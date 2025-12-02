@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Topics - LMS Alprodas</title>
+
+    <link href="css/output.css" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  </head>
+
+  <body class="min-h-screen bg-[#F9F9F9]">
+    <div class="flex h-screen">
+      <!-- Sidebar -->
+      <aside class="w-64 bg-white border-r border-[#DCDEDD] flex flex-col">
+        <!-- Logo Section -->
+        <div class="px-6 py-4 border-b border-[#DCDEDD]">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 relative flex items-center justify-center">
+              <!-- Background circle -->
+              <div
+                class="w-14 h-14 absolute bg-gradient-to-br from-primary-100 to-primary-200 rounded-full"
+              ></div>
+              <!-- Overlapping smaller circle -->
+              <div
+                class="w-10 h-10 absolute bg-gradient-to-br from-primary-500 to-primary-600 rounded-full opacity-90"
+              ></div>
+              <!-- Lucide icon -->
+              <i
+                data-lucide="graduation-cap"
+                class="w-5 h-5 text-white relative z-10"
+              ></i>
+            </div>
+            <div>
+              <h1 class="text-brand-dark text-lg font-bold">LMS Alprodas</h1>
+              <p class="text-brand-dark text-xs font-normal">
+                Manager Dashboard
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="px-6 py-4 space-y-6">
+          <!-- GENERAL Section -->
+          <div>
+            <h3 class="section-title">GENERAL</h3>
+            <div class="space-y-3">
+              <a
+                href="overview.html"
+                class="nav-link border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:rounded-[12px] focus:border-[#0C51D9] focus:border-2 focus:rounded-[12px] focus:bg-white transition-all duration-300"
+              >
+                <i data-lucide="home" class="w-5 h-5 text-gray-600"></i>
+                <span class="text-brand-dark text-base font-medium"
+                  >Dashboard</span
+                >
+              </a>
+
+              <a
+                href="#"
+                class="nav-link-active rounded-[20px] border border-[#0B1042] relative overflow-hidden hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300"
+              >
+                <i data-lucide="tag" class="w-5 h-5 text-white"></i>
+                <span class="text-brand-white text-base font-semibold"
+                  >Topics</span
+                >
+              </a>
+
+              <a
+                href="#"
+                class="nav-link border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:rounded-[12px] focus:border-[#0C51D9] focus:border-2 focus:rounded-[12px] focus:bg-white transition-all duration-300"
+              >
+                <i data-lucide="layers" class="w-5 h-5 text-gray-600"></i>
+                <span class="text-brand-dark text-base font-medium"
+                  >Subjects</span
+                >
+              </a>
+
+              <a
+                href="#"
+                class="nav-link border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:rounded-[12px] focus:border-[#0C51D9] focus:border-2 focus:rounded-[12px] focus:bg-white transition-all duration-300"
+              >
+                <i data-lucide="book-open" class="w-5 h-5 text-gray-600"></i>
+                <span class="text-brand-dark text-base font-medium"
+                  >Courses</span
+                >
+              </a>
+
+              <a
+                href="#"
+                class="nav-link border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:rounded-[12px] focus:border-[#0C51D9] focus:border-2 focus:rounded-[12px] focus:bg-white transition-all duration-300"
+              >
+                <i data-lucide="user-check" class="w-5 h-5 text-gray-600"></i>
+                <span class="text-brand-dark text-base font-medium"
+                  >Mentors</span
+                >
+              </a>
+
+              <a
+                href="#"
+                class="nav-link border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:rounded-[12px] focus:border-[#0C51D9] focus:border-2 focus:rounded-[12px] focus:bg-white transition-all duration-300"
+              >
+                <i data-lucide="users" class="w-5 h-5 text-gray-600"></i>
+                <span class="text-brand-dark text-base font-medium"
+                  >Students</span
+                >
+              </a>
+            </div>
+          </div>
+
+          <!-- OTHERS Section -->
+          <div>
+            <h3 class="section-title">OTHERS</h3>
+            <div class="space-y-3">
+              <a
+                href="#"
+                class="nav-link border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:rounded-[12px] focus:border-[#0C51D9] focus:border-2 focus:rounded-[12px] focus:bg-white transition-all duration-300"
+              >
+                <i data-lucide="credit-card" class="w-5 h-5 text-gray-600"></i>
+                <span class="text-brand-dark text-base font-medium"
+                  >Transactions</span
+                >
+              </a>
+
+              <a
+                href="#"
+                class="nav-link border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:rounded-[12px] focus:border-[#0C51D9] focus:border-2 focus:rounded-[12px] focus:bg-white transition-all duration-300"
+              >
+                <i data-lucide="banknote" class="w-5 h-5 text-gray-600"></i>
+                <span class="text-brand-dark text-base font-medium"
+                  >Withdrawals</span
+                >
+              </a>
+
+              <a
+                href="#"
+                class="nav-link border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:rounded-[12px] focus:border-[#0C51D9] focus:border-2 focus:rounded-[12px] focus:bg-white transition-all duration-300"
+              >
+                <i data-lucide="wallet" class="w-5 h-5 text-gray-600"></i>
+                <span class="text-brand-dark text-base font-medium"
+                  >Wallets</span
+                >
+              </a>
+            </div>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Top Navbar -->
+        <header
+          class="page-header bg-white border-b border-[#DCDEDD] px-5 py-4"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div>
+                <h2 class="text-brand-dark text-2xl font-extrabold">
+                  Topics Management
+                </h2>
+                <p class="text-brand-light text-sm font-normal mt-1">
+                  Manage and organize learning topics across the platform
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <!-- Action Buttons -->
+              <div class="flex items-center gap-3">
+                <button
+                  class="w-10 h-10 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200"
+                >
+                  <i data-lucide="bell" class="w-5 h-5 text-gray-600"></i>
+                </button>
+                <button
+                  class="w-10 h-10 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200"
+                >
+                  <i
+                    data-lucide="message-circle"
+                    class="w-5 h-5 text-gray-600"
+                  ></i>
+                </button>
+                <button
+                  class="w-10 h-10 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200"
+                >
+                  <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
+                </button>
+              </div>
+
+              <!-- Divider -->
+              <div class="w-px h-8 bg-[#DCDEDD] mx-5"></div>
+
+              <!-- User Profile -->
+              <div class="flex items-center gap-3">
+                <img
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
+                  alt="User Avatar"
+                  class="w-12 h-12 rounded-full object-cover"
+                />
+                <div class="text-left">
+                  <p class="text-brand-dark text-base font-semibold">
+                    Angga Masayoshi
+                  </p>
+                  <p class="text-brand-dark text-base font-normal leading-7">
+                    Platform Manager
+                  </p>
+                </div>
+                <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <main class="main-content flex-1 overflow-auto p-5">
+          <!-- Topics Grid Section -->
+          <div class="bg-white border border-[#DCDEDD] rounded-[20px] p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-12 h-12 bg-blue-50 rounded-[12px] flex items-center justify-center"
+                >
+                  <i data-lucide="tag" class="w-6 h-6 text-blue-600"></i>
+                </div>
+                <div>
+                  <h3 class="text-brand-dark text-xl font-bold">All Topics</h3>
+                  <p class="text-brand-light text-sm font-normal">
+                    Browse and manage all learning topics
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-4">
+                <button
+                  class="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-4 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
+                >
+                  <i data-lucide="upload" class="w-4 h-4"></i>
+                  <span class="text-sm font-semibold">Import CSV</span>
+                </button>
+                <button
+                  class="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-3 flex items-center gap-2"
+                >
+                  <i data-lucide="plus" class="w-4 h-4 text-white"></i>
+                  <span class="text-brand-white text-sm font-semibold"
+                    >Add Topic</span
+                  >
+                </button>
+              </div>
+            </div>
+
+            <!-- Search Section -->
+            <div class="mb-6">
+              <div class="flex items-center gap-4">
+                <div class="relative flex-1">
+                  <div
+                    class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+                  >
+                    <i data-lucide="search" class="h-5 w-5 text-gray-400"></i>
+                  </div>
+                  <input
+                    type="text"
+                    class="w-full pl-12 pr-4 py-3 border border-[#DCDEDD] rounded-[16px] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white transition-all duration-300 font-semibold"
+                    placeholder="Search topics..."
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Topics Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <!-- Topic Card 1: Web Development -->
+              <div
+                class="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4"
+              >
+                <!-- Topic Image -->
+                <div
+                  class="w-full h-32 bg-gradient-to-br from-blue-100 to-purple-100 relative overflow-hidden rounded-[12px] mb-4"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3"
+                    alt="Web Development"
+                    class="w-full h-full object-cover rounded-[12px]"
+                  />
+                  <!-- Certified Badge Overlay -->
+                  <div class="absolute bottom-2 right-2">
+                    <span
+                      class="badge-expert px-2 py-1 rounded-md text-xs font-semibold"
+                      >Certified</span
+                    >
+                  </div>
+                </div>
+
+                <div class="flex items-start justify-between mb-4">
+                  <div class="flex-1">
+                    <h4 class="text-brand-dark text-lg font-bold mb-2">
+                      Web Development
+                    </h4>
+                    <p class="text-brand-light text-sm line-clamp-2 mb-1">
+                      Master modern web development with HTML, CSS, JavaScript,
+                      React, and Node.js
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <div
+                    class="flex items-center justify-between text-sm text-gray-600"
+                  >
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="layers" class="w-4 h-4"></i>
+                      <span>142 Subjects</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="users" class="w-4 h-4"></i>
+                      <span>247,892 Students</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex gap-2">
+                  <button
+                    class="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-2 flex items-center justify-center gap-2"
+                  >
+                    <i data-lucide="eye" class="w-4 h-4 text-gray-600"></i>
+                    <span class="text-brand-dark text-sm font-semibold"
+                      >Details</span
+                    >
+                  </button>
+                  <button
+                    class="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-2 flex items-center justify-center gap-2"
+                  >
+                    <i data-lucide="edit" class="w-4 h-4 text-gray-600"></i>
+                    <span class="text-brand-dark text-sm font-semibold"
+                      >Edit</span
+                    >
+                  </button>
+                </div>
+              </div>
+
+              <!-- Topic Card 2: Data Science -->
+              <div
+                class="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4"
+              >
+                <!-- Topic Image -->
+                <div
+                  class="w-full h-32 bg-gradient-to-br from-green-100 to-blue-100 relative overflow-hidden rounded-[12px] mb-4"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71"
+                    alt="Data Science"
+                    class="w-full h-full object-cover rounded-[12px]"
+                  />
+                  <!-- Certified Badge Overlay -->
+                  <div class="absolute bottom-2 right-2">
+                    <span
+                      class="badge-intermediate px-2 py-1 rounded-md text-xs font-semibold"
+                      >Certified</span
+                    >
+                  </div>
+                </div>
+
+                <div class="flex items-start justify-between mb-4">
+                  <div class="flex-1">
+                    <h4 class="text-brand-dark text-lg font-bold mb-2">
+                      Data Science & Analytics
+                    </h4>
+                    <p class="text-brand-light text-sm line-clamp-2 mb-1">
+                      Learn Python, machine learning, statistics, and data
+                      visualization techniques
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <div
+                    class="flex items-center justify-between text-sm text-gray-600"
+                  >
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="layers" class="w-4 h-4"></i>
+                      <span>118 Subjects</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="users" class="w-4 h-4"></i>
+                      <span>189,234 Students</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex gap-2">
+                  <button
+                    class="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-2 flex items-center justify-center gap-2"
+                  >
+                    <i data-lucide="eye" class="w-4 h-4 text-gray-600"></i>
+                    <span class="text-brand-dark text-sm font-semibold"
+                      >Details</span
+                    >
+                  </button>
+                  <button
+                    class="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-2 flex items-center justify-center gap-2"
+                  >
+                    <i data-lucide="edit" class="w-4 h-4 text-gray-600"></i>
+                    <span class="text-brand-dark text-sm font-semibold"
+                      >Edit</span
+                    >
+                  </button>
+                </div>
+              </div>
+
+              <!-- Topic Card 3: Mobile Development -->
+              <div
+                class="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4"
+              >
+                <!-- Topic Image -->
+                <div
+                  class="w-full h-32 bg-gradient-to-br from-purple-100 to-pink-100 relative overflow-hidden rounded-[12px] mb-4"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c"
+                    alt="Mobile Development"
+                    class="w-full h-full object-cover rounded-[12px]"
+                  />
+                  <!-- Certified Badge Overlay -->
+                  <div class="absolute bottom-2 right-2">
+                    <span
+                      class="badge-expert px-2 py-1 rounded-md text-xs font-semibold"
+                      >Certified</span
+                    >
+                  </div>
+                </div>
+
+                <div class="flex items-start justify-between mb-4">
+                  <div class="flex-1">
+                    <h4 class="text-brand-dark text-lg font-bold mb-2">
+                      Mobile App Development
+                    </h4>
+                    <p class="text-brand-light text-sm line-clamp-2 mb-1">
+                      Build native iOS and Android apps with React Native,
+                      Flutter, and Swift
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <div
+                    class="flex items-center justify-between text-sm text-gray-600"
+                  >
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="layers" class="w-4 h-4"></i>
+                      <span>156 Subjects</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="users" class="w-4 h-4"></i>
+                      <span>198,567 Students</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex gap-2">
+                  <button
+                    class="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-2 flex items-center justify-center gap-2"
+                  >
+                    <i data-lucide="eye" class="w-4 h-4 text-gray-600"></i>
+                    <span class="text-brand-dark text-sm font-semibold"
+                      >Details</span
+                    >
+                  </button>
+                  <button
+                    class="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-2 flex items-center justify-center gap-2"
+                  >
+                    <i data-lucide="edit" class="w-4 h-4 text-gray-600"></i>
+                    <span class="text-brand-dark text-sm font-semibold"
+                      >Edit</span
+                    >
+                  </button>
+                </div>
+              </div>
+
+              <!-- Topic Card 4: UI/UX Design -->
+              <div
+                class="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4"
+              >
+                <!-- Topic Image -->
+                <div
+                  class="w-full h-32 bg-gradient-to-br from-orange-100 to-red-100 relative overflow-hidden rounded-[12px] mb-4"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1558655146-9f40138edfeb"
+                    alt="UI/UX Design"
+                    class="w-full h-full object-cover rounded-[12px]"
+                  />
+                  <!-- Certified Badge Overlay -->
+                  <div class="absolute bottom-2 right-2">
+                    <span
+                      class="badge-creative px-2 py-1 rounded-md text-xs font-semibold"
+                      >Certified</span
+                    >
+                  </div>
+                </div>
+
+                <div class="flex items-start justify-between mb-4">
+                  <div class="flex-1">
+                    <h4 class="text-brand-dark text-lg font-bold mb-2">
+                      UI/UX Design Masterclass
+                    </h4>
+                    <p class="text-brand-light text-sm line-clamp-2 mb-1">
+                      Design beautiful interfaces with Figma, Adobe XD, and user
+                      research methods
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <div
+                    class="flex items-center justify-between text-sm text-gray-600"
+                  >
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="layers" class="w-4 h-4"></i>
+                      <span>124 Subjects</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="users" class="w-4 h-4"></i>
+                      <span>156,789 Students</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex gap-2">
+                  <button
+                    class="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-2 flex items-center justify-center gap-2"
+                  >
+                    <i data-lucide="eye" class="w-4 h-4 text-gray-600"></i>
+                    <span class="text-brand-dark text-sm font-semibold"
+                      >Details</span
+                    >
+                  </button>
+                  <button
+                    class="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-2 flex items-center justify-center gap-2"
+                  >
+                    <i data-lucide="edit" class="w-4 h-4 text-gray-600"></i>
+                    <span class="text-brand-dark text-sm font-semibold"
+                      >Edit</span
+                    >
+                  </button>
+                </div>
+              </div>
+
+              <!-- Topic Card 5: DevOps & Cloud -->
+              <div
+                class="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4"
+              >
+                <!-- Topic Image -->
+                <div
+                  class="w-full h-32 bg-gradient-to-br from-gray-100 to-blue-100 relative overflow-hidden rounded-[12px] mb-4"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1504639725590-34d0984388bd"
+                    alt="DevOps & Cloud"
+                    class="w-full h-full object-cover rounded-[12px]"
+                  />
+                  <!-- Certified Badge Overlay -->
+                  <div class="absolute bottom-2 right-2">
+                    <span
+                      class="badge-high-performing px-2 py-1 rounded-md text-xs font-semibold"
+                      >Certified</span
+                    >
+                  </div>
+                </div>
+
+                <div class="flex items-start justify-between mb-4">
+                  <div class="flex-1">
+                    <h4 class="text-brand-dark text-lg font-bold mb-2">
+                      DevOps & Cloud Computing
+                    </h4>
+                    <p class="text-brand-light text-sm line-clamp-2 mb-1">
+                      Master AWS, Docker, Kubernetes, and CI/CD deployment
+                      pipelines
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <div
+                    class="flex items-center justify-between text-sm text-gray-600"
+                  >
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="layers" class="w-4 h-4"></i>
+                      <span>134 Subjects</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="users" class="w-4 h-4"></i>
+                      <span>123,456 Students</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex gap-2">
+                  <button
+                    class="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-2 flex items-center justify-center gap-2"
+                  >
+                    <i data-lucide="eye" class="w-4 h-4 text-gray-600"></i>
+                    <span class="text-brand-dark text-sm font-semibold"
+                      >Details</span
+                    >
+                  </button>
+                  <button
+                    class="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-2 flex items-center justify-center gap-2"
+                  >
+                    <i data-lucide="edit" class="w-4 h-4 text-gray-600"></i>
+                    <span class="text-brand-dark text-sm font-semibold"
+                      >Edit</span
+                    >
+                  </button>
+                </div>
+              </div>
+
+              <!-- Topic Card 6: Cybersecurity -->
+              <div
+                class="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4"
+              >
+                <!-- Topic Image -->
+                <div
+                  class="w-full h-32 bg-gradient-to-br from-red-100 to-orange-100 relative overflow-hidden rounded-[12px] mb-4"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1563986768609-322da13575f3"
+                    alt="Cybersecurity"
+                    class="w-full h-full object-cover rounded-[12px]"
+                  />
+                  <!-- Certified Badge Overlay -->
+                  <div class="absolute bottom-2 right-2">
+                    <span
+                      class="badge-247 px-2 py-1 rounded-md text-xs font-semibold"
+                      >Certified</span
+                    >
+                  </div>
+                </div>
+
+                <div class="flex items-start justify-between mb-4">
+                  <div class="flex-1">
+                    <h4 class="text-brand-dark text-lg font-bold mb-2">
+                      Cybersecurity Fundamentals
+                    </h4>
+                    <p class="text-brand-light text-sm line-clamp-2 mb-1">
+                      Learn ethical hacking, network security, and cybersecurity
+                      best practices
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <div
+                    class="flex items-center justify-between text-sm text-gray-600"
+                  >
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="layers" class="w-4 h-4"></i>
+                      <span>97 Subjects</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="users" class="w-4 h-4"></i>
+                      <span>87,432 Students</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex gap-2">
+                  <button
+                    class="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-2 flex items-center justify-center gap-2"
+                  >
+                    <i data-lucide="eye" class="w-4 h-4 text-gray-600"></i>
+                    <span class="text-brand-dark text-sm font-semibold"
+                      >Details</span
+                    >
+                  </button>
+                  <button
+                    class="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-2 flex items-center justify-center gap-2"
+                  >
+                    <i data-lucide="edit" class="w-4 h-4 text-gray-600"></i>
+                    <span class="text-brand-dark text-sm font-semibold"
+                      >Edit</span
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex items-center justify-between mt-6">
+              <div class="flex items-center gap-2">
+                <p
+                  class="text-[#6B7280] font-['Plus_Jakarta_Sans'] text-[14px] font-normal"
+                >
+                  Show
+                </p>
+                <select
+                  class="px-3 py-2 border border-[#DCDEDD] rounded-lg hover:border-[#0C51D9] focus:border-[#0C51D9] transition-all duration-300 bg-white appearance-none"
+                >
+                  <option>6</option>
+                  <option>12</option>
+                  <option>24</option>
+                </select>
+                <p
+                  class="text-[#6B7280] font-['Plus_Jakarta_Sans'] text-[14px] font-normal"
+                >
+                  topics per page
+                </p>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <!-- Previous Button -->
+                <button
+                  class="px-4 py-2 border border-[#DCDEDD] rounded-lg hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled
+                >
+                  <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+
+                <!-- Page Numbers -->
+                <button
+                  class="px-4 py-2 border border-[#2151A0] rounded-lg blue-gradient blue-btn-shadow text-white font-semibold"
+                >
+                  1
+                </button>
+                <button
+                  class="px-4 py-2 border border-[#DCDEDD] rounded-lg hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300"
+                >
+                  2
+                </button>
+                <button
+                  class="px-4 py-2 border border-[#DCDEDD] rounded-lg hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300"
+                >
+                  3
+                </button>
+                <span class="px-2 text-gray-500">...</span>
+                <button
+                  class="px-4 py-2 border border-[#DCDEDD] rounded-lg hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300"
+                >
+                  8
+                </button>
+
+                <!-- Next Button -->
+                <button
+                  class="px-4 py-2 border border-[#DCDEDD] rounded-lg hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300"
+                >
+                  <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      // Initialize everything when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        lucide.createIcons();
+      });
+    </script>
+  </body>
+</html>

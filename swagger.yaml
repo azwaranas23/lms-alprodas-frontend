@@ -1,0 +1,2710 @@
+openapi: 3.0.0
+info:
+  title: LMS Alprodas Backend API
+  description: API documentation for LMS Alprodas e-learning platform
+  version: 1.0.0
+  contact:
+    name: LMS Alprodas Team
+servers:
+  - url: http://localhost:3000
+    description: Development server
+  - url: https://api.alprodas.com
+    description: Production server
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    BaseResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        data:
+          type: object
+          nullable: true
+
+    PaginatedResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+            meta:
+              type: object
+              properties:
+                total:
+                  type: integer
+                page:
+                  type: integer
+                per_page:
+                  type: integer
+                total_pages:
+                  type: integer
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        error:
+          type: string
+        statusCode:
+          type: integer
+
+    TopicResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        image:
+          type: string
+          nullable: true
+        courseCount:
+          type: integer
+          description: Total number of courses under this topic
+        subjectCount:
+          type: integer
+          description: Total number of subjects under this topic
+        studentEnrollmentCount:
+          type: integer
+          description: Total number of student enrollments in courses under this topic
+
+    UserResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        name:
+          type: string
+        phone:
+          type: string
+          nullable: true
+        isVerified:
+          type: boolean
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        totalStudents:
+          type: integer
+          description: Total students for mentor role
+        totalCourses:
+          type: integer
+          description: Total courses for mentor role
+        totalEnrolledCourses:
+          type: integer
+          description: Total enrolled courses for student role
+        role:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            key:
+              type: string
+            permissions:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  key:
+                    type: string
+                  resource:
+                    type: string
+        userProfile:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: integer
+            bio:
+              type: string
+              nullable: true
+            avatar:
+              type: string
+              nullable: true
+            gender:
+              type: string
+              nullable: true
+            expertise:
+              type: string
+              nullable: true
+            experienceYears:
+              type: integer
+              nullable: true
+            linkedinUrl:
+              type: string
+              nullable: true
+            githubUrl:
+              type: string
+              nullable: true
+
+    TransactionResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        orderId:
+          type: string
+        amount:
+          type: number
+        basePrice:
+          type: number
+        ppnAmount:
+          type: number
+        ppnRate:
+          type: number
+        platformFee:
+          type: number
+        platformFeeRate:
+          type: number
+        mentorNetAmount:
+          type: number
+        status:
+          type: string
+        paymentMethod:
+          type: string
+          nullable: true
+        currency:
+          type: string
+        transactionDate:
+          type: string
+          format: date-time
+        paidAt:
+          type: string
+          format: date-time
+          nullable: true
+        expiredAt:
+          type: string
+          format: date-time
+          nullable: true
+        course:
+          type: object
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            price:
+              type: number
+            image:
+              type: string
+              nullable: true
+        student:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            email:
+              type: string
+
+    CheckoutResponseDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+        snapToken:
+          type: string
+        redirectUrl:
+          type: string
+        basePrice:
+          type: number
+        ppnAmount:
+          type: number
+        platformFee:
+          type: number
+        mentorNetAmount:
+          type: number
+        totalAmount:
+          type: number
+        currency:
+          type: string
+        status:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+        course:
+          type: object
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            price:
+              type: number
+        customer:
+          type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+
+    WithdrawalResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        amount:
+          type: number
+        status:
+          type: string
+          enum: [PENDING, APPROVED, REJECTED, COMPLETED]
+        bankName:
+          type: string
+        accountNumber:
+          type: string
+        accountHolderName:
+          type: string
+        proofPaymentUrl:
+          type: string
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        user:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            email:
+              type: string
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: App
+    description: General application endpoints
+  - name: Auth
+    description: Authentication endpoints
+  - name: Dashboard
+    description: Dashboard statistics and data
+  - name: Permissions
+    description: Permission management
+  - name: Roles
+    description: Role management
+  - name: Subjects
+    description: Subject management
+  - name: Topics
+    description: Topic management
+  - name: Courses
+    description: Course management
+  - name: Sections
+    description: Course section management
+  - name: Lessons
+    description: Lesson management
+  - name: Resources
+    description: Course resource management
+  - name: Transactions
+    description: Transaction and payment management
+  - name: Users
+    description: User management
+  - name: Withdrawals
+    description: Withdrawal management
+  - name: Public
+    description: Public endpoints (no auth required)
+
+paths:
+  # App Controller
+  /:
+    get:
+      tags:
+        - App
+      summary: Health check
+      security: []
+      responses:
+        "200":
+          description: Application is running
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /test-roles:
+    get:
+      tags:
+        - App
+      summary: Test roles endpoint
+      security: []
+      responses:
+        "200":
+          description: List of roles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /profile:
+    get:
+      tags:
+        - App
+      summary: Get user profile
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /test-email:
+    get:
+      tags:
+        - App
+      summary: Send test email
+      security: []
+      responses:
+        "200":
+          description: Test email status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  success:
+                    type: boolean
+
+  /test-email-queue:
+    post:
+      tags:
+        - App
+      summary: Send test email via queue
+      security: []
+      responses:
+        "200":
+          description: Email queued status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  success:
+                    type: boolean
+
+  /test-cache:
+    get:
+      tags:
+        - App
+      summary: Test cache functionality
+      security: []
+      responses:
+        "200":
+          description: Cache test result
+          content:
+            application/json:
+              schema:
+                type: object
+
+  # Auth Controller
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: User login
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+                      user:
+                        $ref: "#/components/schemas/UserResponseDto"
+
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: User registration
+      security: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - name
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+                name:
+                  type: string
+                role_id:
+                  type: integer
+                avatar:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /auth/verify-email:
+    get:
+      tags:
+        - Auth
+      summary: Verify email address
+      security: []
+      parameters:
+        - in: query
+          name: token
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Email verified successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /auth/resend-verification:
+    post:
+      tags:
+        - Auth
+      summary: Resend verification email
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        "200":
+          description: Verification email resent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  # Dashboard Controller
+  /dashboard/statistics:
+    get:
+      tags:
+        - Dashboard
+      summary: Get dashboard statistics
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Dashboard statistics retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      totalRevenue:
+                        type: number
+                      totalTransactions:
+                        type: integer
+                      totalCourses:
+                        type: integer
+                      totalStudents:
+                        type: integer
+
+  /dashboard/latest-transactions:
+    get:
+      tags:
+        - Dashboard
+      summary: Get latest transactions
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Latest transactions retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+
+  /dashboard/latest-courses:
+    get:
+      tags:
+        - Dashboard
+      summary: Get latest courses
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Latest courses retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+
+  # Permissions Controller
+  /permissions:
+    get:
+      tags:
+        - Permissions
+      summary: Get all permissions
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  # Roles Controller
+  /roles:
+    get:
+      tags:
+        - Roles
+      summary: Get all roles
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of roles
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /roles/{id}:
+    get:
+      tags:
+        - Roles
+      summary: Get role by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Role details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /roles/{id}/permissions:
+    put:
+      tags:
+        - Roles
+      summary: Update role permissions
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                permissionIds:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        "200":
+          description: Permissions updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  # Subjects Controller
+  /subjects:
+    get:
+      tags:
+        - Subjects
+      summary: Get all subjects (paginated)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+        - in: query
+          name: search
+          schema:
+            type: string
+        - in: query
+          name: topicId
+          schema:
+            type: integer
+        - in: query
+          name: sort
+          schema:
+            type: string
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum: [asc, desc]
+      responses:
+        "200":
+          description: List of subjects
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedResponse"
+
+    post:
+      tags:
+        - Subjects
+      summary: Create new subject
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - name
+                - description
+                - topicId
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                topicId:
+                  type: integer
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Subject created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /subjects/{id}:
+    get:
+      tags:
+        - Subjects
+      summary: Get subject by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Subject details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+    patch:
+      tags:
+        - Subjects
+      summary: Update subject
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                topicId:
+                  type: integer
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Subject updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+    delete:
+      tags:
+        - Subjects
+      summary: Delete subject
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Subject deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  # Topics Controller
+  /topics:
+    get:
+      tags:
+        - Topics
+      summary: Get all topics (paginated)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+        - in: query
+          name: search
+          schema:
+            type: string
+        - in: query
+          name: sort
+          schema:
+            type: string
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum: [asc, desc]
+      responses:
+        "200":
+          description: List of topics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/TopicResponseDto"
+                      meta:
+                        type: object
+                        properties:
+                          total:
+                            type: integer
+                          page:
+                            type: integer
+                          per_page:
+                            type: integer
+                          total_pages:
+                            type: integer
+
+    post:
+      tags:
+        - Topics
+      summary: Create new topic
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - name
+                - description
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Topic created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/TopicResponseDto"
+
+  /topics/{id}:
+    get:
+      tags:
+        - Topics
+      summary: Get topic by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Topic details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/TopicResponseDto"
+
+    patch:
+      tags:
+        - Topics
+      summary: Update topic
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Topic updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/TopicResponseDto"
+
+    delete:
+      tags:
+        - Topics
+      summary: Delete topic
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Topic deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  # Courses Controller
+  /courses:
+    get:
+      tags:
+        - Courses
+      summary: Get all courses (paginated)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+        - in: query
+          name: search
+          schema:
+            type: string
+        - in: query
+          name: topicId
+          schema:
+            type: integer
+        - in: query
+          name: subjectId
+          schema:
+            type: integer
+        - in: query
+          name: sort
+          schema:
+            type: string
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum: [asc, desc]
+      responses:
+        "200":
+          description: List of courses
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedResponse"
+
+    post:
+      tags:
+        - Courses
+      summary: Create new course
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - title
+                - description
+                - price
+                - subject_id
+                - mentor_id
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                about:
+                  type: string
+                tools:
+                  type: string
+                  description: Comma-separated list of tools used in the course
+                keyPoints:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of key points for the course
+                personas:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of target personas for the course
+                price:
+                  type: number
+                status:
+                  type: string
+                  enum: [PUBLISHED, DRAFT]
+                  default: DRAFT
+                  description: Course status - PUBLISHED or DRAFT
+                subject_id:
+                  type: integer
+                mentor_id:
+                  type: integer
+      responses:
+        "201":
+          description: Course created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /courses/{id}:
+    get:
+      tags:
+        - Courses
+      summary: Get course by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Course details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+    patch:
+      tags:
+        - Courses
+      summary: Update course
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                about:
+                  type: string
+                tools:
+                  type: string
+                  description: Comma-separated list of tools used in the course
+                keyPoints:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of key points for the course
+                personas:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of target personas for the course
+                price:
+                  type: number
+                status:
+                  type: string
+                  enum: [PUBLISHED, DRAFT, ARCHIVED]
+                  default: DRAFT
+                  description: Course status - PUBLISHED, DRAFT, or ARCHIVED
+                subject_id:
+                  type: integer
+                mentor_id:
+                  type: integer
+      responses:
+        "200":
+          description: Course updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+    delete:
+      tags:
+        - Courses
+      summary: Delete course
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Course deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /courses/student/my-courses:
+    get:
+      tags:
+        - Courses
+      summary: Get student's enrolled courses
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: List of enrolled courses
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedResponse"
+
+  /courses/{courseId}/learn:
+    get:
+      tags:
+        - Courses
+      summary: Get course learning structure
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Course learning structure with progress
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /courses/{courseId}/progress:
+    get:
+      tags:
+        - Courses
+      summary: Get course progress
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Course progress information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /courses/lessons/{lessonId}:
+    get:
+      tags:
+        - Courses
+      summary: Get lesson detail
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: lessonId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Lesson details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /courses/lessons/{lessonId}/complete:
+    get:
+      tags:
+        - Courses
+      summary: Mark lesson as completed
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: lessonId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Lesson marked as completed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  # Course Resources
+  /courses/{courseId}/resources:
+    get:
+      tags:
+        - Resources
+      summary: Get course resources
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of course resources
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+    post:
+      tags:
+        - Resources
+      summary: Add course resource
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - title
+                - type
+                - file
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                type:
+                  type: string
+                  enum: [DOCUMENT, IMAGE, ARCHIVE]
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Resource added successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /courses/{courseId}/resources/{id}:
+    patch:
+      tags:
+        - Resources
+      summary: Update course resource
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                type:
+                  type: string
+                  enum: [DOCUMENT, IMAGE, ARCHIVE]
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Resource updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+    delete:
+      tags:
+        - Resources
+      summary: Delete course resource
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Resource deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  # Sections Controller
+  /sections:
+    get:
+      tags:
+        - Sections
+      summary: Get all sections
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of sections
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+    post:
+      tags:
+        - Sections
+      summary: Create new section
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - courseId
+                - order
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                courseId:
+                  type: integer
+                order:
+                  type: integer
+      responses:
+        "201":
+          description: Section created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /sections/course/{courseId}:
+    get:
+      tags:
+        - Sections
+      summary: Get sections by course ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: courseId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of sections for the course
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /sections/{id}:
+    get:
+      tags:
+        - Sections
+      summary: Get section by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Section details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+    patch:
+      tags:
+        - Sections
+      summary: Update section
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                order:
+                  type: integer
+      responses:
+        "200":
+          description: Section updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+    delete:
+      tags:
+        - Sections
+      summary: Delete section
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Section deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  # Lessons Controller
+  /lessons:
+    get:
+      tags:
+        - Lessons
+      summary: Get all lessons
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of lessons
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+    post:
+      tags:
+        - Lessons
+      summary: Create new lesson
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - sectionId
+                - type
+                - order
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                sectionId:
+                  type: integer
+                type:
+                  type: string
+                  enum: [VIDEO, TEXT, QUIZ]
+                content:
+                  type: string
+                video_url:
+                  type: string
+                duration:
+                  type: integer
+                order:
+                  type: integer
+      responses:
+        "201":
+          description: Lesson created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /lessons/section/{sectionId}:
+    get:
+      tags:
+        - Lessons
+      summary: Get lessons by section ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: sectionId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of lessons for the section
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /lessons/{id}:
+    get:
+      tags:
+        - Lessons
+      summary: Get lesson by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Lesson details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+    patch:
+      tags:
+        - Lessons
+      summary: Update lesson
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                type:
+                  type: string
+                  enum: [VIDEO, TEXT, QUIZ]
+                content:
+                  type: string
+                video_url:
+                  type: string
+                duration:
+                  type: integer
+                order:
+                  type: integer
+      responses:
+        "200":
+          description: Lesson updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+    delete:
+      tags:
+        - Lessons
+      summary: Delete lesson
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Lesson deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  # Transactions Controller
+  /transactions/checkout:
+    post:
+      tags:
+        - Transactions
+      summary: Create transaction checkout
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - courseId
+              properties:
+                courseId:
+                  type: integer
+                discountCode:
+                  type: string
+      responses:
+        "201":
+          description: Checkout created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/CheckoutResponseDto"
+
+  /transactions:
+    get:
+      tags:
+        - Transactions
+      summary: Get user transactions
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [PENDING, SUCCESS, FAILED, EXPIRED]
+      responses:
+        "200":
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/TransactionResponseDto"
+                      meta:
+                        type: object
+                        properties:
+                          total:
+                            type: integer
+                          page:
+                            type: integer
+                          per_page:
+                            type: integer
+                          total_pages:
+                            type: integer
+
+  /transactions/{id}:
+    get:
+      tags:
+        - Transactions
+      summary: Get transaction detail
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Transaction details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/TransactionResponseDto"
+
+  /transactions/mentor/list:
+    get:
+      tags:
+        - Transactions
+      summary: Get mentor transactions
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [PENDING, SUCCESS, FAILED, EXPIRED]
+      responses:
+        "200":
+          description: List of mentor transactions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/TransactionResponseDto"
+                      meta:
+                        type: object
+                        properties:
+                          total:
+                            type: integer
+                          page:
+                            type: integer
+                          per_page:
+                            type: integer
+                          total_pages:
+                            type: integer
+
+  /transactions/webhook/midtrans:
+    post:
+      tags:
+        - Transactions
+      summary: Midtrans payment webhook
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_time:
+                  type: string
+                transaction_status:
+                  type: string
+                transaction_id:
+                  type: string
+                status_message:
+                  type: string
+                status_code:
+                  type: string
+                signature_key:
+                  type: string
+                payment_type:
+                  type: string
+                order_id:
+                  type: string
+                gross_amount:
+                  type: string
+                fraud_status:
+                  type: string
+      responses:
+        "200":
+          description: Webhook processed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  # Users Controller
+  /users/mentors:
+    get:
+      tags:
+        - Users
+      summary: Get all mentors
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+        - in: query
+          name: search
+          schema:
+            type: string
+        - in: query
+          name: sort
+          schema:
+            type: string
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum: [asc, desc]
+      responses:
+        "200":
+          description: List of mentors
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedResponse"
+
+  /users/students:
+    get:
+      tags:
+        - Users
+      summary: Get all students
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+        - in: query
+          name: search
+          schema:
+            type: string
+        - in: query
+          name: sort
+          schema:
+            type: string
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum: [asc, desc]
+      responses:
+        "200":
+          description: List of students
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedResponse"
+
+  # Withdrawals Controller
+  /withdrawals/my-withdrawals:
+    get:
+      tags:
+        - Withdrawals
+      summary: Get user's withdrawal requests
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [PENDING, APPROVED, REJECTED, COMPLETED]
+      responses:
+        "200":
+          description: List of user withdrawals
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/WithdrawalResponseDto"
+                      meta:
+                        type: object
+                        properties:
+                          total:
+                            type: integer
+                          page:
+                            type: integer
+                          per_page:
+                            type: integer
+                          total_pages:
+                            type: integer
+
+  /withdrawals/all:
+    get:
+      tags:
+        - Withdrawals
+      summary: Get all withdrawal requests (admin/manager only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [PENDING, APPROVED, REJECTED, COMPLETED]
+      responses:
+        "200":
+          description: List of all withdrawals
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/WithdrawalResponseDto"
+                      meta:
+                        type: object
+                        properties:
+                          total:
+                            type: integer
+                          page:
+                            type: integer
+                          per_page:
+                            type: integer
+                          total_pages:
+                            type: integer
+
+  /withdrawals/balance:
+    get:
+      tags:
+        - Withdrawals
+      summary: Get withdrawal balance information
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Withdrawal balance information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      availableBalance:
+                        type: number
+                      totalEarnings:
+                        type: number
+                      totalWithdrawn:
+                        type: number
+                      pendingWithdrawals:
+                        type: number
+
+  /withdrawals/validate-password:
+    post:
+      tags:
+        - Withdrawals
+      summary: Validate user password for withdrawal
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+              properties:
+                password:
+                  type: string
+                  format: password
+      responses:
+        "200":
+          description: Password validation result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      isValid:
+                        type: boolean
+
+  /withdrawals/check-balance:
+    post:
+      tags:
+        - Withdrawals
+      summary: Check if user can withdraw specified amount
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - amount
+              properties:
+                amount:
+                  type: number
+      responses:
+        "200":
+          description: Balance check result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      canWithdraw:
+                        type: boolean
+                      availableBalance:
+                        type: number
+
+  /withdrawals:
+    post:
+      tags:
+        - Withdrawals
+      summary: Create withdrawal request
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - amount
+                - bankName
+                - accountNumber
+                - accountHolderName
+              properties:
+                amount:
+                  type: number
+                bankName:
+                  type: string
+                accountNumber:
+                  type: string
+                accountHolderName:
+                  type: string
+                notes:
+                  type: string
+      responses:
+        "201":
+          description: Withdrawal request created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/WithdrawalResponseDto"
+
+  /withdrawals/{id}:
+    get:
+      tags:
+        - Withdrawals
+      summary: Get withdrawal request by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Withdrawal details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/WithdrawalResponseDto"
+
+  /withdrawals/{id}/status:
+    patch:
+      tags:
+        - Withdrawals
+      summary: Update withdrawal status (admin/manager only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - status
+              properties:
+                status:
+                  type: string
+                  enum: [PENDING, APPROVED, REJECTED, COMPLETED]
+                notes:
+                  type: string
+                proofPaymentFile:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Withdrawal status updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/WithdrawalResponseDto"
+
+  # Public Frontend Endpoints
+  /front/topics:
+    get:
+      tags:
+        - Public
+      summary: Get public topics
+      security: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+        - in: query
+          name: search
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of topics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/TopicResponseDto"
+                      meta:
+                        type: object
+                        properties:
+                          total:
+                            type: integer
+                          page:
+                            type: integer
+                          per_page:
+                            type: integer
+                          total_pages:
+                            type: integer
+
+  /front/topics/{id}:
+    get:
+      tags:
+        - Public
+      summary: Get public topic by ID
+      security: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Topic details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/TopicResponseDto"
+
+  /front/subjects:
+    get:
+      tags:
+        - Public
+      summary: Get public subjects
+      security: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+        - in: query
+          name: search
+          schema:
+            type: string
+        - in: query
+          name: topicId
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of subjects
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedResponse"
+
+  /front/subjects/by-topic/{topicId}:
+    get:
+      tags:
+        - Public
+      summary: Get subjects by topic
+      security: []
+      parameters:
+        - in: path
+          name: topicId
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: List of subjects for topic
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedResponse"
+
+  /front/subjects/detail/{id}:
+    get:
+      tags:
+        - Public
+      summary: Get public subject by ID
+      security: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Subject details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
+
+  /front/courses:
+    get:
+      tags:
+        - Public
+      summary: Get public courses
+      security: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+        - in: query
+          name: search
+          schema:
+            type: string
+        - in: query
+          name: topicId
+          schema:
+            type: integer
+        - in: query
+          name: subjectId
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of courses
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedResponse"
+
+  /front/courses/by-topic/{topicId}:
+    get:
+      tags:
+        - Public
+      summary: Get courses by topic
+      security: []
+      parameters:
+        - in: path
+          name: topicId
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: List of courses for topic
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedResponse"
+
+  /front/courses/by-subject/{subjectId}:
+    get:
+      tags:
+        - Public
+      summary: Get courses by subject
+      security: []
+      parameters:
+        - in: path
+          name: subjectId
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: List of courses for subject
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedResponse"
+
+  /front/courses/most-joined:
+    get:
+      tags:
+        - Public
+      summary: Get most joined courses
+      security: []
+      responses:
+        "200":
+          description: List of most joined courses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+
+  /front/courses/detail/{id}:
+    get:
+      tags:
+        - Public
+      summary: Get public course by ID
+      security: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Course details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseResponse"
