@@ -26,6 +26,7 @@ import { OtherTabs } from "~/features/courses/components/OtherTabs";
 import { QUERY_KEYS } from "~/constants/api";
 import { Image } from "~/components/atoms/Image";
 import { MentorLayout } from "~/components/templates/MentorLayout";
+import { ResourcesTab } from "~/features/courses/components/CourseResourcesTab";
 
 export function meta() {
   return [
@@ -362,9 +363,7 @@ export default function MentorCourseDetail() {
           <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6">
             {activeTab === "overview" && <OverviewTab course={course} />}
             {activeTab === "lessons" && <LessonsTab course={course} />}
-            {activeTab === "resources" && (
-              <OtherTabs course={course} activeTab="resources" />
-            )}
+            {activeTab === "resources" && <ResourcesTab course={course} />}
             {activeTab === "rewards" && (
               <OtherTabs course={course} activeTab="rewards" />
             )}
