@@ -55,6 +55,7 @@ export default function EditMentorCourse() {
       subject_id: parseInt(courseData.subject) || course?.subject?.id || 1,
       price: courseData.price,
       status: courseData.availability === "published" ? "PUBLISHED" : "DRAFT",
+      course_token: courseData.courseToken,
     };
 
     // Handle image updates first if any
@@ -108,6 +109,7 @@ export default function EditMentorCourse() {
       subject: course.subject?.id?.toString() || "",
       tools: course.tools || "",
       price: course.price,
+      courseToken: course.course_token,
       availability: (course.status?.toUpperCase() === "PUBLISHED"
         ? "published"
         : "draft") as "published" | "draft",

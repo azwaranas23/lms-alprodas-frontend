@@ -33,7 +33,7 @@ interface CourseData {
   targetAudience4?: string;
   tools?: string;
   price: number;
-  enrollmentToken?: string;
+  courseToken: string;
   availability: "published" | "draft";
   level: string;
   duration: string;
@@ -78,7 +78,7 @@ export function CourseWizardContent({
     targetAudience4: initialData.targetAudience4 || "",
     tools: initialData.tools || "",
     price: initialData.price || 0,
-    enrollmentToken: initialData.enrollmentToken || "",
+    courseToken: initialData.courseToken || "",
     images: initialData.images || [],
     mentor: initialData.mentor,
   });
@@ -343,97 +343,6 @@ export function CourseWizardContent({
                   </p>
                   <p className="text-brand-light text-xs font-normal">
                     Check student understanding throughout the course
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {currentStep === 4 && (
-        <div className="w-100 flex-shrink-0 pr-5">
-          <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6 top-6">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-green-50 rounded-[12px] flex items-center justify-center">
-                <Key className="w-6 h-6 text-green-600" />
-              </div>
-              <div>
-                <h3 className="text-brand-dark text-xl font-bold">
-                  Token Enrollment Tips
-                </h3>
-                <p className="text-brand-light text-sm font-normal">
-                  Use tokens effectively to manage access
-                </p>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Check className="w-3 h-3 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-brand-dark text-base font-semibold">
-                    Share in trusted channels
-                  </p>
-                  <p className="text-brand-light text-xs font-normal">
-                    Send tokens via LMS, email, or class group—not publicly.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Check className="w-3 h-3 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-brand-dark text-base font-semibold">
-                    Use tokens per course
-                  </p>
-                  <p className="text-brand-light text-xs font-normal">
-                    Avoid reusing the same token across different classes.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Check className="w-3 h-3 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-brand-dark text-base font-semibold">
-                    Reset when necessary
-                  </p>
-                  <p className="text-brand-light text-xs font-normal">
-                    If too many unknown students join, regenerate the token.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Check className="w-3 h-3 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-brand-dark text-base font-semibold">
-                    Tell students what to do
-                  </p>
-                  <p className="text-brand-light text-xs font-normal">
-                    Explain clearly where they should paste the token.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Check className="w-3 h-3 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-brand-dark text-base font-semibold">
-                    Keep a backup
-                  </p>
-                  <p className="text-brand-light text-xs font-normal">
-                    Store your token somewhere safe in case you forget it.
                   </p>
                 </div>
               </div>

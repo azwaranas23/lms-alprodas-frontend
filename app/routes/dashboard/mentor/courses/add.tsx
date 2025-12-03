@@ -22,7 +22,7 @@ export interface WizardCourseData {
   targetAudience3?: string;
   targetAudience4?: string;
   availability?: "published" | "draft";
-  enrollmentToken?: string;
+  courseToken?: string;
   mainPhoto?: File;
   previewPhoto?: File;
   contentPhoto?: File;
@@ -44,7 +44,7 @@ export default function AddMentorCourse() {
         subjectName: course?.subject?.name,
         mentorName: course?.mentor?.name,
         courseId: course?.id,
-        enrollmentToken: course?.enrollment_token,
+        courseToken: course?.course_token,
         description: course?.description,
         about: course?.about,
         tools: course?.tools,
@@ -102,7 +102,7 @@ export default function AddMentorCourse() {
       status: formData.availability === "published" ? "PUBLISHED" : "DRAFT",
       subject_id: Number(formData.subject),
       mentor_id: user.id,
-      enrollment_token: formData.enrollmentToken,
+      course_token: formData.courseToken ?? "",
       images: images.length ? images : undefined,
     };
 

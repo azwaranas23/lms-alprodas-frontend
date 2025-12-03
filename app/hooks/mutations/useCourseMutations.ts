@@ -39,11 +39,11 @@ export function useUpdateCourseImage() {
     mutationFn: ({
       courseId,
       imageType,
-      imageFile
+      imageFile,
     }: {
       courseId: number;
-      imageType: 'main' | 'preview' | 'sample' | 'certificate';
-      imageFile: File
+      imageType: "main" | "preview" | "sample" | "certificate";
+      imageFile: File;
     }) => coursesService.updateCourseImage(courseId, imageType, imageFile),
     onSuccessCallback: (_, { courseId }) => {
       queryClient.invalidateQueries({ queryKey: courseKeys.detail(courseId) });

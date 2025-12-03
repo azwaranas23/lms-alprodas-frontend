@@ -52,7 +52,7 @@ interface CourseData {
   targetAudience4?: string;
   tools?: string;
   price?: number;
-  enrollmentToken?: string;
+  courseToken: string;
   availability?: "published" | "draft";
   level: string;
   duration: string;
@@ -82,6 +82,8 @@ export function CourseWizard({
     level: "",
     duration: "",
     requirements: [],
+    courseToken: "",
+    availability: "published",
   });
 
   const updateCourseData = (data: Partial<CourseData>) => {
@@ -531,7 +533,7 @@ export function CourseWizard({
                           Token Enrollment Tips
                         </h3>
                         <p className="text-brand-light text-sm font-normal">
-                          Best practices for using class tokens
+                          Best practices for using Course Token.
                         </p>
                       </div>
                     </div>

@@ -16,7 +16,7 @@ interface SuccessCourseState {
   course?: {
     id: number;
     title: string;
-    enrollmentToken?: string;
+    courseToken: string;
     category?: string;
     thumbnailUrl?: string;
   };

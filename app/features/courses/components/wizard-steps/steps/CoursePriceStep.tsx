@@ -17,7 +17,7 @@ import { Avatar } from "~/components/atoms/Avatar";
 
 interface CourseData {
   price?: number; // masih dibiarkan untuk kompatibilitas, tapi tidak dipakai di UI
-  enrollmentToken?: string;
+  courseToken?: string;
   availability?: "published" | "draft";
   mentor?: {
     id: number;
@@ -88,17 +88,17 @@ export function CoursePriceStep({
 
   const handleGenerateToken = () => {
     const token = generateCourseToken();
-    onUpdate({ enrollmentToken: token });
-    if (errors.enrollmentToken) {
-      setErrors((prev) => ({ ...prev, enrollmentToken: "" }));
+    onUpdate({ courseToken: token });
+    if (errors.courseToken) {
+      setErrors((prev) => ({ ...prev, courseToken: "" }));
     }
   };
 
   const validateAndNext = () => {
     const validationErrors: Record<string, string> = {};
 
-    if (!data.enrollmentToken || data.enrollmentToken.trim() === "") {
-      validationErrors.enrollmentToken = "Please generate a course token";
+    if (!data.courseToken || data.courseToken.trim() === "") {
+      validationErrors.courseToken = "Please generate a course token";
     }
 
     if (!data.availability) {
@@ -125,7 +125,7 @@ export function CoursePriceStep({
           <div>
             <h3 className="text-brand-dark text-xl font-bold">Token Courses</h3>
             <p className="text-brand-light text-sm font-normal">
-              Generate class token and set course availability
+              Generate Course Token and set course availability
             </p>
           </div>
         </div>
@@ -135,7 +135,7 @@ export function CoursePriceStep({
           <FormField
             label="Course Token"
             required
-            error={errors.enrollmentToken}
+            error={errors.courseToken}
             className="mb-6"
           >
             <div className="flex flex-col md:flex-row gap-3">
@@ -144,14 +144,14 @@ export function CoursePriceStep({
                   type="text"
                   required
                   readOnly
-                  value={data.enrollmentToken || ""}
-                  error={errors.enrollmentToken}
+                  value={data.courseToken || ""}
+                  error={errors.courseToken}
                   icon={
                     <span className="text-gray-400 font-semibold text-lg">
                       <Key className="w-4 h-4" />
                     </span>
                   }
-                  placeholder="Click Generate Token to create class token"
+                  placeholder="Click Generate Token to create Course Token"
                 />
               </div>
               <Button

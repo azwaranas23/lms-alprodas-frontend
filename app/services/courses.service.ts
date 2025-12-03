@@ -138,7 +138,7 @@ export interface CreateCourseData {
   status?: "PUBLISHED" | "DRAFT";
   subject_id: number;
   mentor_id: number;
-  enrollment_token?: string;
+  course_token: string;
   images?: File[];
 }
 
@@ -153,7 +153,7 @@ export interface UpdateCourseData {
   status?: "PUBLISHED" | "DRAFT" | "ARCHIVED";
   subject_id?: number;
   mentor_id?: number;
-  enrollment_token?: string;
+  course_token?: string;
   // Images are handled via separate endpoints, no longer included here
 }
 

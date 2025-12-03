@@ -173,20 +173,16 @@ export default function MentorCourseDetail() {
   }
 
   // SAFETY: ambil token dengan fallback beberapa nama field
-  const classToken =
-    (course as any).class_token ??
-    (course as any).classToken ??
-    (course as any).enrollment_token ??
-    "";
+  const courseToken = course.course_token;
 
-  const shareText = `Join my course "${course.title}" on LMS Alprodas.\n\nClass Token: ${
-    classToken || "-"
+  const shareText = `Join my course "${course.title}" on LMS Alprodas.\n\nCourse Token: ${
+    courseToken || "-"
   }`;
 
   const handleCopyToken = async () => {
-    if (!classToken) return;
+    if (!courseToken) return;
     try {
-      await navigator.clipboard.writeText(String(classToken));
+      await navigator.clipboard.writeText(String(courseToken));
       setCopyLabel("Copied!");
       setTimeout(() => setCopyLabel("Copy Token"), 1500);
     } catch (err) {
@@ -397,7 +393,7 @@ export default function MentorCourseDetail() {
                   Share Course
                 </h2>
                 <p className="text-sm text-gray-500 mb-4">
-                  Share this course information and class token with your
+                  Share this course information and course token with your
                   students so they can enroll.
                 </p>
 
@@ -411,17 +407,17 @@ export default function MentorCourseDetail() {
 
                   <div className="flex items-center justify-between bg-[#F9FAFB] rounded-[12px] px-3 py-2 mb-2">
                     <span className="text-xs font-medium text-gray-500">
-                      Class Token
+                      Course Token
                     </span>
                     <span className="font-mono text-sm text-brand-dark">
-                      {classToken || "-"}
+                      {courseToken || "-"}
                     </span>
                   </div>
 
                   <button
                     type="button"
                     onClick={handleCopyToken}
-                    disabled={!classToken}
+                    disabled={!courseToken}
                     className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700 disabled:text-gray-400 disabled:cursor-not-allowed mt-1"
                   >
                     <Copy className="w-4 h-4" />
