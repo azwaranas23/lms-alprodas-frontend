@@ -1,6 +1,6 @@
-import { type ReactNode } from 'react';
-import { BaseSidebar } from './BaseSidebar';
-import { BaseHeader } from './BaseHeader';
+import { type ReactNode } from "react";
+import { BaseSidebar } from "./BaseSidebar";
+import { BaseHeader } from "./BaseHeader";
 
 interface BackButton {
   onClick?: () => void;
@@ -13,10 +13,16 @@ interface LayoutProps {
   title?: string;
   subtitle?: string;
   backButton?: BackButton;
-  variant?: 'normal' | 'wizard' | 'learning';
+  variant?: "normal" | "wizard" | "learning";
 }
 
-export function Layout({ children, title, subtitle, backButton, variant = 'normal' }: LayoutProps) {
+export function Layout({
+  children,
+  title,
+  subtitle,
+  backButton,
+  variant = "normal",
+}: LayoutProps) {
   return (
     <div className="min-h-screen bg-[#F9F9F9]">
       <div className="flex h-screen">
@@ -24,8 +30,8 @@ export function Layout({ children, title, subtitle, backButton, variant = 'norma
         <div className="flex-1 flex flex-col overflow-hidden">
           {(title || subtitle) && (
             <BaseHeader
-              title={title || ''}
-              subtitle={subtitle || ''}
+              title={title || ""}
+              subtitle={subtitle || ""}
               backButton={backButton}
               variant={variant}
             />

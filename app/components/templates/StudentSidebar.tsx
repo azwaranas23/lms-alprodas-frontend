@@ -109,25 +109,19 @@ export function StudentSidebar() {
             MAIN
           </h3>
           <div className="space-y-3">
-            <StudentNavLink
+            {/* <StudentNavLink
               href="#"
               icon={Home}
               label="Overview"
               isActive={currentPath === "/dashboard/student/overview"}
-            />
+            /> */}
             <StudentNavLink
               href="/dashboard/student/my-courses"
               icon={BookOpen}
               label="My Courses"
               isActive={currentPath === "/dashboard/student/my-courses"}
             />
-            <StudentNavLink
-              href="#"
-              icon={Star}
-              label="Points"
-              isActive={currentPath === "/dashboard/student/points"}
-            />
-            <StudentNavLink
+            {/* <StudentNavLink
               href="/dashboard/student/transactions"
               icon={CreditCard}
               label="Transactions"
@@ -140,12 +134,12 @@ export function StudentSidebar() {
               icon={Trophy}
               label="Challenges"
               isActive={currentPath === "/dashboard/student/challenges"}
-            />
+            /> */}
           </div>
         </div>
 
         {/* SUPPORT Section */}
-        <div>
+        {/* <div>
           <h3 className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-3">
             SUPPORT
           </h3>
@@ -163,7 +157,7 @@ export function StudentSidebar() {
               isActive={false}
             />
           </div>
-        </div>
+        </div> */}
 
         {/* ACCOUNT Section */}
         <div>

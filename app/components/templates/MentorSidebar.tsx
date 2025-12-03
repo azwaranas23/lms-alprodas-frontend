@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import {
   Home,
   BookOpen,
@@ -12,13 +12,38 @@ import {
   HelpCircle,
   MessageSquare,
   GraduationCap,
+  LogOut,
 } from "lucide-react";
+import { authService } from "~/services/auth.service";
 
 interface MentorNavLinkProps {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   label: string;
   isActive?: boolean;
+}
+
+function LogoutButton() {
+  const navigate = useNavigate();
+  const baseClasses =
+    "nav-link border rounded-[20px] transition-all duration-300 flex items-center gap-3 px-4 py-3";
+  const inactiveClasses =
+    "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 hover:rounded-[12px] focus:border-[#0C51D9] focus:border-2 focus:rounded-[12px] focus:bg-white";
+
+  const handleLogout = () => {
+    authService.logout();
+    navigate("/login");
+  };
+
+  return (
+    <button
+      onClick={handleLogout}
+      className={`${baseClasses} ${inactiveClasses} w-full`}
+    >
+      <LogOut className="w-5 h-5 text-gray-600" />
+      <span className="text-base font-medium text-brand-dark">Logout</span>
+    </button>
+  );
 }
 
 function MentorNavLink({
@@ -101,12 +126,12 @@ export function MentorSidebar() {
               isActive={currentPath.startsWith("/dashboard/mentor/courses")}
             />
             <MentorNavLink
-              href="#"
+              href="/dashboard/mentor/students"
               icon={Users}
               label="Students"
               isActive={currentPath === "/dashboard/mentor/students"}
             />
-            <MentorNavLink
+            {/* <MentorNavLink
               href="/dashboard/mentor/transactions"
               icon={CreditCard}
               label="Transactions"
@@ -114,8 +139,8 @@ export function MentorSidebar() {
                 currentPath === "/dashboard/mentor/transactions" ||
                 currentPath.startsWith("/dashboard/mentor/transactions/")
               }
-            />
-            <MentorNavLink
+            /> */}
+            {/* <MentorNavLink
               href="/dashboard/mentor/withdrawals"
               icon={Banknote}
               label="Withdrawals"
@@ -123,12 +148,12 @@ export function MentorSidebar() {
                 currentPath === "/dashboard/mentor/withdrawals" ||
                 currentPath.startsWith("/dashboard/mentor/withdrawals/")
               }
-            />
+            /> */}
           </div>
         </div>
 
         {/* RESOURCES Section */}
-        <div>
+        {/* <div>
           <h3 className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-3">
             RESOURCES
           </h3>
@@ -158,10 +183,10 @@ export function MentorSidebar() {
               isActive={currentPath === "/dashboard/mentor/analytics"}
             />
           </div>
-        </div>
+        </div> */}
 
         {/* SUPPORT Section */}
-        <div>
+        {/* <div>
           <h3 className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-3">
             SUPPORT
           </h3>
@@ -178,6 +203,15 @@ export function MentorSidebar() {
               label="Community"
               isActive={currentPath === "/dashboard/mentor/community"}
             />
+          </div>
+        </div> */}
+
+        <div>
+          <h3 className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-3">
+            ACCOUNT
+          </h3>
+          <div className="space-y-3">
+            <LogoutButton />
           </div>
         </div>
       </nav>

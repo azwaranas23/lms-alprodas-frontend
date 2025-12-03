@@ -1,5 +1,5 @@
-import { Tag, BookOpen } from 'lucide-react';
-import { Image } from '~/components/atoms/Image';
+import { Tag, BookOpen } from "lucide-react";
+import { Image } from "~/components/atoms/Image";
 
 interface Course {
   id: number;
@@ -20,7 +20,10 @@ interface LatestCoursesProps {
   onCourseDetails?: (id: string) => void;
 }
 
-export function LatestCourses({ courses, onCourseDetails }: LatestCoursesProps) {
+export function LatestCourses({
+  courses,
+  onCourseDetails,
+}: LatestCoursesProps) {
   const handleDetailsClick = (id: number) => {
     if (onCourseDetails) {
       onCourseDetails(id.toString());
@@ -30,7 +33,9 @@ export function LatestCourses({ courses, onCourseDetails }: LatestCoursesProps) 
   return (
     <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-5">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-brand-dark text-lg font-bold">Latest Courses Added</h3>
+        <h3 className="text-brand-dark text-lg font-bold">
+          Latest Courses Added
+        </h3>
       </div>
       <div className="space-y-4">
         {courses.map((course) => (
@@ -44,11 +49,15 @@ export function LatestCourses({ courses, onCourseDetails }: LatestCoursesProps) 
             />
             <div className="flex-1">
               <div className="mb-1">
-                <p className="text-brand-dark text-lg font-bold">{course.title}</p>
+                <p className="text-brand-dark text-lg font-bold">
+                  {course.title}
+                </p>
               </div>
               <div className="flex items-center gap-2">
                 <Tag className="w-4 h-4 text-gray-500" />
-                <p className="text-brand-dark text-sm font-normal">{course.subject.name}</p>
+                <p className="text-brand-dark text-sm font-normal">
+                  {course.subject.name}
+                </p>
                 <BookOpen className="w-4 h-4 text-gray-500" />
                 <p className="text-brand-dark text-sm font-normal">
                   {course.total_lessons} Lessons
@@ -59,7 +68,9 @@ export function LatestCourses({ courses, onCourseDetails }: LatestCoursesProps) 
               onClick={() => handleDetailsClick(course.id)}
               className="btn-details border border-[#DCDEDD] rounded-xl hover:ring-2 hover:ring-[#0C51D9] hover:text-[#0C51D9] transition-all duration-300 py-[14px] px-5 flex items-center justify-center"
             >
-              <span className="text-brand-dark text-base font-medium">Details</span>
+              <span className="text-brand-dark text-base font-medium">
+                Details
+              </span>
             </button>
           </div>
         ))}

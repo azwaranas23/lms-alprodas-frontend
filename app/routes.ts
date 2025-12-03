@@ -23,6 +23,7 @@ export default [
   ),
   route("/transactions", "routes/transactions.tsx"),
   route("/transactions/:id", "routes/transactions.$id.tsx"),
+  route("/dashboard/mentor/students", "routes/dashboard/mentor/students.tsx"),
   route("/dashboard/mentor/courses", "routes/dashboard/mentor/courses.tsx"),
   route(
     "/dashboard/mentor/courses/add",

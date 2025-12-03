@@ -142,7 +142,10 @@ export function Sidebar() {
                 href="/students"
                 icon={Users}
                 label="Students"
-                isActive={currentPath === "/students"}
+                isActive={
+                  currentPath === "/mentors" ||
+                  currentPath.startsWith("/mentors/")
+                }
               />
             )}
           </div>

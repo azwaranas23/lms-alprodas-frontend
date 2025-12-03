@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { useParams, Link } from "react-router";
+import { useParams, Link, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Layout } from "~/components/templates/Layout";
-import { Header } from "~/components/templates/Header";
 import { PermissionRoute } from "~/features/auth/components/PermissionRoute";
 import {
   BookOpen,
@@ -27,6 +25,7 @@ import { LessonsTab } from "~/features/courses/components/LessonsTab";
 import { OtherTabs } from "~/features/courses/components/OtherTabs";
 import { QUERY_KEYS } from "~/constants/api";
 import { Image } from "~/components/atoms/Image";
+import { MentorLayout } from "~/components/templates/MentorLayout";
 
 export function meta() {
   return [
@@ -55,7 +54,6 @@ export default function MentorCourseDetail() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("overview");
 
-  // NEW: state untuk modal share
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [copyLabel, setCopyLabel] = useState("Copy Token");
 
@@ -69,7 +67,6 @@ export default function MentorCourseDetail() {
     enabled: !!id,
   });
 
-  // Fetch sections
   const { data: sectionsData } = useQuery({
     queryKey: [...QUERY_KEYS.sections, "course", id],
     queryFn: () => sectionsService.getSectionsByCourse(Number(id)),
@@ -124,29 +121,35 @@ export default function MentorCourseDetail() {
     setActiveTab(tab);
   };
 
+  // LOADING STATE – gunakan MentorLayout
   if (isLoading) {
     return (
       <PermissionRoute requiredPermission="courses.read">
-        <Layout>
-          <Header title="Loading..." subtitle="Please wait" />
+        <MentorLayout
+          title="Course Details"
+          subtitle="Course information and management"
+        >
           <main className="main-content flex-1 overflow-auto p-5">
             <div className="flex items-center justify-center min-h-[400px]">
               <div className="text-center">
-                <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
                 <p className="text-gray-600">Loading course details...</p>
               </div>
             </div>
           </main>
-        </Layout>
+        </MentorLayout>
       </PermissionRoute>
     );
   }
 
+  // ERROR STATE – gunakan MentorLayout
   if (error || !course) {
     return (
       <PermissionRoute requiredPermission="courses.read">
-        <Layout>
-          <Header title="Error" subtitle="Failed to load course" />
+        <MentorLayout
+          title="Course Details"
+          subtitle="Course information and management"
+        >
           <main className="main-content flex-1 overflow-auto p-5">
             <div className="flex items-center justify-center min-h-[400px]">
               <div className="text-center">
@@ -167,14 +170,12 @@ export default function MentorCourseDetail() {
               </div>
             </div>
           </main>
-        </Layout>
+        </MentorLayout>
       </PermissionRoute>
     );
   }
 
-  // SAFETY: ambil token dengan fallback beberapa nama field
   const courseToken = course.course_token;
-
   const shareText = `Join my course "${course.title}" on LMS Alprodas.\n\nCourse Token: ${
     courseToken || "-"
   }`;
@@ -201,18 +202,17 @@ export default function MentorCourseDetail() {
         console.error("Share cancelled or failed", err);
       }
     } else {
-      // kalau tidak support, kita biarkan user copy manual
       handleCopyToken();
     }
   };
 
+  // NORMAL STATE – juga gunakan MentorLayout
   return (
     <PermissionRoute requiredPermission="courses.read">
-      <Layout>
-        <Header
-          title="Course Details"
-          subtitle="Course information and management"
-        />
+      <MentorLayout
+        title="Course Details"
+        subtitle="Course information and management"
+      >
         <main className="main-content flex-1 overflow-auto p-5">
           {/* Course Header */}
           <div className="bg-white border border-[#DCDEDD] rounded-[20px] mb-6 p-6">
@@ -274,7 +274,6 @@ export default function MentorCourseDetail() {
                   </span>
                 </Link>
 
-                {/* MODIFIED: tombol share membuka modal */}
                 <button
                   type="button"
                   onClick={() => setIsShareOpen(true)}
@@ -287,7 +286,7 @@ export default function MentorCourseDetail() {
             </div>
           </div>
 
-          {/* Tab Navigation */}
+          {/* Tabs */}
           <div className="bg-white border border-[#DCDEDD] rounded-[20px] mb-6 p-6">
             <div className="flex flex-wrap gap-2">
               <button
@@ -451,7 +450,7 @@ export default function MentorCourseDetail() {
             </div>
           )}
         </main>
-      </Layout>
+      </MentorLayout>
     </PermissionRoute>
   );
 }
