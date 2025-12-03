@@ -9,20 +9,20 @@ import { LoadingSpinner } from "~/components/atoms/LoadingSpinner";
 import { Button } from "~/components/atoms/Button";
 import { coursesService } from "~/services/courses.service";
 import { authService } from "~/services/auth.service";
-import { transactionsService } from "~/services/transactions.service";
-import { formatCurrency, getAvatarSrc } from "~/utils/formatters";
+import { enrollmentService } from "~/services/enrollment.service";
+import { getAvatarSrc } from "~/utils/formatters";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Checkout - LMS Alprodas" },
+    { title: "Enroll Course - LMS Alprodas" },
     {
       name: "description",
-      content: "Complete your course purchase and start learning today",
+      content: "Enter your course token to enroll in this class",
     },
   ];
 }
 
-interface CheckoutData {
+interface EnrollmentPageData {
   student: {
     name: string;
     email: string;
@@ -38,59 +38,48 @@ interface CheckoutData {
     instructor: string;
     level: string;
   };
-  payment: {
-    subTotal: string;
-    taxAmount: string;
-    grandTotal: string;
-  };
 }
 
 export default function CheckoutPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [checkoutData, setCheckoutData] = useState<CheckoutData | null>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [pageData, setPageData] = useState<EnrollmentPageData | null>(null);
   const [course, setCourse] = useState<any>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Get logged-in user data
+  // dibaca sekali saja, jangan dijadikan dependency useEffect
   const loggedInUser = authService.getUser();
 
-  // Fetch course data
   useEffect(() => {
+    // kalau belum ada id, jangan fetch
+    if (!id) {
+      setError("Course ID is required");
+      setLoading(false);
+      return;
+    }
+
+    // kalau belum login, langsung redirect
+    if (!loggedInUser) {
+      navigate("/login", { replace: true });
+      return;
+    }
+
     const fetchCourse = async () => {
-      // Check authentication first
-      if (!loggedInUser) {
-        navigate("/login", { replace: true });
-        return;
-      }
-
-      if (!id) {
-        setError("Course ID is required");
-        setLoading(false);
-        return;
-      }
-
       try {
         setLoading(true);
         const response = await coursesService.getCourseDetail(Number(id));
         const courseData = response.data;
 
-        // Check if user is already enrolled
         if (courseData.is_enrolled) {
-          // Immediately redirect without showing error
-          navigate(`/student/course-progress/${id}`, { replace: true });
+          navigate(`/student/${id}/progress`, { replace: true });
           return;
         }
 
         setCourse(courseData);
 
-        const subTotal = courseData.price;
-        const taxAmount = Math.round(subTotal * 0.11);
-        const grandTotal = subTotal + taxAmount;
-
-        const checkoutData: CheckoutData = {
+        const data: EnrollmentPageData = {
           student: {
             name: loggedInUser?.name || "Student",
             email: loggedInUser?.email || "student@email.com",
@@ -109,14 +98,9 @@ export default function CheckoutPage() {
             instructor: courseData.mentor?.name || "Instructor",
             level: "Intermediate",
           },
-          payment: {
-            subTotal: formatCurrency(subTotal),
-            taxAmount: formatCurrency(taxAmount),
-            grandTotal: formatCurrency(grandTotal),
-          },
         };
 
-        setCheckoutData(checkoutData);
+        setPageData(data);
       } catch (err) {
         console.error("Failed to fetch course:", err);
         setError("Failed to load course data");
@@ -126,39 +110,39 @@ export default function CheckoutPage() {
     };
 
     fetchCourse();
-  }, [id, navigate]);
+    // HANYA tergantung id & navigate
+  }, [id, navigate]); // <<< loggedInUser dihapus dari deps
 
-  const handlePayNow = async () => {
-    if (!checkoutData || !id) return;
-
+  const handleEnrollWithToken = async (token: string) => {
+    if (!id) return;
     setIsProcessing(true);
 
     try {
-      // Call transactions/checkout API
-      const checkoutResponse = await transactionsService.checkout({
+      await enrollmentService.enrollWithToken({
         course_id: Number(id),
+        token,
       });
 
-      // Handle payment gateway redirect
-      if (checkoutResponse.data.redirect_url) {
-        // Redirect to Midtrans payment page
-        window.location.href = checkoutResponse.data.redirect_url;
-      } else {
-        // Fallback: redirect to payment success page
-        navigate(`/payment-success/${id}`);
-      }
-    } catch (error) {
-      console.error("Payment failed:", error);
-      alert("Payment failed. Please try again.");
+      // Berhasil enroll → arahkan ke halaman success
+      navigate(`/enrollment-success/${id}`, {
+        state: {
+          courseTitle: course?.title,
+        },
+      });
+    } catch (error: any) {
+      console.error("Enrollment failed:", error);
+      alert(
+        error?.response?.data?.message ||
+          "Enrollment failed. Please check your token and try again."
+      );
       setIsProcessing(false);
     }
   };
 
-  // Show nothing while checking auth and enrollment
   if (loading || !loggedInUser) {
     return (
       <div className="min-h-screen bg-[#F9F9F9] flex items-center justify-center">
-        <LoadingSpinner text="Loading checkout..." />
+        <LoadingSpinner text="Loading enrollment page..." />
       </div>
     );
   }
@@ -175,10 +159,10 @@ export default function CheckoutPage() {
     );
   }
 
-  if (!checkoutData || !course) {
+  if (!pageData || !course) {
     return (
       <div className="min-h-screen bg-[#F9F9F9] flex items-center justify-center">
-        <LoadingSpinner text="Loading checkout..." />
+        <LoadingSpinner text="Loading enrollment page..." />
       </div>
     );
   }
@@ -187,34 +171,28 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-[#F9F9F9]">
       <Navbar />
 
-      {/* Checkout Content */}
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Page Header */}
         <div className="mb-8">
           <div className="mb-4">
             <h1 className="text-3xl font-extrabold text-brand-dark">
-              Checkout
+              Enroll Course
             </h1>
             <p className="text-brand-light text-lg">
-              Complete your course purchase
+              Complete your enrollment by entering the course token
             </p>
           </div>
         </div>
 
-        {/* Checkout Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Column - Course Information */}
           <div className="space-y-6">
-            <CourseInfoCard courseData={checkoutData.course} />
+            <CourseInfoCard courseData={pageData.course} />
           </div>
 
-          {/* Right Column - Student Info & Payment */}
           <div className="space-y-6">
-            <StudentInfoCard studentData={checkoutData.student} />
+            <StudentInfoCard studentData={pageData.student} />
             <PaymentDetailsCard
-              paymentData={checkoutData.payment}
-              onPayNow={handlePayNow}
               isProcessing={isProcessing}
+              onEnroll={handleEnrollWithToken}
             />
           </div>
         </div>

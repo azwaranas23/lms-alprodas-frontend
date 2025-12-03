@@ -4,17 +4,6 @@ import { CourseHeroSection } from "~/features/courses/components/CourseHeroSecti
 import { CourseContentSection } from "~/features/courses/components/CourseContentSection";
 import { Footer } from "~/components/pages/home/Footer";
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "Complete React Mastery - LMS Alprodas" },
-    {
-      name: "description",
-      content:
-        "Master React with our comprehensive course covering fundamentals, hooks, advanced patterns and real-world projects.",
-    },
-  ];
-}
-
 export default function CourseDetail({ params }: Route.ComponentProps) {
   const courseId = parseInt(params.id);
 

@@ -6,6 +6,7 @@ export default [
   route("/course/:id", "routes/course.$id.tsx"),
   route("/courses", "routes/courses.tsx"),
   route("/checkout/:id", "routes/checkout.$id.tsx"),
+  route("/enrollment-success/:id", "routes/enrollment-success.$id.tsx"),
   route("/payment-success/:id", "routes/payment-success.$id.tsx"),
   route("/overview", "routes/overview.tsx"),
   route("/login", "routes/login.tsx"),
