@@ -12,6 +12,7 @@ import {
   MessageCircle,
   Settings,
   ChevronDown,
+  Key,
 } from "lucide-react";
 import { useUser } from "~/hooks/useUser";
 import { CourseInfoStep } from "./wizard-steps/steps/CourseInfoStep";
@@ -51,6 +52,7 @@ interface CourseData {
   targetAudience4?: string;
   tools?: string;
   price?: number;
+  enrollmentToken?: string;
   availability?: "published" | "draft";
   level: string;
   duration: string;
@@ -61,7 +63,7 @@ const steps: StepConfig[] = [
   { id: 1, title: "Course Information", icon: BookOpen },
   { id: 2, title: "Course Photos", icon: Layers },
   { id: 3, title: "Course Details", icon: DollarSign },
-  { id: 4, title: "Course Price", icon: Image },
+  { id: 4, title: "Course Token", icon: Image },
   { id: 5, title: "Review Summary", icon: CheckCircle },
 ];
 
@@ -522,14 +524,14 @@ export function CourseWizard({
                   <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6 top-6">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="w-12 h-12 bg-green-50 rounded-[12px] flex items-center justify-center">
-                        <DollarSign className="w-6 h-6 text-green-600" />
+                        <Key className="w-6 h-6 text-green-600" />
                       </div>
                       <div>
                         <h3 className="text-brand-dark text-xl font-bold">
-                          Pricing Tips
+                          Token Enrollment Tips
                         </h3>
                         <p className="text-brand-light text-sm font-normal">
-                          Best practices for course pricing
+                          Best practices for using class tokens
                         </p>
                       </div>
                     </div>
@@ -541,10 +543,11 @@ export function CourseWizard({
                         </div>
                         <div>
                           <p className="text-brand-dark text-base font-semibold">
-                            Research market rates
+                            Share token securely
                           </p>
                           <p className="text-brand-light text-xs font-normal">
-                            Check similar courses in your subject area
+                            Only share the token with students who should join
+                            this class.
                           </p>
                         </div>
                       </div>
@@ -555,10 +558,11 @@ export function CourseWizard({
                         </div>
                         <div>
                           <p className="text-brand-dark text-base font-semibold">
-                            Consider your experience
+                            Regenerate if leaked
                           </p>
                           <p className="text-brand-light text-xs font-normal">
-                            Price based on your expertise and course depth
+                            If the token is shared publicly, generate a new one
+                            and update your students.
                           </p>
                         </div>
                       </div>
@@ -569,10 +573,11 @@ export function CourseWizard({
                         </div>
                         <div>
                           <p className="text-brand-dark text-base font-semibold">
-                            Start with draft
+                            Use one token per class
                           </p>
                           <p className="text-brand-light text-xs font-normal">
-                            Test and refine before publishing
+                            Keep a single token per course section to avoid
+                            confusion.
                           </p>
                         </div>
                       </div>
@@ -583,10 +588,11 @@ export function CourseWizard({
                         </div>
                         <div>
                           <p className="text-brand-dark text-base font-semibold">
-                            Value-based pricing
+                            Communicate clearly
                           </p>
                           <p className="text-brand-light text-xs font-normal">
-                            Price reflects the value students will gain
+                            Tell students where to enter the token in their
+                            dashboard.
                           </p>
                         </div>
                       </div>
@@ -600,7 +606,7 @@ export function CourseWizard({
                             Review regularly
                           </p>
                           <p className="text-brand-light text-xs font-normal">
-                            Adjust pricing based on feedback and demand
+                            Rotate tokens if class membership changes often.
                           </p>
                         </div>
                       </div>

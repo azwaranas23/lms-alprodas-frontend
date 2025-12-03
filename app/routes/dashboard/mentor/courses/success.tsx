@@ -6,24 +6,26 @@ export function meta() {
     { title: "Course Created Successfully - LMS Alprodas" },
     {
       name: "description",
-      content: "Your course has been created successfully",
+      content: "Your course has been created successfully in LMS Alprodas",
     },
   ];
 }
 
 export default function MentorCourseSuccess() {
   useEffect(() => {
-    const showConfetti = () => {
+    const triggerConfetti = () => {
       console.log("🎉 Course created successfully!");
+      // Confetti library bisa ditambahkan di sini jika dibutuhkan
     };
 
-    const timer = setTimeout(showConfetti, 500);
+    const timer = setTimeout(triggerConfetti, 400);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className="min-h-screen bg-[#F9F9F9] flex items-center justify-center">
       <div className="max-w-2xl mx-auto px-6 py-12 text-center">
+        {/* Success Icon */}
         <div className="mb-8">
           <div className="w-32 h-32 mx-auto relative flex items-center justify-center">
             <div className="w-32 h-32 absolute bg-gradient-to-br from-primary-100 to-primary-200 rounded-full"></div>
@@ -32,51 +34,19 @@ export default function MentorCourseSuccess() {
           </div>
         </div>
 
+        {/* Title & Description */}
         <div className="mb-12">
           <h1 className="text-brand-dark text-4xl font-extrabold mb-4">
-            Yeay! What a Great Day
+            Course Successfully Created
           </h1>
-          <p className="text-brand-light text-base font-normal">
-            Students can now discover and enroll in your course. You'll receive
-            notifications when new students join and can track your course
-            performance.
+          <p className="text-brand-light text-base font-normal max-w-xl mx-auto">
+            Your course has been published and is now visible to students. You
+            can continue creating new courses or review your existing course
+            list.
           </p>
         </div>
 
-        <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6 mb-12">
-          <div className="mb-6">
-            <div className="w-full h-64 rounded-[12px] overflow-hidden border border-[#DCDEDD] mb-4">
-              <img
-                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=256&fit=crop"
-                alt="Course Thumbnail"
-                className="w-full h-64 object-cover"
-              />
-            </div>
-            <div className="text-center">
-              <h3 className="text-brand-dark text-lg font-bold mb-2">
-                Complete React Development Masterclass
-              </h3>
-              <p className="text-brand-light text-sm font-normal">
-                Web Development • Rp 22.490.590
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center justify-between pt-4 border-t border-[#DCDEDD]">
-            <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-gray-500" />
-              <span className="text-brand-light text-sm font-medium">
-                Published just now
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Users className="w-4 h-4 text-gray-500" />
-              <span className="text-brand-light text-sm font-medium">
-                0 students enrolled
-              </span>
-            </div>
-          </div>
-        </div>
-
+        {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="/dashboard/mentor/courses/add"
@@ -87,6 +57,7 @@ export default function MentorCourseSuccess() {
               Create Another Course
             </span>
           </a>
+
           <a
             href="/dashboard/mentor/courses"
             className="btn-primary rounded-[12px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-8 py-4 flex items-center justify-center gap-3"

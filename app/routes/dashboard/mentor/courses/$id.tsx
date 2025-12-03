@@ -17,6 +17,8 @@ import {
   Wrench,
   Clock,
   Users,
+  Copy,
+  X,
 } from "lucide-react";
 import { coursesService } from "~/services/courses.service";
 import { sectionsService } from "~/services/sections.service";
@@ -53,6 +55,10 @@ export default function MentorCourseDetail() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("overview");
 
+  // NEW: state untuk modal share
+  const [isShareOpen, setIsShareOpen] = useState(false);
+  const [copyLabel, setCopyLabel] = useState("Copy Token");
+
   const {
     data: courseData,
     isLoading,
@@ -63,7 +69,7 @@ export default function MentorCourseDetail() {
     enabled: !!id,
   });
 
-  // Fetch sections for this course to calculate total lessons and duration
+  // Fetch sections
   const { data: sectionsData } = useQuery({
     queryKey: [...QUERY_KEYS.sections, "course", id],
     queryFn: () => sectionsService.getSectionsByCourse(Number(id)),
@@ -75,18 +81,18 @@ export default function MentorCourseDetail() {
         ...courseData.data,
         sections: courseData.data.sections?.map((section) => ({
           ...section,
-          description: section.description || "", // Convert null to empty string
+          description: section.description || "",
           lessons: section.lessons.map((lesson) => ({
             ...lesson,
-            content_url: lesson.content_url || "", // Convert null to empty string
-            content_text: lesson.content_text || undefined, // Keep as optional
+            content_url: lesson.content_url || "",
+            content_text: lesson.content_text || undefined,
           })),
         })),
       }
     : undefined;
+
   const sections = sectionsData?.data || [];
 
-  // Calculate total lessons and duration from sections
   const totalLessons = sections.reduce(
     (total: number, section: any) => total + (section.total_lessons || 0),
     0
@@ -105,7 +111,6 @@ export default function MentorCourseDetail() {
     return total;
   }, 0);
 
-  // Format duration to hours and minutes
   const formatDuration = (minutes: number) => {
     if (minutes === 0) return "0 min";
     const hours = Math.floor(minutes / 60);
@@ -166,6 +171,44 @@ export default function MentorCourseDetail() {
       </PermissionRoute>
     );
   }
+
+  // SAFETY: ambil token dengan fallback beberapa nama field
+  const classToken =
+    (course as any).class_token ??
+    (course as any).classToken ??
+    (course as any).enrollment_token ??
+    "";
+
+  const shareText = `Join my course "${course.title}" on LMS Alprodas.\n\nClass Token: ${
+    classToken || "-"
+  }`;
+
+  const handleCopyToken = async () => {
+    if (!classToken) return;
+    try {
+      await navigator.clipboard.writeText(String(classToken));
+      setCopyLabel("Copied!");
+      setTimeout(() => setCopyLabel("Copy Token"), 1500);
+    } catch (err) {
+      console.error("Failed to copy token", err);
+    }
+  };
+
+  const handleNativeShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: course.title,
+          text: shareText,
+        });
+      } catch (err) {
+        console.error("Share cancelled or failed", err);
+      }
+    } else {
+      // kalau tidak support, kita biarkan user copy manual
+      handleCopyToken();
+    }
+  };
 
   return (
     <PermissionRoute requiredPermission="courses.read">
@@ -234,7 +277,13 @@ export default function MentorCourseDetail() {
                     Edit Course
                   </span>
                 </Link>
-                <button className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-6 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center gap-2">
+
+                {/* MODIFIED: tombol share membuka modal */}
+                <button
+                  type="button"
+                  onClick={() => setIsShareOpen(true)}
+                  className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-6 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
+                >
                   <Share2 className="w-4 h-4" />
                   Share Course
                 </button>
@@ -331,6 +380,80 @@ export default function MentorCourseDetail() {
               <OtherTabs course={course} activeTab="students" />
             )}
           </div>
+
+          {/* SHARE MODAL */}
+          {isShareOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+              <div className="bg-white rounded-[20px] w-full max-w-lg p-6 shadow-xl relative border border-[#DCDEDD] shadow-[0_6px_20px_rgba(0,0,0,0.08)]">
+                <button
+                  type="button"
+                  onClick={() => setIsShareOpen(false)}
+                  className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+
+                <h2 className="text-xl font-bold text-brand-dark mb-1">
+                  Share Course
+                </h2>
+                <p className="text-sm text-gray-500 mb-4">
+                  Share this course information and class token with your
+                  students so they can enroll.
+                </p>
+
+                <div className="border border-[#DCDEDD] rounded-[16px] p-4 mb-4">
+                  <h3 className="text-base font-semibold text-brand-dark mb-1">
+                    {course.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 mb-3">
+                    {course.subject?.name || "General Subject"}
+                  </p>
+
+                  <div className="flex items-center justify-between bg-[#F9FAFB] rounded-[12px] px-3 py-2 mb-2">
+                    <span className="text-xs font-medium text-gray-500">
+                      Class Token
+                    </span>
+                    <span className="font-mono text-sm text-brand-dark">
+                      {classToken || "-"}
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleCopyToken}
+                    disabled={!classToken}
+                    className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700 disabled:text-gray-400 disabled:cursor-not-allowed mt-1"
+                  >
+                    <Copy className="w-4 h-4" />
+                    {copyLabel}
+                  </button>
+                </div>
+
+                <div className="bg-[#F9FAFB] rounded-[16px] p-4 mb-4">
+                  <p className="text-xs text-gray-600 whitespace-pre-line">
+                    {shareText}
+                  </p>
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setIsShareOpen(false)}
+                    className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-6 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNativeShare}
+                    className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-6 py-3 flex items-center gap-2"
+                  >
+                    <span className="text-white">Share via Device</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </main>
       </Layout>
     </PermissionRoute>

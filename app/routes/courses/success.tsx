@@ -1,6 +1,6 @@
 import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router";
 import { CheckCircle, Calendar, Users, Plus, Eye } from "lucide-react";
-import { Button } from "~/components/atoms/Button";
 
 export function meta() {
   return [
@@ -12,15 +12,35 @@ export function meta() {
   ];
 }
 
-export default function CourseSuccess() {
-  useEffect(() => {
-    const showConfetti = () => {
-      // Course creation success - could trigger analytics or celebratory effects
-    };
+interface SuccessCourseState {
+  course?: {
+    id: number;
+    title: string;
+    enrollmentToken?: string;
+    category?: string;
+    thumbnailUrl?: string;
+  };
+}
 
-    const timer = setTimeout(showConfetti, 500);
-    return () => clearTimeout(timer);
-  }, []);
+export default function MentorCourseSuccess() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { course } = (location.state || {}) as SuccessCourseState;
+
+  // kalau tidak ada state (user akses langsung URL), redirect
+  useEffect(() => {
+    if (!course) {
+      navigate("/dashboard/mentor/courses", { replace: true });
+    }
+  }, [course, navigate]);
+
+  if (!course) return null;
+
+  const categoryLabel = course.category || "General";
+
+  const thumbnailSrc =
+    course.thumbnailUrl ||
+    "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=256&fit=crop";
 
   return (
     <div className="min-h-screen bg-[#F9F9F9] flex items-center justify-center">
@@ -48,20 +68,18 @@ export default function CourseSuccess() {
           <div className="mb-6">
             <div className="w-full h-64 rounded-[12px] overflow-hidden border border-[#DCDEDD] mb-4">
               <img
-                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=256&fit=crop"
+                src={thumbnailSrc}
                 alt="Course Thumbnail"
                 className="w-full h-64 object-cover"
               />
             </div>
             <div className="text-center">
               <h3 className="text-brand-dark text-lg font-bold mb-2">
-                Complete React Development Masterclass
+                {course.title}
               </h3>
-              <p className="text-brand-light text-sm font-normal">
-                Web Development • Rp 22.490.590
-              </p>
             </div>
           </div>
+
           <div className="flex items-center justify-between pt-4 border-t border-[#DCDEDD]">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-gray-500" />
@@ -80,7 +98,7 @@ export default function CourseSuccess() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            href="/courses/add"
+            href="/dashboard/mentor/courses/add"
             className="border border-[#DCDEDD] rounded-[12px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-8 py-4 flex items-center justify-center gap-3"
           >
             <Plus className="w-5 h-5 text-gray-600" />
@@ -88,16 +106,14 @@ export default function CourseSuccess() {
               Create Another Course
             </span>
           </a>
-          <a href="/courses">
-            <Button
-              variant="primary"
-              className="rounded-[12px] px-8 py-4 flex items-center justify-center gap-3"
-            >
-              <Eye className="w-5 h-5 text-white" />
-              <span className="text-brand-white text-base font-semibold">
-                View Course
-              </span>
-            </Button>
+          <a
+            href="/dashboard/mentor/courses"
+            className="btn-primary rounded-[12px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-8 py-4 flex items-center justify-center gap-3"
+          >
+            <Eye className="w-5 h-5 text-white" />
+            <span className="text-brand-white text-base font-semibold">
+              View My Courses
+            </span>
           </a>
         </div>
       </div>

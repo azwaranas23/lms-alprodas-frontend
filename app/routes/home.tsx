@@ -8,11 +8,11 @@ import { Footer } from "~/components/pages/home/Footer";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "LMS Alprodas - Learn From the Best, Grow Your Skills" },
+    { title: "HackGrowth - Learn From the Best, Grow Your Skills" },
     {
       name: "description",
       content:
-        "Join thousands of students learning from industry experts. Grow your skills and build your career with LMS Alprodas.",
+        "Join thousands of students learning from industry experts. Grow your skills and build your career with HackGrowth.",
     },
   ];
 }
@@ -36,7 +36,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#F9F9F9]">
-      <Navbar onSmoothScroll={handleSmoothScroll} mode="home" />
+      <Navbar />
       <HeroSection onSmoothScroll={handleSmoothScroll} />
       <TopicsSection />
       <CoursesSection />
