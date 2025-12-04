@@ -36,17 +36,17 @@ export function UserNavbar() {
           </Link>
 
           <Link
-            className={`text-[16px] font-semibold ${getActiveClass(getDashboardUrl())}`}
-            to={getDashboardUrl()}
-          >
-            Dashboard
-          </Link>
-
-          <Link
             className={`text-[16px] font-semibold ${getActiveClass("/courses")}`}
             to="/courses"
           >
             Courses
+          </Link>
+
+          <Link
+            className={`text-[16px] font-semibold ${getActiveClass(getDashboardUrl())}`}
+            to={getDashboardUrl()}
+          >
+            Dashboard
           </Link>
         </div>
 

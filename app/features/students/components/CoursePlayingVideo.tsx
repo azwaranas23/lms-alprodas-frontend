@@ -30,6 +30,12 @@ export default function CoursePlayingVideo() {
   const navigate = useNavigate();
   const { getFullName, getRoleName, getAvatar } = useUser();
 
+  const handleGoToCourseResources = () => {
+    if (courseId) {
+      navigate(`/course/${courseId}?tab=resources`);
+    }
+  };
+
   const [courseData, setCourseData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -829,7 +835,11 @@ export default function CoursePlayingVideo() {
                     Resources & Downloads
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 transition-all duration-300">
+                    {/* Lesson Notes */}
+                    <div
+                      onClick={handleGoToCourseResources}
+                      className="cursor-pointer border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 hover:shadow-md transition-all duration-300"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
                           <FileText className="w-5 h-5 text-blue-600" />
@@ -842,12 +852,24 @@ export default function CoursePlayingVideo() {
                             Complete lesson transcript and code examples
                           </p>
                         </div>
-                        <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleGoToCourseResources();
+                          }}
+                          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                        >
                           <Download className="w-4 h-4 text-gray-600" />
                         </button>
                       </div>
                     </div>
-                    <div className="border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 transition-all duration-300">
+
+                    {/* Source Code */}
+                    <div
+                      onClick={handleGoToCourseResources}
+                      className="cursor-pointer border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 hover:shadow-md transition-all duration-300"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
                           <Code className="w-5 h-5 text-green-600" />
@@ -860,7 +882,14 @@ export default function CoursePlayingVideo() {
                             Starter and completed project files
                           </p>
                         </div>
-                        <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleGoToCourseResources();
+                          }}
+                          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                        >
                           <Download className="w-4 h-4 text-gray-600" />
                         </button>
                       </div>

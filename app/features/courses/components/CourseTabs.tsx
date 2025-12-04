@@ -1,5 +1,5 @@
-// app/features/courses/components/CourseTabs.tsx
 import { useState } from "react";
+import { useSearchParams } from "react-router"; // <-- TAMBAHAN
 import { Info, BookOpen, Folder, Award, MessageCircle } from "lucide-react";
 
 import type { Course } from "~/types/courses";
@@ -11,21 +11,46 @@ import { CourseResourcesStudentTab } from "./CourseResourcesStudentTab";
 import { CourseBenefitsTab } from "./CourseBenefitsTab";
 import { CourseTestimonialsTab } from "./CourseTestimonialsTab";
 
+type TabKey = "about" | "lessons" | "resources" | "benefits" | "testimonials";
+
 interface CourseTabsProps {
   course: Course;
   courseId: number;
 }
 
 export function CourseTabs({ course, courseId }: CourseTabsProps) {
-  const [activeTab, setActiveTab] = useState<
-    "about" | "lessons" | "resources" | "benefits" | "testimonials"
-  >("about");
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleTabClick = (
-    tab: "about" | "lessons" | "resources" | "benefits" | "testimonials"
-  ) => {
+  // Baca tab dari query ?tab=...
+  const urlTab = searchParams.get("tab");
+  const allowedTabs: TabKey[] = [
+    "about",
+    "lessons",
+    "resources",
+    "benefits",
+    "testimonials",
+  ];
+
+  const initialTab: TabKey = allowedTabs.includes(urlTab as TabKey)
+    ? (urlTab as TabKey)
+    : "about";
+
+  const [activeTab, setActiveTab] = useState<TabKey>(initialTab);
+
+  const handleTabClick = (tab: TabKey) => {
     setActiveTab(tab);
-    // PERHATIAN: tidak ada window.location.hash di sini
+
+    // Update query param tab di URL
+    setSearchParams((prev) => {
+      const sp = new URLSearchParams(prev);
+      if (tab === "about") {
+        // about = default, boleh dihapus supaya URL lebih bersih
+        sp.delete("tab");
+      } else {
+        sp.set("tab", tab);
+      }
+      return sp;
+    });
   };
 
   return (

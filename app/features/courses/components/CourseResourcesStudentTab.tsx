@@ -11,9 +11,6 @@ export function CourseResourcesStudentTab({
 }: CourseResourcesStudentTabProps) {
   const { data, isLoading, error } = useStudentCourseResources(courseId);
 
-  // DEBUG: cek di console apa yang diterima dari API
-  console.log("Student course resources response:", data, error);
-
   const resources: CourseResourceResponse[] = data?.data ?? [];
 
   const formatSize = (bytes: number) => {
@@ -22,6 +19,26 @@ export function CourseResourcesStudentTab({
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
     const value = bytes / Math.pow(1024, i);
     return `${value.toFixed(1)} ${units[i]}`;
+  };
+
+  const getFileExtension = (resource: CourseResourceResponse) => {
+    const name = resource.fileName || "";
+
+    if (name.includes(".")) {
+      const ext = name.split(".").pop()?.toLowerCase();
+      if (ext && ext.length <= 5) {
+        return ext;
+      }
+    }
+
+    if (resource.resourceType) {
+      const parts = resource.resourceType.split("/");
+      if (parts.length === 2 && parts[1]) {
+        return parts[1].toLowerCase();
+      }
+    }
+
+    return "-";
   };
 
   const handleDownload = (resource: CourseResourceResponse) => {
@@ -64,43 +81,44 @@ export function CourseResourcesStudentTab({
       )}
 
       {!isLoading && !error && resources.length > 0 && (
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm">
-            <thead className="bg-[#F9FAFB]">
-              <tr>
-                <th className="px-4 py-3 text-left font-semibold text-brand-dark">
+        <div className="-mx-8 -mb-8">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-[#F9FAFB]">
+                <th className="px-8 py-3 text-left font-semibold text-brand-dark rounded-tl-[20px]">
                   Name
                 </th>
-                <th className="px-4 py-3 text-left font-semibold text-brand-dark">
+                <th className="px-8 py-3 text-left font-semibold text-brand-dark">
                   Type
                 </th>
-                <th className="px-4 py-3 text-left font-semibold text-brand-dark">
+                <th className="px-8 py-3 text-left font-semibold text-brand-dark">
                   Size
                 </th>
-                <th className="px-4 py-3 text-left font-semibold text-brand-dark">
+                <th className="px-8 py-3 text-left font-semibold text-brand-dark rounded-tr-[20px]">
                   Download
                 </th>
               </tr>
             </thead>
             <tbody>
               {resources.map((r) => (
-                <tr
-                  key={r.id}
-                  className="border-t border-[#DCDEDD] hover:bg-gray-50"
-                >
-                  <td className="px-4 py-3 flex items-center gap-2">
+                <tr key={r.id} className="hover:bg-gray-50">
+                  <td className="px-8 py-4 flex items-center gap-2">
                     <FileText className="w-4 h-4 text-gray-500" />
                     <span>{r.fileName}</span>
                   </td>
-                  <td className="px-4 py-3 text-gray-600">{r.resourceType}</td>
-                  <td className="px-4 py-3 text-gray-600">
+                  <td className="px-8 py-4">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold">
+                      {getFileExtension(r).toUpperCase()}
+                    </span>
+                  </td>
+                  <td className="px-8 py-4 text-gray-600">
                     {formatSize(r.fileSize)}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-8 py-4">
                     <button
                       type="button"
                       onClick={() => handleDownload(r)}
-                      className="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium"
+                      className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium"
                     >
                       <Download className="w-4 h-4" />
                       Download

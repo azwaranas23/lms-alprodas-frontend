@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useSearchParams } from "react-router";
+import { useNavigate, Link, useSearchParams } from "react-router";
 import {
   BookOpen,
   Filter,
@@ -165,6 +165,8 @@ export default function StudentMyCourses() {
     }
   };
 
+  const navigate = useNavigate();
+
   return (
     <StudentLayout
       title="My Courses"
@@ -328,6 +330,7 @@ export default function StudentMyCourses() {
                 {filteredEnrolledCourses.map((course: any) => (
                   <div
                     key={course.id}
+                    onClick={() => navigate(`/course/${course.id}`)}
                     className="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4"
                   >
                     <div className="flex gap-4 h-full">
@@ -398,13 +401,14 @@ export default function StudentMyCourses() {
                             <>
                               <Button
                                 variant="outline"
-                                onClick={() =>
+                                onClick={(e) => {
+                                  e.stopPropagation();
                                   handleDownloadCertificate(
                                     course.id,
                                     course.certificate_id,
                                     course.title
-                                  )
-                                }
+                                  );
+                                }}
                                 disabled={downloadingCertificates[course.id]}
                                 className="flex-1 px-3 py-3.5 flex items-center justify-center gap-2"
                               >
@@ -417,15 +421,17 @@ export default function StudentMyCourses() {
                                   </>
                                 ) : (
                                   <>
-                                    <Download className="w-4 h-4 " />
-                                    <span className=" text-sm font-semibold">
+                                    <Download className="w-4 h-4" />
+                                    <span className="text-sm font-semibold">
                                       Certificate
                                     </span>
                                   </>
                                 )}
                               </Button>
+
                               <Link
                                 to={`/student/${course.id}/progress`}
+                                onClick={(e) => e.stopPropagation()}
                                 className="flex-1 btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-3 py-3.5 flex items-center justify-center gap-2"
                               >
                                 <Play className="w-4 h-4 text-white" />
@@ -440,6 +446,7 @@ export default function StudentMyCourses() {
                             <>
                               <Link
                                 to={`/course/${course.id}`}
+                                onClick={(e) => e.stopPropagation()}
                                 className="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-3.5 flex items-center justify-center gap-2 bg-white"
                               >
                                 <Eye className="w-4 h-4 text-gray-600" />
@@ -449,6 +456,7 @@ export default function StudentMyCourses() {
                               </Link>
                               <Link
                                 to={`/student/${course.id}/progress`}
+                                onClick={(e) => e.stopPropagation()}
                                 className="flex-1 btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-3 py-3.5 flex items-center justify-center gap-2"
                               >
                                 <Play className="w-4 h-4 text-white" />

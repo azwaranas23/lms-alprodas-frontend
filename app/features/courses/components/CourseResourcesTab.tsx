@@ -66,11 +66,13 @@ export function ResourcesTab({}: ResourcesTabProps) {
       "ppt",
       "pptx",
       "txt",
+      "zip",
+      "rar",
     ];
     const ext = f.name.split(".").pop()?.toLowerCase();
     if (!ext || !allowedExts.includes(ext)) {
       setLocalError(
-        "File type not allowed. Allowed: pdf, doc, docx, xls, xlsx, ppt, pptx, txt"
+        "File type not allowed. Allowed: pdf, doc, docx, xls, xlsx, ppt, pptx, txt, zip, rar"
       );
       e.target.value = "";
       setFile(null);
@@ -118,6 +120,31 @@ export function ResourcesTab({}: ResourcesTabProps) {
     return `${value.toFixed(1)} ${units[i]}`;
   };
 
+  const getFileExtension = (resource: CourseResourceResponse) => {
+    // 1) Coba ambil dari resourcePath: ...\file-xxxxxx.pdf
+    if (resource.resourcePath) {
+      // ambil nama file dari path (mendukung \ dan /)
+      const pathPart = resource.resourcePath.split(/[\\/]/).pop() ?? "";
+      const extFromPath = pathPart.split(".").pop()?.toLowerCase();
+
+      // pastikan ext bukan string kosong dan bukan sama persis dengan nama file
+      if (extFromPath && extFromPath !== pathPart.toLowerCase()) {
+        return extFromPath.toUpperCase();
+      }
+    }
+
+    // 2) Fallback dari mimetype: "application/pdf" -> "PDF"
+    if (resource.resourceType) {
+      const parts = resource.resourceType.split("/");
+      if (parts.length === 2 && parts[1]) {
+        return parts[1].toUpperCase();
+      }
+    }
+
+    // 3) Fallback terakhir
+    return "-";
+  };
+
   return (
     <div>
       {/* Header */}
@@ -161,7 +188,7 @@ export function ResourcesTab({}: ResourcesTabProps) {
 
           <div className="flex flex-col gap-1">
             <label className="block text-brand-dark text-sm font-semibold">
-              File (pdf, doc, xls, ppt, txt) *
+              File (pdf, doc, xls, ppt, txt, zip, rar) *
             </label>
             <div className="flex items-center gap-3">
               {/* Custom file button */}
@@ -171,7 +198,7 @@ export function ResourcesTab({}: ResourcesTabProps) {
                 <input
                   type="file"
                   onChange={handleFileChange}
-                  accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt"
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip,.rar"
                   className="hidden"
                 />
               </label>
@@ -202,91 +229,73 @@ export function ResourcesTab({}: ResourcesTabProps) {
       </div>
 
       {/* List / Empty State */}
-      <div className="bg-white border border-[#DCDEDD] rounded-[16px] p-6">
-        {isLoading ? (
-          <div className="text-center py-12">
-            <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-gray-600">Loading resources...</p>
-          </div>
-        ) : resources.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FolderOpen className="w-8 h-8 text-blue-600" />
-            </div>
-            <h3 className="text-brand-dark text-xl font-bold mb-2">
-              No Course Resources
-            </h3>
-            <p className="text-brand-light text-base">
-              Upload documents, slides, and other materials to support your
-              course.
-            </p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead className="bg-[#F9FAFB]">
-                <tr>
-                  <th className="px-4 py-3 text-left font-semibold text-brand-dark">
-                    Name
-                  </th>
-                  <th className="px-4 py-3 text-left font-semibold text-brand-dark">
-                    Type
-                  </th>
-                  <th className="px-4 py-3 text-left font-semibold text-brand-dark">
-                    Size
-                  </th>
-                  <th className="px-4 py-3 text-left font-semibold text-brand-dark">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {resources.map((r) => (
-                  <tr
-                    key={r.id}
-                    className="border-t border-[#DCDEDD] hover:bg-gray-50"
+      <div className="-mx-6 -mb-6">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-[#F9FAFB]">
+              <th className="px-6 py-3 text-left font-semibold text-brand-dark rounded-tl-[16px]">
+                Name
+              </th>
+              <th className="px-6 py-3 text-left font-semibold text-brand-dark">
+                Type
+              </th>
+              <th className="px-6 py-3 text-left font-semibold text-brand-dark">
+                Size
+              </th>
+              <th className="px-6 py-3 text-left font-semibold text-brand-dark rounded-tr-[16px]">
+                Actions
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {resources.map((r) => (
+              <tr key={r.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-gray-500" />
+                  <span>{r.fileName}</span>
+                </td>
+
+                <td className="px-6 py-4">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold">
+                    {getFileExtension(r)}
+                  </span>
+                </td>
+
+                <td className="px-6 py-4 text-gray-600">
+                  {formatSize(r.fileSize)}
+                </td>
+
+                <td className="px-6 py-4 flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => handleDownload(r)}
+                    className="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium"
                   >
-                    <td className="px-4 py-3 flex items-center gap-2">
-                      <FileText className="w-4 h-4 text-gray-500" />
-                      <span>{r.fileName}</span>
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {r.resourceType}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {formatSize(r.fileSize)}
-                    </td>
-                    <td className="px-4 py-3 flex items-center gap-3">
-                      <button
-                        type="button"
-                        onClick={() => handleDownload(r)}
-                        className="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium"
-                      >
-                        <Download className="w-4 h-4" />
-                        Download
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(r.id)}
-                        disabled={
-                          deleteMutation.isPending &&
-                          deleteMutation.variables === r.id
-                        }
-                        className="flex items-center gap-1 text-red-600 hover:text-red-800 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                        {deleteMutation.isPending &&
-                        deleteMutation.variables === r.id
-                          ? "Deleting..."
-                          : "Delete"}
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                    <Download className="w-4 h-4" />
+                    Download
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(r.id)}
+                    disabled={
+                      deleteMutation.isPending &&
+                      deleteMutation.variables === r.id
+                    }
+                    className="flex items-center gap-1 text-red-600 hover:text-red-800 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    {deleteMutation.isPending &&
+                    deleteMutation.variables === r.id
+                      ? "Deleting..."
+                      : "Delete"}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
