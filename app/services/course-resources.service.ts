@@ -25,11 +25,11 @@ function mapCourseResource(raw: any): CourseResourceResponse {
   };
 }
 
+// === MENTOR (sudah ada) ===
 export async function getCourseResources(
   courseId: number
 ): Promise<BaseResponse<CourseResourceResponse[]>> {
   const res = await apiClient.get(`/courses/${courseId}/resources`);
-
   const raw = res.data as BaseResponse<any[]>;
   return {
     message: raw.message,
@@ -37,6 +37,19 @@ export async function getCourseResources(
   };
 }
 
+// === STUDENT (baru) ===
+export async function getStudentCourseResources(
+  courseId: number
+): Promise<BaseResponse<CourseResourceResponse[]>> {
+  const res = await apiClient.get(`/student/courses/${courseId}/resources`);
+  const raw = res.data as BaseResponse<any[]>;
+  return {
+    message: raw.message,
+    data: (raw.data ?? []).map(mapCourseResource),
+  };
+}
+
+// upload & delete tetap dipakai Mentor
 export async function uploadCourseResource(
   courseId: number,
   payload: { name?: string; file: File }
