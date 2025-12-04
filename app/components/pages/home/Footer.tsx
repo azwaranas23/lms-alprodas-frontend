@@ -117,30 +117,6 @@ export function Footer() {
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Newsletter Section */}
-        <div className="bg-gray-800/50 rounded-2xl p-8 mb-12 backdrop-blur-sm border border-gray-700/50">
-          <div className="text-center max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-brand-white mb-3">
-              Stay Updated with LMS Alprodas
-            </h3>
-            <p className="text-gray-300 text-base mb-6">
-              Get the latest courses, tips, and exclusive content delivered to
-              your inbox.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-xl bg-gray-700/50 border border-gray-600 text-white placeholder-gray-400"
-              />
-              <Button variant="primary" className="px-6 py-3 rounded-xl">
-                <Mail className="w-4 h-4" />
-                Subscribe
-              </Button>
-            </div>
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Company Info */}
           <div className="lg:col-span-1 space-y-4">
@@ -267,7 +243,7 @@ export function Footer() {
         <div className="border-t border-gray-700/50 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              © 2024 LMS Alprodas. All rights reserved.
+              © 2025 LMS Alprodas. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
               <a

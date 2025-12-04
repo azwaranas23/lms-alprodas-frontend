@@ -40,19 +40,19 @@ export function CourseTabs({ course, courseId }: CourseTabsProps) {
   const handleTabClick = (tab: TabKey) => {
     setActiveTab(tab);
 
-    // Update query param tab di URL
-    setSearchParams((prev) => {
-      const sp = new URLSearchParams(prev);
-      if (tab === "about") {
-        // about = default, boleh dihapus supaya URL lebih bersih
-        sp.delete("tab");
-      } else {
-        sp.set("tab", tab);
-      }
-      return sp;
-    });
-  };
+    // Copy dari searchParams sekarang
+    const sp = new URLSearchParams(searchParams);
 
+    if (tab === "about") {
+      // about = default, boleh dihapus
+      sp.delete("tab");
+    } else {
+      sp.set("tab", tab);
+    }
+
+    // UPDATE: jangan reset scroll ketika query berubah
+    setSearchParams(sp, { preventScrollReset: true });
+  };
   return (
     <>
       {/* Tabs Navigation */}

@@ -32,7 +32,9 @@ export default function CoursePlayingVideo() {
 
   const handleGoToCourseResources = () => {
     if (courseId) {
-      navigate(`/course/${courseId}?tab=resources`);
+      navigate(`/course/${courseId}?tab=resources`, {
+        preventScrollReset: true,
+      });
     }
   };
 
