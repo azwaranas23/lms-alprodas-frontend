@@ -8,11 +8,11 @@ import { Footer } from "~/components/pages/home/Footer";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "HackGrowth - Learn From the Best, Grow Your Skills" },
+    { title: "LMS Alprodas" },
     {
       name: "description",
       content:
-        "Join thousands of students learning from industry experts. Grow your skills and build your career with HackGrowth.",
+        "Join thousands of students learning from industry experts. Grow your skills and build your career with LMS Alprodas.",
     },
   ];
 }
