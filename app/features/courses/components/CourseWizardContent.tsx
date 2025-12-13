@@ -3,7 +3,7 @@ import { Check, DollarSign, Image, Key, Lightbulb } from "lucide-react";
 import { CourseInfoStep } from "./wizard-steps/steps/CourseInfoStep";
 import { CoursePhotosStep } from "./wizard-steps/steps/CoursePhotosStep";
 import { CourseDetailsStep } from "./wizard-steps/steps/CourseDetailsStep";
-import { CoursePriceStep } from "./wizard-steps/steps/CoursePriceStep";
+import { CourseTokenStep } from "./wizard-steps/steps/CourseTokenStep";
 import { ReviewSummaryStep } from "./wizard-steps/steps/ReviewSummaryStep";
 
 interface CourseWizardContentProps {
@@ -32,7 +32,6 @@ interface CourseData {
   targetAudience3?: string;
   targetAudience4?: string;
   tools?: string;
-  price: number;
   courseToken: string;
   availability: "published" | "draft";
   level: string;
@@ -77,7 +76,6 @@ export function CourseWizardContent({
     targetAudience3: initialData.targetAudience3 || "",
     targetAudience4: initialData.targetAudience4 || "",
     tools: initialData.tools || "",
-    price: initialData.price || 0,
     courseToken: initialData.courseToken || "",
     images: initialData.images || [],
     mentor: initialData.mentor,
@@ -136,7 +134,7 @@ export function CourseWizardContent({
         );
       case 4:
         return (
-          <CoursePriceStep
+          <CourseTokenStep
             data={courseData}
             onUpdate={updateCourseData}
             onNext={handleNext}

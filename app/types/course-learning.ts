@@ -79,7 +79,7 @@ export interface CourseLearningData {
 	tools?: string;
 	key_points?: string[];
 	personas?: string[];
-	price: number;
+	course_token: string;
 	status: 'PUBLISHED' | 'DRAFT' | 'ARCHIVED';
 	total_lessons: number;
 	total_duration: number;

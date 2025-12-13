@@ -1,34 +1,66 @@
 // app/routes/dashboard/mentor/students.tsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Route } from "./+types/students";
-import { Upload, Plus, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import { MentorLayout } from "~/components/templates/MentorLayout";
 import { MentorRoute } from "~/features/auth/components/RoleBasedRoute";
 import { StudentCard, type Student } from "~/components/organisms/StudentCard";
+import { StudentDetailModal } from "~/components/organisms/StudentDetailModal";
 import { StudentsSearchSection } from "~/components/molecules/StudentsSearchSection";
 import { Pagination } from "~/components/molecules/Pagination";
-import { useStudents } from "~/hooks/api/useUsers";
+import { useQuery } from "@tanstack/react-query";
+import { coursesService } from "~/services/courses.service";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Students Management - LMS Alprodas" },
+    { title: "My Students - Alprodas LMS" },
     {
       name: "description",
-      content: "Manage your students and track their learning progress",
+      content: "View students enrolled in your courses",
     },
   ];
+}
+
+// Custom hook for debouncing
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
+interface StudentWithDetails extends Student {
+  latestEnrollment?: string;
 }
 
 export default function MentorStudentsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState("8");
+  const [selectedStudent, setSelectedStudent] = useState<StudentWithDetails | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Fetch students data from API with server-side pagination
-  const { data: studentsData, isLoading } = useStudents({
-    page: currentPage,
-    limit: parseInt(itemsPerPage),
-    search: searchTerm,
+  // Debounce search query by 500ms
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  // Fetch students enrolled in mentor's courses
+  const { data: studentsData, isLoading } = useQuery({
+    queryKey: ["mentor-students", currentPage, itemsPerPage, debouncedSearchTerm],
+    queryFn: () =>
+      coursesService.getMentorStudents({
+        page: currentPage,
+        limit: parseInt(itemsPerPage),
+        search: debouncedSearchTerm || undefined,
+      }),
   });
 
   const students = studentsData?.data?.items || [];
@@ -40,28 +72,30 @@ export default function MentorStudentsPage() {
   };
 
   // Transform API data to match existing Student format
-  const transformedStudents: Student[] = students.map((student) => ({
+  const transformedStudents: StudentWithDetails[] = students.map((student) => ({
     id: String(student.id),
     name: student.name,
     specialization: student.user_profile?.expertise || "Student",
     email: student.email,
     enrolledCourses: student.enrolled_courses_count || 0,
-    status: student.is_active ? "Active" : "Inactive",
+    status: student.is_active ? "Active" as const : "Inactive" as const,
     avatar:
       student.user_profile?.avatar ||
       "https://images.unsplash.com/photo-1494790108755-2616b612b047",
+    latestEnrollment: student.latest_enrollment,
   }));
 
   const handleViewDetails = (studentId: string) => {
-    console.log("View details for student:", studentId);
+    const student = transformedStudents.find((s) => s.id === studentId);
+    if (student) {
+      setSelectedStudent(student);
+      setIsModalOpen(true);
+    }
   };
 
-  const handleImportCSV = () => {
-    console.log("Import CSV clicked");
-  };
-
-  const handleAddStudent = () => {
-    console.log("Add student clicked");
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedStudent(null);
   };
 
   const handlePageChange = (newPage: number) => {
@@ -77,8 +111,8 @@ export default function MentorStudentsPage() {
     return (
       <MentorRoute>
         <MentorLayout
-          title="Students Management"
-          subtitle="Manage your students and track their progress"
+          title="My Students"
+          subtitle="Students enrolled in your courses"
         >
           <main className="main-content flex-1 overflow-auto p-5">
             <div className="flex items-center justify-center min-h-[400px]">
@@ -96,8 +130,8 @@ export default function MentorStudentsPage() {
   return (
     <MentorRoute>
       <MentorLayout
-        title="Students Management"
-        subtitle="Manage your students and track their progress"
+        title="My Students"
+        subtitle="Students enrolled in your courses"
       >
         <main className="main-content flex-1 overflow-auto p-5">
           <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6">
@@ -108,30 +142,12 @@ export default function MentorStudentsPage() {
                 </div>
                 <div>
                   <h3 className="text-brand-dark text-xl font-bold">
-                    All Students
+                    Enrolled Students
                   </h3>
                   <p className="text-brand-light text-sm font-normal">
-                    Browse and manage all platform students
+                    Students taking your courses
                   </p>
                 </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={handleImportCSV}
-                  className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-4 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
-                >
-                  <Upload className="w-4 h-4" />
-                  <span className="text-sm font-semibold">Import CSV</span>
-                </button>
-                <button
-                  onClick={handleAddStudent}
-                  className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-3 flex items-center gap-2"
-                >
-                  <Plus className="w-4 h-4 text-white" />
-                  <span className="text-brand-white text-sm font-semibold">
-                    Add Student
-                  </span>
-                </button>
               </div>
             </div>
 
@@ -149,7 +165,7 @@ export default function MentorStudentsPage() {
                 <p className="text-gray-500">
                   {searchTerm
                     ? "Try adjusting your search criteria"
-                    : "Students will appear here once they register"}
+                    : "Students will appear here once they enroll in your courses"}
                 </p>
               </div>
             ) : (
@@ -178,6 +194,13 @@ export default function MentorStudentsPage() {
             />
           </div>
         </main>
+
+        {/* Student Detail Modal */}
+        <StudentDetailModal
+          student={selectedStudent}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        />
       </MentorLayout>
     </MentorRoute>
   );

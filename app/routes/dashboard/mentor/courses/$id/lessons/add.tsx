@@ -31,7 +31,7 @@ import { Button } from "~/components/atoms/Button";
 
 export function meta() {
   return [
-    { title: "Add New Lesson - LMS Alprodas" },
+    { title: "Add New Lesson - Alprodas LMS" },
     { name: "description", content: "Create a new lesson for your course" },
   ];
 }
@@ -293,11 +293,10 @@ export default function AddLesson() {
               <div className="flex gap-4">
                 {/* Video Option */}
                 <label
-                  className={`group card flex items-center justify-between w-full min-h-[60px] rounded-[16px] border p-4 transition-all duration-300 cursor-pointer ${
-                    formData.type === "VIDEO"
+                  className={`group card flex items-center justify-between w-full min-h-[60px] rounded-[16px] border p-4 transition-all duration-300 cursor-pointer ${formData.type === "VIDEO"
                       ? "border-[#0C51D9] ring-2 ring-[#0C51D9] ring-offset-2"
                       : "border-[#DCDEDD] hover:border-[#0C51D9]"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-red-50 rounded-[12px] flex items-center justify-center">
@@ -324,11 +323,10 @@ export default function AddLesson() {
                       className="hidden"
                     />
                     <div
-                      className={`flex size-[18px] rounded-full shadow-sm border transition-all duration-300 ${
-                        formData.type === "VIDEO"
+                      className={`flex size-[18px] rounded-full shadow-sm border transition-all duration-300 ${formData.type === "VIDEO"
                           ? "border-[5px] border-[#0C51D9]"
                           : "border-[#DCDEDD]"
-                      }`}
+                        }`}
                     ></div>
                     <p className="text-xs font-semibold">
                       {formData.type === "VIDEO" ? "Selected" : "Select"}
@@ -338,11 +336,10 @@ export default function AddLesson() {
 
                 {/* Article Option */}
                 <label
-                  className={`group card flex items-center justify-between w-full min-h-[60px] rounded-[16px] border p-4 transition-all duration-300 cursor-pointer ${
-                    formData.type === "ARTICLE"
+                  className={`group card flex items-center justify-between w-full min-h-[60px] rounded-[16px] border p-4 transition-all duration-300 cursor-pointer ${formData.type === "ARTICLE"
                       ? "border-[#0C51D9] ring-2 ring-[#0C51D9] ring-offset-2"
                       : "border-[#DCDEDD] hover:border-[#0C51D9]"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-green-50 rounded-[12px] flex items-center justify-center">
@@ -369,11 +366,10 @@ export default function AddLesson() {
                       className="hidden"
                     />
                     <div
-                      className={`flex size-[18px] rounded-full shadow-sm border transition-all duration-300 ${
-                        formData.type === "ARTICLE"
+                      className={`flex size-[18px] rounded-full shadow-sm border transition-all duration-300 ${formData.type === "ARTICLE"
                           ? "border-[5px] border-[#0C51D9]"
                           : "border-[#DCDEDD]"
-                      }`}
+                        }`}
                     ></div>
                     <p className="text-xs font-semibold">
                       {formData.type === "ARTICLE" ? "Selected" : "Select"}

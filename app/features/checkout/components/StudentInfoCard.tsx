@@ -61,12 +61,6 @@ export function StudentInfoCard({ studentData }: StudentInfoCardProps) {
 					</span>
 				</div>
 				<div className="flex justify-between items-center">
-					<span className="text-brand-light text-base">Phone</span>
-					<span className="text-brand-dark text-base font-medium">
-						{studentData.phone}
-					</span>
-				</div>
-				<div className="flex justify-between items-center">
 					<span className="text-brand-light text-base">Location</span>
 					<span className="text-brand-dark text-base font-medium">
 						{studentData.location}

@@ -14,7 +14,7 @@ import { Image } from "~/components/atoms/Image";
 
 export function meta() {
   return [
-    { title: "Topics - LMS Alprodas" },
+    { title: "Topics - Alprodas LMS" },
     {
       name: "description",
       content: "Manage and organize learning topics across the platform",
@@ -271,7 +271,7 @@ export default function Topics() {
                         onEdit={() =>
                           navigate(`/dashboard/topics/edit/${topic.id}`)
                         }
-                        onView={() => {}}
+                        onView={() => { }}
                       />
                     ))}
                   </div>

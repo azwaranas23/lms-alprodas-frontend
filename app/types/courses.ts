@@ -85,7 +85,6 @@ export interface Course {
   description: string;
   about?: string;
   tools?: string;
-  price: number;
   status: "PUBLISHED" | "DRAFT" | "ARCHIVED";
   total_lessons: number;
   total_students: number;

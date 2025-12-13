@@ -11,9 +11,9 @@ import {
 import { useState, useEffect } from "react";
 import type { Route } from "./+types/withdrawals.success";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Withdrawal Successful - LMS Alprodas" },
+    { title: "Withdrawal Successful - Alprodas LMS" },
     {
       name: "description",
       content: "Your withdrawal request has been submitted successfully",

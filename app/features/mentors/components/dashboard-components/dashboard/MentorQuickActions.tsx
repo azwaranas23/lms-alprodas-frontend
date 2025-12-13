@@ -37,10 +37,10 @@ export function MentorQuickActions({
               <PlusCircle className="w-5 h-5 text-blue-600" />
             </div>
             <div className="flex flex-col items-start">
-              <span className="text-sm font-semibold text-brand-dark">
+              <span className="text-md font-semibold text-brand-dark">
                 Create Course
               </span>
-              <span className="text-xs text-brand-light">
+              <span className="text-sm text-brand-light">
                 Start a new learning experience
               </span>
             </div>
@@ -58,51 +58,11 @@ export function MentorQuickActions({
               <Users className="w-5 h-5 text-green-600" />
             </div>
             <div className="flex flex-col items-start">
-              <span className="text-sm font-semibold text-brand-dark">
+              <span className="text-md font-semibold text-brand-dark">
                 View Students
               </span>
-              <span className="text-xs text-brand-light">
+              <span className="text-sm text-brand-light">
                 See all learners in your courses
-              </span>
-            </div>
-          </div>
-        </button>
-
-        <button
-          type="button"
-          onClick={onViewProfile}
-          className="w-full flex items-center justify-between px-4 py-3 rounded-[12px] border border-[#DCDEDD] hover:bg-gray-50 transition-colors"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center">
-              <User className="w-5 h-5 text-purple-600" />
-            </div>
-            <div className="flex flex-col items-start">
-              <span className="text-sm font-semibold text-brand-dark">
-                View Profile
-              </span>
-              <span className="text-xs text-brand-light">
-                Check how students see you
-              </span>
-            </div>
-          </div>
-        </button>
-
-        <button
-          type="button"
-          onClick={onAccountSettings}
-          className="w-full flex items-center justify-between px-4 py-3 rounded-[12px] border border-[#DCDEDD] hover:bg-gray-50 transition-colors"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center">
-              <Settings className="w-5 h-5 text-gray-700" />
-            </div>
-            <div className="flex flex-col items-start">
-              <span className="text-sm font-semibold text-brand-dark">
-                Account Settings
-              </span>
-              <span className="text-xs text-brand-light">
-                Manage your account and preferences
               </span>
             </div>
           </div>

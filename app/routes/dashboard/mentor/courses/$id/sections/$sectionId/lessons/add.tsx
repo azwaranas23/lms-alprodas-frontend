@@ -31,7 +31,7 @@ import { Button } from "~/components/atoms/Button";
 
 export function meta() {
   return [
-    { title: "Add New Lesson - LMS Alprodas" },
+    { title: "Add New Lesson - Alprodas LMS" },
     { name: "description", content: "Create a new lesson for your course" },
   ];
 }

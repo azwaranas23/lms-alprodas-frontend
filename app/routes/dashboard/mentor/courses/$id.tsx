@@ -30,7 +30,7 @@ import { ResourcesTab } from "~/features/courses/components/CourseResourcesTab";
 
 export function meta() {
   return [
-    { title: "Course Details - LMS Alprodas" },
+    { title: "Course Details - Alprodas LMS" },
     {
       name: "description",
       content: "View and manage course details, sections, and lessons",
@@ -76,17 +76,17 @@ export default function MentorCourseDetail() {
 
   const course = courseData?.data
     ? {
-        ...courseData.data,
-        sections: courseData.data.sections?.map((section) => ({
-          ...section,
-          description: section.description || "",
-          lessons: section.lessons.map((lesson) => ({
-            ...lesson,
-            content_url: lesson.content_url || "",
-            content_text: lesson.content_text || undefined,
-          })),
+      ...courseData.data,
+      sections: courseData.data.sections?.map((section) => ({
+        ...section,
+        description: section.description || "",
+        lessons: section.lessons.map((lesson) => ({
+          ...lesson,
+          content_url: lesson.content_url || "",
+          content_text: lesson.content_text || undefined,
         })),
-      }
+      })),
+    }
     : undefined;
 
   const sections = sectionsData?.data || [];
@@ -177,9 +177,8 @@ export default function MentorCourseDetail() {
   }
 
   const courseToken = course.course_token;
-  const shareText = `Join my course "${course.title}" on LMS Alprodas.\n\nCourse Token: ${
-    courseToken || "-"
-  }`;
+  const shareText = `Join my course "${course.title}" on Alprodas LMS.\n\nCourse Token: ${courseToken || "-"
+    }`;
 
   const handleCopyToken = async () => {
     if (!courseToken) return;
@@ -292,66 +291,60 @@ export default function MentorCourseDetail() {
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => switchTab("overview")}
-                className={`flex items-center gap-2 px-4 py-3 rounded-[12px] border-2 font-semibold transition-all duration-300 ${
-                  activeTab === "overview"
+                className={`flex items-center gap-2 px-4 py-3 rounded-[12px] border-2 font-semibold transition-all duration-300 ${activeTab === "overview"
                     ? "border-[#0C51D9] bg-[#0C51D9] text-white hover:bg-[#1e5beb]"
                     : "border-[#DCDEDD] bg-white text-brand-dark font-medium hover:border-[#0C51D9] hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 <Home className="w-4 h-4" />
                 <span>Overview</span>
               </button>
               <button
                 onClick={() => switchTab("lessons")}
-                className={`flex items-center gap-2 px-4 py-3 rounded-[12px] border-2 font-medium transition-all duration-300 ${
-                  activeTab === "lessons"
+                className={`flex items-center gap-2 px-4 py-3 rounded-[12px] border-2 font-medium transition-all duration-300 ${activeTab === "lessons"
                     ? "border-[#0C51D9] bg-[#0C51D9] text-white hover:bg-[#1e5beb]"
                     : "border-[#DCDEDD] bg-white text-brand-dark hover:border-[#0C51D9] hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 <BookOpen className="w-4 h-4" />
                 <span>Lessons</span>
               </button>
               <button
                 onClick={() => switchTab("resources")}
-                className={`flex items-center gap-2 px-4 py-3 rounded-[12px] border-2 font-medium transition-all duration-300 ${
-                  activeTab === "resources"
+                className={`flex items-center gap-2 px-4 py-3 rounded-[12px] border-2 font-medium transition-all duration-300 ${activeTab === "resources"
                     ? "border-[#0C51D9] bg-[#0C51D9] text-white hover:bg-[#1e5beb]"
                     : "border-[#DCDEDD] bg-white text-brand-dark hover:border-[#0C51D9] hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 <Folder className="w-4 h-4" />
                 <span>Resources</span>
               </button>
               <button
                 onClick={() => switchTab("rewards")}
-                className={`flex items-center gap-2 px-4 py-3 rounded-[12px] border-2 font-medium transition-all duration-300 ${
-                  activeTab === "rewards"
+                className={`flex items-center gap-2 px-4 py-3 rounded-[12px] border-2 font-medium transition-all duration-300 ${activeTab === "rewards"
                     ? "border-[#0C51D9] bg-[#0C51D9] text-white hover:bg-[#1e5beb]"
                     : "border-[#DCDEDD] bg-white text-brand-dark hover:border-[#0C51D9] hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 <Trophy className="w-4 h-4" />
                 <span>Rewards</span>
               </button>
               <button
                 onClick={() => switchTab("tools")}
-                className={`flex items-center gap-2 px-4 py-3 rounded-[12px] border-2 font-medium transition-all duration-300 ${
-                  activeTab === "tools"
+                className={`flex items-center gap-2 px-4 py-3 rounded-[12px] border-2 font-medium transition-all duration-300 ${activeTab === "tools"
                     ? "border-[#0C51D9] bg-[#0C51D9] text-white hover:bg-[#1e5beb]"
                     : "border-[#DCDEDD] bg-white text-brand-dark hover:border-[#0C51D9] hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 <Wrench className="w-4 h-4" />
                 <span>Tools</span>
               </button>
               <button
                 onClick={() => switchTab("students")}
-                className={`flex items-center gap-2 px-4 py-3 rounded-[12px] border-2 font-medium transition-all duration-300 ${
-                  activeTab === "students"
+                className={`flex items-center gap-2 px-4 py-3 rounded-[12px] border-2 font-medium transition-all duration-300 ${activeTab === "students"
                     ? "border-[#0C51D9] bg-[#0C51D9] text-white hover:bg-[#1e5beb]"
                     : "border-[#DCDEDD] bg-white text-brand-dark hover:border-[#0C51D9] hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 <Users className="w-4 h-4" />
                 <span>Students</span>

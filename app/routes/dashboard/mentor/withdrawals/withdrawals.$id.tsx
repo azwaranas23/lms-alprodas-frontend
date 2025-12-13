@@ -3,9 +3,9 @@ import { useParams, Link, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import type { Route } from "./+types/withdrawals.$id";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Withdrawal Details - LMS Alprodas" },
+    { title: "Withdrawal Details - Alprodas LMS" },
     {
       name: "description",
       content: "View detailed withdrawal information and status",

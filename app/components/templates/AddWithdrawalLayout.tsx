@@ -57,7 +57,7 @@ export function AddWithdrawalLayout({
               </div>
               <div>
                 <h1 className="text-brand-dark text-lg font-bold">
-                  LMS Alprodas
+                  Alprodas LMS
                 </h1>
                 <p className="text-brand-dark text-xs font-normal">
                   Request Withdrawal
@@ -77,13 +77,12 @@ export function AddWithdrawalLayout({
                 <div key={step.id}>
                   <div className="flex items-center gap-4">
                     <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center text-white flex-shrink-0 ${
-                        status === "completed"
+                      className={`w-12 h-12 rounded-full flex items-center justify-center text-white flex-shrink-0 ${status === "completed"
                           ? "bg-green-600"
                           : status === "active"
                             ? "bg-blue-600"
                             : "bg-gray-200 text-gray-500"
-                      }`}
+                        }`}
                     >
                       {status === "completed" ? (
                         <Check className="w-6 h-6" />
@@ -93,13 +92,12 @@ export function AddWithdrawalLayout({
                     </div>
                     <div className="flex-1">
                       <h3
-                        className={`text-lg font-bold ${
-                          status === "completed"
+                        className={`text-lg font-bold ${status === "completed"
                             ? "text-green-600"
                             : status === "active"
                               ? "text-blue-600"
                               : "text-gray-500"
-                        }`}
+                          }`}
                       >
                         {step.title}
                       </h3>
@@ -109,13 +107,12 @@ export function AddWithdrawalLayout({
                   {/* Connector Line */}
                   {!isLast && (
                     <div
-                      className={`ml-6 w-0.5 h-8 ${
-                        status === "completed"
+                      className={`ml-6 w-0.5 h-8 ${status === "completed"
                           ? "bg-green-600"
                           : status === "active"
                             ? "bg-blue-600"
                             : "bg-gray-200"
-                      }`}
+                        }`}
                     ></div>
                   )}
                 </div>

@@ -13,9 +13,9 @@ import { LatestCourses } from "~/features/mentors/components/dashboard-component
 import { dashboardService } from "~/services/dashboard.service";
 import { QUERY_KEYS } from "~/constants/api";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Mentor Dashboard - LMS Alprodas" },
+    { title: "Mentor Dashboard - Alprodas LMS" },
     {
       name: "description",
       content: "Mentor dashboard overview with statistics and quick actions",
@@ -110,8 +110,6 @@ export default function MentorDashboard() {
             />
           </div>
 
-          {/* Search bar */}
-          <SearchSection />
 
           {/* Latest Courses saja (tanpa Latest Transactions) */}
           <div className="grid grid-cols-1 gap-4 mb-6">

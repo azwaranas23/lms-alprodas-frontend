@@ -1,6 +1,6 @@
-import { TrendingUp, Award } from "lucide-react";
+import { ArrowRight, Play, Star, TrendingUp, Users } from "lucide-react";
 import { Button } from "~/components/atoms/Button";
-import { Card } from "~/components/molecules/Card";
+import { motion } from "framer-motion";
 
 interface HeroSectionProps {
   onSmoothScroll: (e: React.MouseEvent<HTMLElement>, href: string) => void;
@@ -8,135 +8,117 @@ interface HeroSectionProps {
 
 export function HeroSection({ onSmoothScroll }: HeroSectionProps) {
   return (
-    <section
-      id="home"
-      className="bg-gradient-to-br from-blue-50 to-purple-50 py-20"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Text Content */}
-          <div className="text-left">
-            <h1 className="text-4xl md:text-6xl font-extrabold text-brand-dark mb-6">
-              Grow Your Skills
-              <br />
-              <span className="text-blue-600">Build Your Career</span>
-            </h1>
-            <p className="text-xl text-brand-light mb-8">
-              Empowering the next generation of developers with world-class
-              courses and expert mentorship.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Button
-                variant="primary"
-                onClick={(e) => onSmoothScroll(e, "#courses")}
-                className="rounded-[12px] px-8 py-4 text-lg font-semibold"
-              >
-                Start Learning Today
-              </Button>
-              <Button
-                variant="outline"
-                onClick={(e) => onSmoothScroll(e, "#topics")}
-                className="rounded-[12px] px-8 py-4 text-lg font-semibold"
-              >
-                Browse Topics
-              </Button>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="text-left">
-                <div className="text-3xl font-bold text-blue-600 mb-2">
-                  10k+
-                </div>
-                <div className="text-brand-light">Active Students</div>
-              </div>
-              <div className="text-left">
-                <div className="text-3xl font-bold text-blue-600 mb-2">
-                  500+
-                </div>
-                <div className="text-brand-light">Expert Instructors</div>
-              </div>
-              <div className="text-left">
-                <div className="text-3xl font-bold text-blue-600 mb-2">
-                  1000+
-                </div>
-                <div className="text-brand-light">Premium Courses</div>
-              </div>
-            </div>
+    <section id="home" className="relative overflow-hidden bg-white pb-16 lg:pt-48 lg:pb-24">
+      {/* Background Gradients */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-gradient-to-b from-blue-50/50 via-purple-50/30 to-white -z-10 rounded-b-[4rem]" />
+
+      <div className="max-w-7xl py-12 mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+
+        {/* Main Text Content */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto mb-12"
+        >
+          <motion.h1
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.1,
+                  delayChildren: 0.2
+                }
+              }
+            }}
+            className="text-5xl md:text-7xl font-extrabold text-brand-dark mb-6 leading-tight tracking-tight"
+          >
+            <span className="inline-block bg-[linear-gradient(110deg,#1a202c,45%,#2563eb,55%,#1a202c)] bg-[length:200%_100%] bg-clip-text text-transparent animate-background-shine">
+              Learn, Practice, Master,
+            </span>
+            <br className="hidden lg:block" />
+            <motion.span
+              variants={{
+                hidden: { opacity: 0, scale: 0.9 },
+                visible: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: "easeOut" } }
+              }}
+              className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600"
+            >
+              Alprodas LMS
+            </motion.span>
+          </motion.h1>
+          <p className="text-lg text-brand-light mb-8 max-w-2xl mx-auto leading-relaxed">
+            Experience the future of online education. Access high-quality courses, track your progress, and earn certifications—all in one intuitive platform.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button
+              variant="primary"
+              onClick={(e) => onSmoothScroll(e, "#courses")}
+              className="rounded-full px-8 py-4 text-base font-bold shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-all min-w-[160px]"
+            >
+              Get Started
+            </Button>
+            <Button
+              variant="outline"
+              onClick={(e) => onSmoothScroll(e, "#topics")}
+              className="rounded-full px-8 py-4 text-base font-semibold border-2 hover:bg-gray-50 min-w-[160px] inline-flex justify-center items-center gap-2"
+            >
+              <Play className="w-4 h-4 fill-current" />
+              Watch Demo
+            </Button>
+          </div>
+        </motion.div>
+
+        {/* Central Image & Floating Widgets */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="relative max-w-5xl mx-auto mt-16"
+        >
+          {/* Background Blob Elements */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-purple-100/50 via-blue-100/50 to-pink-100/50 rounded-full blur-3xl -z-10 animate-pulse" />
+
+          {/* Main Character Image */}
+          <div className="relative z-10">
+            <img
+              src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+              alt="Happy Student"
+              className="w-full max-w-[800px] mx-auto rounded-[40px] shadow-2xl border-4 border-white"
+            />
           </div>
 
-          {/* Right Column - Image with Overlapped Success Card */}
-          <div className="relative">
-            {/* Main Hero Image */}
-            <div className="w-full h-80 lg:h-[450px] relative overflow-hidden rounded-[20px]">
-              <img
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
-                alt="Students collaborating and learning together"
-                className="w-full h-full object-cover"
-              />
+          {/* Floating Widget: Chart (Bottom Left) */}
+          <motion.div
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="hidden md:block absolute bottom-12 -left-8 lg:-left-20 z-20 bg-white p-5 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+          >
+            <div className="flex items-end gap-2 h-16 w-32">
+              {[40, 70, 45, 90, 65, 85].map((h, i) => (
+                <div key={i} className="flex-1 bg-blue-100 rounded-t-sm relative group">
+                  <div
+                    className="absolute bottom-0 w-full bg-blue-500 rounded-t-sm transition-all duration-1000"
+                    style={{ height: `${h}%` }}
+                  />
+                </div>
+              ))}
             </div>
+            <div className="mt-3 flex justify-between items-center">
+              <span className="text-xs font-bold text-gray-700">Growth</span>
+              <span className="text-xs text-green-500 font-bold flex items-center gap-1">
+                <TrendingUp size={12} /> +24%
+              </span>
+            </div>
+          </motion.div>
 
-            {/* Overlapped Success Card */}
-            <div className="absolute -bottom-6 -left-6 shadow-lg">
-              <Card hover className="p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 bg-green-50 rounded-[16px] flex items-center justify-center">
-                    <TrendingUp className="w-6 h-6 text-green-600" />
-                  </div>
-                  <div>
-                    <div className="text-brand-dark text-lg font-bold">
-                      98% Success Rate
-                    </div>
-                    <div className="text-brand-light text-sm font-medium">
-                      Course Completion
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-brand-dark font-medium">
-                      Career Growth
-                    </span>
-                    <span className="text-brand-dark font-extrabold">95%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-green-600 h-2 rounded-full"
-                      style={{ width: "95%" }}
-                    ></div>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-brand-dark font-medium">
-                      Skill Improvement
-                    </span>
-                    <span className="text-brand-dark font-extrabold">92%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className="bg-blue-600 h-2 rounded-full"
-                      style={{ width: "92%" }}
-                    ></div>
-                  </div>
-                </div>
-              </Card>
-            </div>
+        </motion.div>
 
-            {/* Achievement Badge */}
-            <div className="absolute -top-4 -right-4 shadow-lg">
-              <Card className="p-4 rounded-[12px]">
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center mb-3">
-                    <Award className="w-8 h-8 text-yellow-500" />
-                  </div>
-                  <div>
-                    <div className="text-brand-dark text-sm font-bold">
-                      Top Rated
-                    </div>
-                    <div className="text-brand-light text-xs">Platform</div>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

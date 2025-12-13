@@ -39,10 +39,6 @@ export const urlSchema = z.string()
   .min(1, 'URL is required')
   .url('Please enter a valid URL');
 
-export const priceSchema = z.number()
-  .min(0, 'Price must be greater than or equal to 0')
-  .multipleOf(0.01, 'Price can only have up to 2 decimal places');
-
 // Text content schemas
 export const titleSchema = z.string()
   .min(1, 'Title is required')

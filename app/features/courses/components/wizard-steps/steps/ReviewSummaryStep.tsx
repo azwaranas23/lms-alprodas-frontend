@@ -33,7 +33,6 @@ interface CourseData {
   targetAudience3?: string;
   targetAudience4?: string;
   tools?: string;
-  price?: number;
   availability?: "published" | "draft";
   images?: Array<{ image_path: string }>;
   courseToken?: string;
@@ -56,11 +55,6 @@ export function ReviewSummaryStep({
 }: ReviewSummaryStepProps) {
   const { getFullName } = useUser();
   const [subjectName, setSubjectName] = useState<string>("Loading...");
-
-  const formatPrice = (price?: number) => {
-    if (!price) return "Not set";
-    return `Rp ${price.toLocaleString("id-ID")}`;
-  };
 
   // Fetch subject name from ID
   useEffect(() => {
@@ -173,13 +167,13 @@ export function ReviewSummaryStep({
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <DollarSign className="w-5 h-5 text-gray-400 mt-0.5" />
+                    <Key className="w-5 h-5 text-gray-400 mt-0.5" />
                     <div>
                       <p className="text-brand-light text-sm font-medium">
-                        Price
+                        Course Token
                       </p>
                       <p className="text-brand-dark text-base font-semibold">
-                        {formatPrice(data.price)}
+                        {data.courseToken || "Not set"}
                       </p>
                     </div>
                   </div>

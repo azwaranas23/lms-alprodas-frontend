@@ -8,13 +8,13 @@ import { Button } from "~/components/atoms/Button";
 import { authService } from "~/services/auth.service";
 import { getTempNavData, clearTempNavData } from "~/utils/secureNavigation";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Verify Email - LMS Alprodas" },
+    { title: "Verify Email - Alprodas LMS" },
     {
       name: "description",
       content:
-        "Verify your email address to activate your LMS Alprodas account",
+        "Verify your email address to activate your Alprodas LMS account",
     },
   ];
 }
@@ -99,7 +99,7 @@ export default function VerifyEmailPage() {
           setVerificationStatus("error");
           setVerificationMessage(
             axiosError.response?.data?.message ||
-              "Email verification failed. Please try again."
+            "Email verification failed. Please try again."
           );
         }
       };

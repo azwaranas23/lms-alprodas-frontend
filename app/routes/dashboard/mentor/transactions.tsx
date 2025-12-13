@@ -3,7 +3,7 @@ import { MentorTransactionsList } from "~/features/mentors/components/MentorTran
 
 export function meta() {
   return [
-    { title: "My Transactions - LMS Alprodas" },
+    { title: "My Transactions - Alprodas LMS" },
     {
       name: "description",
       content: "Monitor and manage all course purchase transactions",

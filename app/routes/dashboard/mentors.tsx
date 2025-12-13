@@ -7,9 +7,9 @@ import { Pagination } from "~/components/molecules/Pagination";
 import { useMentors } from "~/hooks/api/useUsers";
 import { BASE_URL } from "~/constants/api";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Mentors Management - LMS Alprodas" },
+    { title: "Mentors Management - Alprodas LMS" },
     {
       name: "description",
       content: "Manage platform mentors and track their performance",

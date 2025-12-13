@@ -16,7 +16,7 @@ import { coursesService } from "~/services/courses.service";
 
 export function meta() {
   return [
-    { title: "Lesson Details - LMS Alprodas" },
+    { title: "Lesson Details - Alprodas LMS" },
     { name: "description", content: "View lesson details and content" },
   ];
 }

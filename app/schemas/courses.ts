@@ -24,9 +24,3 @@ export const courseDetailsSchema = z.object({
   duration: z.string().min(1, 'Please enter course duration').optional().or(z.literal('')),
   requirements: z.array(z.string()).optional(),
 });
-
-// Step 3: Course Price
-export const coursePriceSchema = z.object({
-  price: z.number().min(0, 'Price must be a positive number').max(999999999, 'Price is too high'),
-  availability: z.enum(['published', 'draft']),
-});

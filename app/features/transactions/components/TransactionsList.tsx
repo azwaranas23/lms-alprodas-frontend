@@ -4,8 +4,8 @@ import { CreditCard, Download, Filter, Search } from 'lucide-react';
 import { TransactionCard, type Transaction } from '~/components/organisms/TransactionCard';
 import { Pagination } from '~/components/molecules/Pagination';
 import { useNavigate } from 'react-router';
-import { transactionsService } from '~/services/transactions.service';
 import { BASE_URL } from '~/constants/api';
+import { transactionsService } from '~/services/transactions.service';
 
 export function TransactionsList() {
   const navigate = useNavigate();

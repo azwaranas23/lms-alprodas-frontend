@@ -13,7 +13,7 @@ import type { CourseWizardFormData } from "~/types/course-wizard";
 
 export function meta() {
   return [
-    { title: "Edit Course - LMS Alprodas" },
+    { title: "Edit Course - Alprodas LMS" },
     { name: "description", content: "Edit existing course" },
   ];
 }
@@ -53,7 +53,6 @@ export default function EditMentorCourse() {
         courseData.targetAudience4,
       ].filter((audience): audience is string => Boolean(audience)),
       subject_id: parseInt(courseData.subject) || course?.subject?.id || 1,
-      price: courseData.price,
       status: courseData.availability === "published" ? "PUBLISHED" : "DRAFT",
       course_token: courseData.courseToken,
     };
@@ -108,7 +107,6 @@ export default function EditMentorCourse() {
       description: course.description,
       subject: course.subject?.id?.toString() || "",
       tools: course.tools || "",
-      price: course.price,
       courseToken: course.course_token,
       availability: (course.status?.toUpperCase() === "PUBLISHED"
         ? "published"
@@ -127,15 +125,15 @@ export default function EditMentorCourse() {
       images: course.images || [],
       mentor: course.mentor
         ? {
-            id: course.mentor.id,
-            name: course.mentor.name,
-            profile: {
-              expertise: course.mentor.profile?.expertise,
-              avatar: course.mentor.profile?.avatar,
-              totalCourses: 0,
-              totalStudents: 0,
-            },
-          }
+          id: course.mentor.id,
+          name: course.mentor.name,
+          profile: {
+            expertise: course.mentor.profile?.expertise,
+            avatar: course.mentor.profile?.avatar,
+            totalCourses: 0,
+            totalStudents: 0,
+          },
+        }
         : undefined,
     };
   };
@@ -157,7 +155,7 @@ export default function EditMentorCourse() {
       case 3:
         return "Course Details";
       case 4:
-        return "Course Price";
+        return "Course Token";
       case 5:
         return "Review Summary";
       default:

@@ -66,7 +66,7 @@ export function Sidebar() {
             <GraduationCap className="w-5 h-5 text-white relative z-10" />
           </div>
           <div>
-            <h1 className="text-brand-dark text-lg font-bold">LMS Alprodas</h1>
+            <h1 className="text-brand-dark text-lg font-bold">Alprodas LMS</h1>
             <p className="text-brand-dark text-xs font-normal">
               Manager Dashboard
             </p>

@@ -5,14 +5,15 @@ import { TopicsSection } from "~/components/pages/home/TopicsSection";
 import { CoursesSection } from "~/components/pages/home/CoursesSection";
 import { TestimonialsSection } from "~/components/pages/home/TestimonialsSection";
 import { Footer } from "~/components/pages/home/Footer";
+import { FeaturesSection } from "~/components/pages/home/FeaturesSection";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "LMS Alprodas" },
+    { title: "Alprodas LMS" },
     {
       name: "description",
       content:
-        "Join thousands of students learning from industry experts. Grow your skills and build your career with LMS Alprodas.",
+        "Join thousands of students learning from industry experts. Grow your skills and build your career with Alprodas LMS.",
     },
   ];
 }
@@ -38,6 +39,7 @@ export default function Home() {
     <div className="min-h-screen bg-[#F9F9F9]">
       <Navbar />
       <HeroSection onSmoothScroll={handleSmoothScroll} />
+      <FeaturesSection />
       <TopicsSection />
       <CoursesSection />
       <TestimonialsSection onSmoothScroll={handleSmoothScroll} />

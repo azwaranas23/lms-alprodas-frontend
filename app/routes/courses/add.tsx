@@ -3,7 +3,7 @@ import { CourseWizard } from "~/features/courses/components/CourseWizard";
 
 export function meta() {
   return [
-    { title: "Add Course - Step 1 - LMS Alprodas" },
+    { title: "Add Course - Step 1 - Alprodas LMS" },
     { name: "description", content: "Create a new course - Step 1 of 5" },
   ];
 }

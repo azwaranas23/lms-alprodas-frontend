@@ -2,9 +2,9 @@ import type { Route } from "./+types/my-courses";
 import StudentMyCourses from "~/features/students/components/StudentMyCourses";
 import { StudentRoute } from "~/features/auth/components/RoleBasedRoute";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "My Courses - LMS Alprodas" },
+    { title: "My Courses - Alprodas LMS" },
     {
       name: "description",
       content:

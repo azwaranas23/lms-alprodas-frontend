@@ -12,9 +12,9 @@ import { authService } from "~/services/auth.service";
 import { enrollmentService } from "~/services/enrollment.service";
 import { getAvatarSrc } from "~/utils/formatters";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Enroll Course - LMS Alprodas" },
+    { title: "Enroll Course - Alprodas LMS" },
     {
       name: "description",
       content: "Enter your course token to enroll in this class",
@@ -133,7 +133,7 @@ export default function CheckoutPage() {
       console.error("Enrollment failed:", error);
       alert(
         error?.response?.data?.message ||
-          "Enrollment failed. Please check your token and try again."
+        "Enrollment failed. Please check your token and try again."
       );
       setIsProcessing(false);
     }

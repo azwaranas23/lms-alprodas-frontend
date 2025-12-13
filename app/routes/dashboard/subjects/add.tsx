@@ -4,7 +4,7 @@ import { PermissionRoute } from "~/features/auth/components/PermissionRoute";
 
 export function meta() {
   return [
-    { title: "Add Subject - LMS Alprodas" },
+    { title: "Add Subject - Alprodas LMS" },
     {
       name: "description",
       content: "Create a new learning subject for the platform",

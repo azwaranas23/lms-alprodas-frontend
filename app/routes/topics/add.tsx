@@ -4,7 +4,7 @@ import { TopicForm } from "~/features/topics/components/TopicForm";
 
 export function meta() {
   return [
-    { title: "Add Topic - LMS Alprodas" },
+    { title: "Add Topic - Alprodas LMS" },
     {
       name: "description",
       content: "Create a new learning topic for the platform",

@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router";
 import type { Route } from "./+types/withdrawals";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Withdrawals Management - LMS Alprodas" },
+    { title: "Withdrawals Management - Alprodas LMS" },
     {
       name: "description",
       content: "Manage and monitor all withdrawal requests in the system",

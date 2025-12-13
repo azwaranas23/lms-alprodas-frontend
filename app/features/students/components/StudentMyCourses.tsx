@@ -238,10 +238,6 @@ export default function StudentMyCourses() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Button variant="outline" className="flex items-center gap-2">
-                <Filter className="w-4 h-4" />
-                <span className="text-sm font-semibold">Filter Courses</span>
-              </Button>
               <Button
                 variant="primary"
                 className="flex items-center gap-2"
@@ -397,7 +393,7 @@ export default function StudentMyCourses() {
 
                         <div className="flex gap-2">
                           {course.progress_percentage === 100 &&
-                          course.certificate_id ? (
+                            course.certificate_id ? (
                             <>
                               <Button
                                 variant="outline"

@@ -12,9 +12,9 @@ import { coursesService } from "~/services/courses.service";
 import { formatCurrency, getAvatarSrc } from "~/utils/formatters";
 import { Image } from "~/components/atoms/Image";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Payment Success - LMS Alprodas" },
+    { title: "Payment Success - Alprodas LMS" },
     {
       name: "description",
       content: "Payment successful! Your course purchase has been completed",
@@ -27,7 +27,6 @@ interface PurchaseData {
   course: {
     title: string;
     category: string;
-    price: string;
     thumbnail: string;
     studentsEnrolled: string;
     id?: string;
@@ -81,7 +80,6 @@ export default function PurchaseSuccessPage() {
           course: {
             title: courseData.title,
             category: courseData.subject?.topic?.name || "Course",
-            price: formatCurrency(courseData.price),
             thumbnail: courseData.images?.[0]?.image_path || "",
             studentsEnrolled: `${courseData.total_students} students enrolled`,
             id: courseData.id.toString(),
@@ -187,7 +185,6 @@ export default function PurchaseSuccessPage() {
               courseData={{
                 title: purchaseData.course.title,
                 category: purchaseData.course.category,
-                price: purchaseData.course.price,
                 thumbnail: purchaseData.course.thumbnail,
                 studentsEnrolled: purchaseData.course.studentsEnrolled,
                 purchaseDate: purchaseData.transaction.purchaseDate,

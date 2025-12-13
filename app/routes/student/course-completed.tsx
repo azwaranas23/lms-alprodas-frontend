@@ -6,9 +6,9 @@ import { SuccessIcon } from "~/features/students/components/SuccessIcon";
 import { CourseCompletionCard } from "~/features/students/components/CourseCompletionCard";
 import { coursesService } from "~/services/courses.service";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Course Completed - LMS Alprodas" },
+    { title: "Course Completed - Alprodas LMS" },
     {
       name: "description",
       content: "Congratulations! You have successfully completed the course",
@@ -175,7 +175,7 @@ export default function CourseCompletedPage() {
     if (!courseData) return;
 
     // Create share text
-    const shareText = `🎉 I just completed "${courseData.title}" on LMS Alprodas! Achievement unlocked: ${courseData.achievement}`;
+    const shareText = `🎉 I just completed "${courseData.title}" on Alprodas LMS! Achievement unlocked: ${courseData.achievement}`;
 
     // Try to use Web Share API if available
     if (navigator.share) {

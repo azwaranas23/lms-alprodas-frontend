@@ -1,12 +1,12 @@
 import type { Route } from "./+types/login";
 import { LoginPage } from "~/components/pages/LoginPage";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Login - LMS Alprodas" },
+    { title: "Login - Alprodas LMS" },
     {
       name: "description",
-      content: "Login to access your LMS Alprodas learning dashboard",
+      content: "Login to access your Alprodas LMS learning dashboard",
     },
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
   ];

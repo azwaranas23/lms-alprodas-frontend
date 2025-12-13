@@ -7,11 +7,11 @@ import { CourseCard } from "~/components/organisms/CourseCard";
 
 export function meta() {
   return [
-    { title: "All Courses - LMS Alprodas" },
+    { title: "All Courses - Alprodas LMS" },
     {
       name: "description",
       content:
-        "Explore all available courses on LMS Alprodas and start your learning journey today.",
+        "Explore all available courses on Alprodas LMS and start your learning journey today.",
     },
   ];
 }
@@ -52,7 +52,7 @@ export default function CoursesPage(): JSX.Element {
                 All Courses
               </h1>
               <p className="mt-2 text-sm md:text-base lg:text-lg text-[#6B6B6B] max-w-2xl">
-                Explore all available courses on LMS Alprodas and start your
+                Explore all available courses on Alprodas LMS and start your
                 learning journey today.
               </p>
             </div>

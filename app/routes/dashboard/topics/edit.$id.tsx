@@ -8,7 +8,7 @@ import type { Topic } from "~/types/topics";
 
 export function meta() {
   return [
-    { title: "Edit Topic - LMS Alprodas" },
+    { title: "Edit Topic - Alprodas LMS" },
     {
       name: "description",
       content: "Edit an existing learning topic",

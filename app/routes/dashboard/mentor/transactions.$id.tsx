@@ -4,7 +4,7 @@ import { TransactionDetails } from "~/features/transactions/components/Transacti
 
 export function meta() {
   return [
-    { title: "Transaction Details - LMS Alprodas" },
+    { title: "Transaction Details - Alprodas LMS" },
     {
       name: "description",
       content: "Complete transaction information and payment details",

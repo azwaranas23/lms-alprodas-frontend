@@ -145,7 +145,7 @@ export function TestimonialsSection({ onSmoothScroll }: TestimonialsSectionProps
         <div className="overflow-hidden">
           <div
             className={`flex ${isTransitioning ? 'transition-transform duration-500 ease-in-out' : ''}`}
-            style={{transform: `translateX(-${(currentTestimonialIndex + visibleCards) * cardWidth}px)`}}>
+            style={{ transform: `translateX(-${(currentTestimonialIndex + visibleCards) * cardWidth}px)` }}>
             {extendedTestimonials.map((testimonial, index) => (
               <TestimonialCard key={`${testimonial.id}-${index}`} testimonial={testimonial} />
             ))}
@@ -165,23 +165,6 @@ export function TestimonialsSection({ onSmoothScroll }: TestimonialsSectionProps
         </div>
       </div>
 
-      {/* Centered Call to Action */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="text-center flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a href="#">
-            <Button variant="outline" className="px-8 py-4">
-              <PlayCircle className="w-5 h-5" />
-              <span className="text-base font-semibold">Watch Demo</span>
-            </Button>
-          </a>
-          <a href="#courses" onClick={(e) => onSmoothScroll(e, '#courses')}>
-            <Button variant="primary" className="px-8 py-4">
-              <GraduationCap className="w-5 h-5 text-white" />
-              <span className="text-brand-white text-base font-semibold">Join Our Community</span>
-            </Button>
-          </a>
-        </div>
-      </div>
     </section>
   );
 }

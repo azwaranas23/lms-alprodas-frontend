@@ -77,24 +77,6 @@ export function BaseHeader({
     );
   };
 
-  const renderActionButtons = () => {
-    if (!showActions) return null;
-
-    return (
-      <div className="flex items-center gap-3">
-        <button className="w-10 h-10 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200 cursor-pointer" type="button">
-          <Bell className="w-5 h-5 text-gray-600" />
-        </button>
-        <button className="w-10 h-10 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200 cursor-pointer" type="button">
-          <MessageCircle className="w-5 h-5 text-gray-600" />
-        </button>
-        <button className="w-10 h-10 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200 cursor-pointer" type="button">
-          <Settings className="w-5 h-5 text-gray-600" />
-        </button>
-      </div>
-    );
-  };
-
   const renderUserProfile = () => {
     if (!showUserProfile) return null;
 
@@ -165,13 +147,6 @@ export function BaseHeader({
 
         {/* Right Section */}
         <div className="flex items-center gap-4">
-          {renderActionButtons()}
-
-          {/* Divider */}
-          {showActions && showUserProfile && (
-            <div className="w-px h-8 bg-[#DCDEDD] mx-5"></div>
-          )}
-
           {renderUserProfile()}
         </div>
       </div>

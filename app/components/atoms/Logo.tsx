@@ -14,7 +14,7 @@ export function Logo({ variant = "navbar" }: LogoProps) {
           <GraduationCap className="w-5 h-5 text-white relative z-10" />
         </div>
         <div>
-          <h1 className="text-brand-dark text-lg font-bold">LMS Alprodas</h1>
+          <h1 className="text-brand-dark text-lg font-bold">Alprodas LMS</h1>
           <p className="text-brand-dark text-xs font-normal">
             Learning Platform
           </p>
@@ -35,7 +35,7 @@ export function Logo({ variant = "navbar" }: LogoProps) {
           Welcome Back
         </h2>
         <p className="text-brand-light text-base font-normal leading-7">
-          Access your LMS Alprodas dashboard
+          Access your Alprodas LMS dashboard
         </p>
       </div>
     </div>

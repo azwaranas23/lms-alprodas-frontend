@@ -7,7 +7,7 @@ import { subjectsService, type Subject } from "~/services/subjects.service";
 
 export function meta() {
   return [
-    { title: "Edit Subject - LMS Alprodas" },
+    { title: "Edit Subject - Alprodas LMS" },
     {
       name: "description",
       content: "Edit an existing learning subject",

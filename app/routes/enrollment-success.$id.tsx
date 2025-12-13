@@ -5,12 +5,12 @@ import { useParams, useLocation } from "react-router";
 import { CheckCircle, BookOpen, LayoutDashboard } from "lucide-react";
 import confetti from "canvas-confetti";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Enrollment Successful - LMS Alprodas" },
+    { title: "Enrollment Successful - Alprodas LMS" },
     {
       name: "description",
-      content: "You have successfully enrolled in your course on LMS Alprodas.",
+      content: "You have successfully enrolled in your course on Alprodas LMS.",
     },
   ];
 }

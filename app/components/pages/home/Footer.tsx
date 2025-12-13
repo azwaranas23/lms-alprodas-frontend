@@ -126,7 +126,7 @@ export function Footer() {
                 <GraduationCap className="w-6 h-6 text-white relative z-10" />
               </div>
               <h3 className="text-xl font-bold text-brand-white">
-                LMS Alprodas
+                Alprodas LMS
               </h3>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
@@ -243,7 +243,7 @@ export function Footer() {
         <div className="border-t border-gray-700/50 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              © 2025 LMS Alprodas. All rights reserved.
+              © 2025 Alprodas LMS. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
               <a

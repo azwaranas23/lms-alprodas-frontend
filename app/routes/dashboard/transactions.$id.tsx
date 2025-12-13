@@ -4,9 +4,9 @@ import { Layout } from "~/components/templates/Layout";
 import { PermissionRoute } from "~/features/auth/components/PermissionRoute";
 import { TransactionDetails } from "~/features/transactions/components/TransactionDetails";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Transaction Details - LMS Alprodas" },
+    { title: "Transaction Details - Alprodas LMS" },
     {
       name: "description",
       content: "View detailed transaction information and payment details",

@@ -13,12 +13,13 @@ import {
   Settings,
   ChevronDown,
   Key,
+  GraduationCap,
 } from "lucide-react";
 import { useUser } from "~/hooks/useUser";
 import { CourseInfoStep } from "./wizard-steps/steps/CourseInfoStep";
 import { CoursePhotosStep } from "./wizard-steps/steps/CoursePhotosStep";
 import { CourseDetailsStep } from "./wizard-steps/steps/CourseDetailsStep";
-import { CoursePriceStep } from "./wizard-steps/steps/CoursePriceStep";
+import { CourseTokenStep } from "./wizard-steps/steps/CourseTokenStep";
 import { ReviewSummaryStep } from "./wizard-steps/steps/ReviewSummaryStep";
 
 interface CourseWizardProps {
@@ -51,7 +52,6 @@ interface CourseData {
   targetAudience3?: string;
   targetAudience4?: string;
   tools?: string;
-  price?: number;
   courseToken: string;
   availability?: "published" | "draft";
   level: string;
@@ -62,8 +62,8 @@ interface CourseData {
 const steps: StepConfig[] = [
   { id: 1, title: "Course Information", icon: BookOpen },
   { id: 2, title: "Course Photos", icon: Layers },
-  { id: 3, title: "Course Details", icon: DollarSign },
-  { id: 4, title: "Course Token", icon: Image },
+  { id: 3, title: "Course Details", icon: GraduationCap },
+  { id: 4, title: "Course Token", icon: Key },
   { id: 5, title: "Review Summary", icon: CheckCircle },
 ];
 
@@ -139,7 +139,7 @@ export function CourseWizard({
         );
       case 4:
         return (
-          <CoursePriceStep
+          <CourseTokenStep
             data={courseData}
             onUpdate={updateCourseData}
             onNext={handleNext}
@@ -162,7 +162,7 @@ export function CourseWizard({
             data={courseData}
             onUpdate={updateCourseData}
             onNext={handleNext}
-            onCancel={() => {}}
+            onCancel={() => { }}
           />
         );
     }
@@ -188,7 +188,7 @@ export function CourseWizard({
               </div>
               <div>
                 <h1 className="text-brand-dark text-lg font-bold">
-                  LMS Alprodas
+                  Alprodas LMS
                 </h1>
                 <p className="text-brand-dark text-xs font-normal">
                   Create New Course
@@ -208,25 +208,23 @@ export function CourseWizard({
                 <div key={step.id}>
                   <div className="flex items-center gap-4">
                     <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center text-white flex-shrink-0 ${
-                        isActive
-                          ? "bg-blue-600"
-                          : isCompleted
-                            ? "bg-green-600"
-                            : "bg-gray-200 text-gray-500"
-                      }`}
+                      className={`w-12 h-12 rounded-full flex items-center justify-center text-white flex-shrink-0 ${isActive
+                        ? "bg-blue-600"
+                        : isCompleted
+                          ? "bg-green-600"
+                          : "bg-gray-200 text-gray-500"
+                        }`}
                     >
                       <step.icon className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
                       <h3
-                        className={`text-lg font-bold ${
-                          isActive
-                            ? "text-blue-600"
-                            : isCompleted
-                              ? "text-green-600"
-                              : "text-gray-500"
-                        }`}
+                        className={`text-lg font-bold ${isActive
+                          ? "text-blue-600"
+                          : isCompleted
+                            ? "text-green-600"
+                            : "text-gray-500"
+                          }`}
                       >
                         {step.title}
                       </h3>
@@ -234,13 +232,12 @@ export function CourseWizard({
                   </div>
                   {isConnected && (
                     <div
-                      className={`ml-6 w-0.5 h-8 ${
-                        isCompleted
-                          ? "bg-green-600"
-                          : isActive
-                            ? "bg-blue-600"
-                            : "bg-gray-200"
-                      }`}
+                      className={`ml-6 w-0.5 h-8 ${isCompleted
+                        ? "bg-green-600"
+                        : isActive
+                          ? "bg-blue-600"
+                          : "bg-gray-200"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -275,22 +272,6 @@ export function CourseWizard({
               </div>
 
               <div className="flex items-center gap-4">
-                {/* Action Buttons */}
-                <div className="flex items-center gap-3">
-                  <button className="w-14 h-14 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200">
-                    <Bell className="w-5 h-5 text-gray-600" />
-                  </button>
-                  <button className="w-14 h-14 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200">
-                    <MessageCircle className="w-5 h-5 text-gray-600" />
-                  </button>
-                  <button className="w-14 h-14 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200">
-                    <Settings className="w-5 h-5 text-gray-600" />
-                  </button>
-                </div>
-
-                {/* Divider */}
-                <div className="w-px h-8 bg-[#DCDEDD] mx-5"></div>
-
                 {/* User Profile */}
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">

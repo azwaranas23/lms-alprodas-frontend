@@ -7,9 +7,9 @@ import { StudentsSearchSection } from "~/components/molecules/StudentsSearchSect
 import { Pagination } from "~/components/molecules/Pagination";
 import { useStudents } from "~/hooks/api/useUsers";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Students Management - LMS Alprodas" },
+    { title: "Students Management - Alprodas LMS" },
     {
       name: "description",
       content: "Manage platform students and track their learning progress",

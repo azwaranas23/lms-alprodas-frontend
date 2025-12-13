@@ -4,7 +4,6 @@ import { Image } from "~/components/atoms/Image";
 interface Course {
   id: number;
   title: string;
-  price: number;
   status: string;
   total_lessons: number;
   created_at: string;

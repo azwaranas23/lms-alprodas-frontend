@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router";
 import type { Route } from "./+types/signup";
 import {
   User,
-  Phone,
   Mail,
   Lock,
   UserPlus,
@@ -17,13 +16,13 @@ import { authService } from "~/services/auth.service";
 import { storeTempNavData } from "~/utils/secureNavigation";
 import { ApiErrorMessage } from "~/components/atoms/ApiErrorMessage";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Sign Up - LMS Alprodas" },
+    { title: "Sign Up - Alprodas LMS" },
     {
       name: "description",
       content:
-        "Create your LMS Alprodas account and start learning from industry experts today",
+        "Create your Alprodas LMS account and start learning from industry experts today",
     },
   ];
 }
@@ -32,7 +31,6 @@ interface FormData {
   profilePhoto: File | null;
   role: string;
   fullName: string;
-  phone: string;
   gender: string;
   email: string;
   password: string;
@@ -50,7 +48,6 @@ export default function SignupPage() {
     profilePhoto: null,
     role: "",
     fullName: "",
-    phone: "",
     gender: "",
     email: "",
     password: "",
@@ -84,11 +81,6 @@ export default function SignupPage() {
         return !stringValue ? "Please select your role." : "";
       case "fullName":
         return !stringValue?.trim() ? "Please enter your full name." : "";
-      case "phone":
-        const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-        return !phoneRegex.test(stringValue?.replace(/\s/g, "") || "")
-          ? "Please enter a valid phone number."
-          : "";
       case "gender":
         return !stringValue ? "Please select your gender." : "";
       case "email":
@@ -295,11 +287,10 @@ export default function SignupPage() {
                       handleInputChange("fullName", e.target.value)
                     }
                     onBlur={(e) => handleBlur("fullName", e.target.value)}
-                    className={`w-full pl-10 pr-4 py-3 bg-white border rounded-[16px] transition-all duration-300 ${
-                      errors.fullName
+                    className={`w-full pl-10 pr-4 py-3 bg-white border rounded-[16px] transition-all duration-300 ${errors.fullName
                         ? "border-[#DC2626] border-2"
                         : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white"
-                    }`}
+                      }`}
                     placeholder="Enter your full name"
                   />
                 </div>
@@ -307,43 +298,6 @@ export default function SignupPage() {
                   <div className="mt-2">
                     <p className="text-danger text-sm font-normal">
                       {errors.fullName}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Phone Number Field */}
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="block mb-2 text-gray-600 text-sm font-semibold"
-                >
-                  Phone Number *
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Phone className="h-4 w-4 text-gray-400" />
-                  </div>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    required
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
-                    onBlur={(e) => handleBlur("phone", e.target.value)}
-                    className={`w-full pl-10 pr-4 py-3 bg-white border rounded-[16px] transition-all duration-300 ${
-                      errors.phone
-                        ? "border-[#DC2626] border-2"
-                        : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white"
-                    }`}
-                    placeholder="Enter your phone number"
-                  />
-                </div>
-                {errors.phone && (
-                  <div className="mt-2">
-                    <p className="text-danger text-sm font-normal">
-                      {errors.phone}
                     </p>
                   </div>
                 )}
@@ -403,11 +357,10 @@ export default function SignupPage() {
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     onBlur={(e) => handleBlur("email", e.target.value)}
-                    className={`w-full pl-10 pr-4 py-3 bg-white border rounded-[16px] transition-all duration-300 ${
-                      errors.email
+                    className={`w-full pl-10 pr-4 py-3 bg-white border rounded-[16px] transition-all duration-300 ${errors.email
                         ? "border-[#DC2626] border-2"
                         : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white"
-                    }`}
+                      }`}
                     placeholder="Enter your email address"
                   />
                 </div>
@@ -443,11 +396,10 @@ export default function SignupPage() {
                       handleInputChange("password", e.target.value)
                     }
                     onBlur={(e) => handleBlur("password", e.target.value)}
-                    className={`w-full pl-10 pr-4 py-3 bg-white border rounded-[16px] transition-all duration-300 ${
-                      errors.password
+                    className={`w-full pl-10 pr-4 py-3 bg-white border rounded-[16px] transition-all duration-300 ${errors.password
                         ? "border-[#DC2626] border-2"
                         : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white"
-                    }`}
+                      }`}
                     placeholder="Create a password"
                   />
                 </div>
@@ -484,11 +436,10 @@ export default function SignupPage() {
                     onBlur={(e) =>
                       handleBlur("confirmPassword", e.target.value)
                     }
-                    className={`w-full pl-10 pr-4 py-3 bg-white border rounded-[16px] transition-all duration-300 ${
-                      errors.confirmPassword
+                    className={`w-full pl-10 pr-4 py-3 bg-white border rounded-[16px] transition-all duration-300 ${errors.confirmPassword
                         ? "border-[#DC2626] border-2"
                         : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white"
-                    }`}
+                      }`}
                     placeholder="Confirm your password"
                   />
                 </div>

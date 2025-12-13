@@ -30,27 +30,6 @@ export function GuestNavbar() {
           >
             Courses
           </Link>
-
-          <a
-            className="text-[16px] font-semibold text-[#3D3D3D] hover:text-[#0C51D9]"
-            href="/#topics"
-          >
-            Topics
-          </a>
-
-          <a
-            className="text-[16px] font-semibold text-[#3D3D3D] hover:text-[#0C51D9]"
-            href="/#about"
-          >
-            About
-          </a>
-
-          <a
-            className="text-[16px] font-semibold text-[#3D3D3D] hover:text-[#0C51D9]"
-            href="/#contact"
-          >
-            Contact
-          </a>
         </div>
 
         <div className="hidden md:flex items-center gap-6">

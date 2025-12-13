@@ -40,7 +40,6 @@ export default function AddMentorCourse() {
       // Ambil data yang dibutuhkan untuk halaman success
       const successCourse = {
         title: course?.title,
-        price: course?.price,
         subjectName: course?.subject?.name,
         mentorName: course?.mentor?.name,
         courseId: course?.id,

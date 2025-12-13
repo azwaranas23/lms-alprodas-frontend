@@ -149,7 +149,6 @@ export interface UpdateCourseData {
   tools?: string;
   key_points?: string[];
   personas?: string[];
-  price?: number;
   status?: "PUBLISHED" | "DRAFT" | "ARCHIVED";
   subject_id?: number;
   mentor_id?: number;
@@ -370,6 +369,38 @@ export const coursesService = {
         responseType: "blob",
       }
     );
+    return response.data;
+  },
+
+  // Get students enrolled in mentor's courses
+  async getMentorStudents(params?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+  }): Promise<{
+    message: string;
+    data: {
+      items: Array<{
+        id: number;
+        name: string;
+        email: string;
+        is_active: boolean;
+        enrolled_courses_count: number;
+        user_profile: {
+          avatar: string | null;
+          expertise: string | null;
+        } | null;
+        latest_enrollment: string;
+      }>;
+      meta: {
+        total: number;
+        page: number;
+        per_page: number;
+        total_pages: number;
+      };
+    };
+  }> {
+    const response = await apiClient.get("/courses/mentor/students", { params });
     return response.data;
   },
 };

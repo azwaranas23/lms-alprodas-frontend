@@ -80,7 +80,7 @@ export default function CoursePlayingArticle() {
               </div>
               <div>
                 <h1 className="text-brand-dark text-lg font-bold">
-                  LMS Alprodas
+                  Alprodas LMS
                 </h1>
                 <p className="text-brand-dark text-xs font-normal">
                   Student Dashboard
@@ -108,9 +108,8 @@ export default function CoursePlayingArticle() {
                       </span>
                     </div>
                     <ChevronDown
-                      className={`w-4 h-4 text-gray-500 transition-transform ${
-                        openSections.includes(1) ? "rotate-180" : ""
-                      }`}
+                      className={`w-4 h-4 text-gray-500 transition-transform ${openSections.includes(1) ? "rotate-180" : ""
+                        }`}
                     />
                   </div>
                 </button>
@@ -163,9 +162,8 @@ export default function CoursePlayingArticle() {
                       </span>
                     </div>
                     <ChevronDown
-                      className={`w-4 h-4 text-gray-500 transition-transform ${
-                        openSections.includes(2) ? "rotate-180" : ""
-                      }`}
+                      className={`w-4 h-4 text-gray-500 transition-transform ${openSections.includes(2) ? "rotate-180" : ""
+                        }`}
                     />
                   </div>
                 </button>
@@ -218,9 +216,8 @@ export default function CoursePlayingArticle() {
                       </span>
                     </div>
                     <ChevronDown
-                      className={`w-4 h-4 text-gray-500 transition-transform ${
-                        openSections.includes(3) ? "rotate-180" : ""
-                      }`}
+                      className={`w-4 h-4 text-gray-500 transition-transform ${openSections.includes(3) ? "rotate-180" : ""
+                        }`}
                     />
                   </div>
                 </button>
@@ -492,7 +489,7 @@ export default function CoursePlayingArticle() {
     <div className="product-card">
       <img src={product.image} alt={product.name} />
       <h3>{product.name}</h3>
-      <p className="price">\${product.price}</p>
+      <p className="Course Token: ">{product.courseToken}</p>
       <button
         onClick={() => onAddToCart(product)}
         disabled={isInCart}

@@ -107,7 +107,7 @@ export function Navbar({ onSmoothScroll, mode = "home" }: NavbarProps) {
             </div>
             <div>
               <h1 className="text-brand-dark text-lg font-bold">
-                LMS Alprodas
+                Alprodas LMS
               </h1>
             </div>
           </div>

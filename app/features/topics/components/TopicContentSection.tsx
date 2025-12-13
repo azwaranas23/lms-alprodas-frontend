@@ -77,15 +77,8 @@ function SubjectCard({ subject }: SubjectCardProps) {
             </div>
           </div>
 
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 px-3 py-2 rounded-[8px]"
-            >
-              <Map className="w-4 h-4" />
-              <span className="text-sm font-semibold">Get a Roadmap</span>
-            </Button>
-            <div className="flex-shrink-0">
+          <div className="flex">
+            <div className="w-full">
               <a href="/courses">
                 <Button variant="outline" className="px-8 py-4 text-lg">
                   View All Courses
@@ -188,7 +181,7 @@ function CourseCard({ course }: CourseCardProps) {
       </div>
       <div className="flex items-center justify-between">
         <div className="text-2xl font-bold text-brand-dark">
-          {course.is_enrolled ? "Enrolled" : formatCurrency(course.price)}
+          {course.is_enrolled ? "Enrolled" : "Enroll Now"}
         </div>
         <Link to={`/course/${course.id}`}>
           <Button variant="primary" className="px-4 py-2 rounded-[8px] text-sm">

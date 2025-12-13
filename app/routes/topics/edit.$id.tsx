@@ -4,7 +4,7 @@ import { TopicForm } from "~/features/topics/components/TopicForm";
 
 export function meta() {
   return [
-    { title: "Edit Topic - LMS Alprodas" },
+    { title: "Edit Topic - Alprodas LMS" },
     { name: "description", content: "Update topic information and settings" },
   ];
 }

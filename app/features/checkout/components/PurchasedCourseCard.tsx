@@ -3,7 +3,6 @@ import { Calendar, Users } from "lucide-react";
 interface PurchasedCourseData {
 	title: string;
 	category: string;
-	price: string;
 	thumbnail: string;
 	studentsEnrolled: string;
 	purchaseDate: string;
@@ -33,7 +32,7 @@ export function PurchasedCourseCard({ courseData }: PurchasedCourseCardProps) {
 						{courseData.title}
 					</h3>
 					<p className="text-brand-light text-base font-normal">
-						{courseData.category} • {courseData.price}
+						{courseData.category}
 					</p>
 				</div>
 			</div>

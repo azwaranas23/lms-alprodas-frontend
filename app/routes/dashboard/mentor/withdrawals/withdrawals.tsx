@@ -14,9 +14,9 @@ import {
   formatDate,
 } from "~/utils/formatters";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Withdrawals - LMS Alprodas" },
+    { title: "Withdrawals - Alprodas LMS" },
     {
       name: "description",
       content: "Manage your withdrawal requests and earnings",
@@ -165,8 +165,8 @@ export default function MentorWithdrawalsPage() {
                   isLoadingBalance
                     ? "Loading..."
                     : formatCurrencyCompact(
-                        balanceData?.pending_withdrawals || 0
-                      )
+                      balanceData?.pending_withdrawals || 0
+                    )
                 }
                 subtitle="Awaiting approval"
                 icon={Clock}

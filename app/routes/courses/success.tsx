@@ -4,7 +4,7 @@ import { CheckCircle, Calendar, Users, Plus, Eye } from "lucide-react";
 
 export function meta() {
   return [
-    { title: "Course Created Successfully - LMS Alprodas" },
+    { title: "Course Created Successfully - Alprodas LMS" },
     {
       name: "description",
       content: "Your course has been created successfully",

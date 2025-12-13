@@ -21,8 +21,8 @@ interface AddCourseLayoutProps {
 const steps = [
   { id: 1, title: "Course Information", icon: BookOpen },
   { id: 2, title: "Course Photos", icon: Layers },
-  { id: 3, title: "Course Details", icon: DollarSign },
-  { id: 4, title: "Course Price", icon: Image },
+  { id: 3, title: "Course Details", icon: GraduationCap },
+  { id: 4, title: "Course Token", icon: Image },
   { id: 5, title: "Review Summary", icon: CheckCircle },
 ];
 
@@ -53,7 +53,7 @@ export function AddCourseLayout({
               </div>
               <div>
                 <h1 className="text-brand-dark text-lg font-bold">
-                  LMS Alprodas
+                  Alprodas LMS
                 </h1>
                 <p className="text-brand-dark text-xs font-normal">
                   {mode === "edit" ? "Edit Course" : "Create New Course"}
@@ -74,13 +74,12 @@ export function AddCourseLayout({
                 <div key={step.id}>
                   <div className="flex items-center gap-4">
                     <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${
-                        isActive
-                          ? "bg-blue-600 text-white"
-                          : isCompleted
-                            ? "bg-green-600 text-white"
-                            : "bg-gray-200 text-gray-500"
-                      }`}
+                      className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${isActive
+                        ? "bg-blue-600 text-white"
+                        : isCompleted
+                          ? "bg-green-600 text-white"
+                          : "bg-gray-200 text-gray-500"
+                        }`}
                     >
                       {isCompleted ? (
                         <Check className="w-6 h-6" />
@@ -90,13 +89,12 @@ export function AddCourseLayout({
                     </div>
                     <div className="flex-1">
                       <h3
-                        className={`text-lg font-bold ${
-                          isActive
-                            ? "text-blue-600"
-                            : isCompleted
-                              ? "text-green-600"
-                              : "text-gray-500"
-                        }`}
+                        className={`text-lg font-bold ${isActive
+                          ? "text-blue-600"
+                          : isCompleted
+                            ? "text-green-600"
+                            : "text-gray-500"
+                          }`}
                       >
                         {step.title}
                       </h3>
@@ -106,13 +104,12 @@ export function AddCourseLayout({
                   {/* Connector Line */}
                   {!isLast && (
                     <div
-                      className={`ml-6 w-0.5 h-8 ${
-                        isCompleted
-                          ? "bg-green-600"
-                          : isActive
-                            ? "bg-blue-600"
-                            : "bg-gray-200"
-                      }`}
+                      className={`ml-6 w-0.5 h-8 ${isCompleted
+                        ? "bg-green-600"
+                        : isActive
+                          ? "bg-blue-600"
+                          : "bg-gray-200"
+                        }`}
                     ></div>
                   )}
                 </div>

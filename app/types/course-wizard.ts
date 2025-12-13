@@ -21,11 +21,7 @@ export interface CourseWizardData {
     level?: string;
     duration?: string;
     requirements?: string[];
-  };
-  coursePrice?: {
-    price: number;
-    availability: "published" | "draft";
-  };
+  }
   courseToken: string;
 }
 
@@ -43,7 +39,6 @@ export interface CourseWizardFormData {
   targetAudience3?: string;
   targetAudience4?: string;
   tools?: string;
-  price: number;
   availability: "published" | "draft";
   mainPhoto?: File;
   previewPhoto?: File;

@@ -498,7 +498,7 @@ export default function CoursePlayingVideo() {
               </div>
               <div>
                 <h1 className="text-brand-dark text-lg font-bold">
-                  LMS Alprodas
+                  Alprodas LMS
                 </h1>
                 <p className="text-brand-dark text-xs font-normal">
                   Student Dashboard
@@ -530,11 +530,10 @@ export default function CoursePlayingVideo() {
                           </span>
                         </div>
                         <ChevronDown
-                          className={`w-4 h-4 text-gray-500 accordion-chevron transition-transform ${
-                            openSections.includes(section.id)
+                          className={`w-4 h-4 text-gray-500 accordion-chevron transition-transform ${openSections.includes(section.id)
                               ? "rotate-180"
                               : ""
-                          }`}
+                            }`}
                         />
                       </div>
                     </button>
@@ -614,13 +613,12 @@ export default function CoursePlayingVideo() {
                   </h2>
                   <p className="text-brand-light text-sm font-normal mt-1">
                     {lessonDetail
-                      ? `Section ${
-                          lessonDetail.section.order_index ||
-                          courseData?.sections?.findIndex(
-                            (s: any) => s.id === lessonDetail.section.id
-                          ) + 1 ||
-                          lessonDetail.section.id
-                        }: ${lessonDetail.section.title} • Lesson ${lessonDetail.order_index}`
+                      ? `Section ${lessonDetail.section.order_index ||
+                      courseData?.sections?.findIndex(
+                        (s: any) => s.id === lessonDetail.section.id
+                      ) + 1 ||
+                      lessonDetail.section.id
+                      }: ${lessonDetail.section.title} • Lesson ${lessonDetail.order_index}`
                       : courseData.subject.name}
                   </p>
                 </div>
@@ -742,7 +740,7 @@ export default function CoursePlayingVideo() {
                           <span>
                             {formatDuration(
                               lessonDetail?.duration_minutes ||
-                                currentLesson.duration_minutes
+                              currentLesson.duration_minutes
                             )}{" "}
                             duration
                           </span>
@@ -805,28 +803,28 @@ export default function CoursePlayingVideo() {
                           <ChevronRight className="w-4 h-4 text-white" />
                         </button>
                       ) : // No next lesson - this is the last lesson
-                      !lessonDetail?.progress?.is_completed &&
-                        courseProgress?.progress_stats?.percentage !== 100 ? (
-                        <button
-                          onClick={handleCompleteCourse}
-                          className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-2 flex items-center gap-2"
-                        >
-                          <Check className="w-4 h-4 text-white" />
-                          <span className="text-brand-white text-sm font-semibold">
-                            Complete Course
-                          </span>
-                        </button>
-                      ) : (
-                        <button
-                          disabled
-                          className="bg-gray-100 border border-[#DCDEDD] text-gray-400 py-2 px-4 rounded-[8px] font-medium cursor-not-allowed flex items-center gap-2"
-                        >
-                          <Check className="w-4 h-4" />
-                          <span className="text-sm font-semibold">
-                            Course Completed
-                          </span>
-                        </button>
-                      )}
+                        !lessonDetail?.progress?.is_completed &&
+                          courseProgress?.progress_stats?.percentage !== 100 ? (
+                          <button
+                            onClick={handleCompleteCourse}
+                            className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-2 flex items-center gap-2"
+                          >
+                            <Check className="w-4 h-4 text-white" />
+                            <span className="text-brand-white text-sm font-semibold">
+                              Complete Course
+                            </span>
+                          </button>
+                        ) : (
+                          <button
+                            disabled
+                            className="bg-gray-100 border border-[#DCDEDD] text-gray-400 py-2 px-4 rounded-[8px] font-medium cursor-not-allowed flex items-center gap-2"
+                          >
+                            <Check className="w-4 h-4" />
+                            <span className="text-sm font-semibold">
+                              Course Completed
+                            </span>
+                          </button>
+                        )}
                     </div>
                   </div>
                 </div>

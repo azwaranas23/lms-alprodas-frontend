@@ -4,9 +4,9 @@ import { TopicHeroSection } from "~/features/topics/components/TopicHeroSection"
 import { TopicContentSection } from "~/features/topics/components/TopicContentSection";
 import { Footer } from "~/components/pages/home/Footer";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Web Development - LMS Alprodas" },
+    { title: "Web Development - Alprodas LMS" },
     {
       name: "description",
       content:

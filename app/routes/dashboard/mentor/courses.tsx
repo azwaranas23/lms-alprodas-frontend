@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { MentorLayout } from "~/components/templates/MentorLayout";
@@ -25,12 +25,29 @@ import { Avatar } from "~/components/atoms/Avatar";
 
 export function meta() {
   return [
-    { title: "My Courses - LMS Alprodas" },
+    { title: "My Courses - Alprodas LMS" },
     {
       name: "description",
       content: "Create and manage your courses and learning materials",
     },
   ];
+}
+
+// Custom hook for debouncing
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
 }
 
 export default function MentorCoursesPage() {
@@ -40,18 +57,21 @@ export default function MentorCoursesPage() {
   const [itemsPerPage, setItemsPerPage] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Debounce search query by 500ms
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
+
   // Fetch courses data from API
   const {
     data: coursesData,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["courses", currentPage, itemsPerPage, searchQuery],
+    queryKey: ["courses", currentPage, itemsPerPage, debouncedSearchQuery],
     queryFn: () =>
       coursesService.getCourses({
         page: currentPage,
         limit: itemsPerPage,
-        search: searchQuery || undefined,
+        search: debouncedSearchQuery || undefined,
       }),
   });
 
@@ -167,13 +187,6 @@ export default function MentorCoursesPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <button
-                      onClick={handleExportData}
-                      className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-4 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
-                    >
-                      <Download className="w-4 h-4" />
-                      <span className="text-sm font-semibold">Export Data</span>
-                    </button>
                     <button
                       onClick={handleCreateCourse}
                       className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-3 flex items-center gap-2"
@@ -363,11 +376,10 @@ export default function MentorCoursesPage() {
                       <button
                         key={index + 1}
                         onClick={() => setCurrentPage(index + 1)}
-                        className={`px-4 py-2 border rounded-lg font-semibold transition-all duration-300 ${
-                          currentPage === index + 1
-                            ? "border-[#2151A0] blue-gradient blue-btn-shadow text-white"
-                            : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50"
-                        }`}
+                        className={`px-4 py-2 border rounded-lg font-semibold transition-all duration-300 ${currentPage === index + 1
+                          ? "border-[#2151A0] blue-gradient blue-btn-shadow text-white"
+                          : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50"
+                          }`}
                       >
                         {index + 1}
                       </button>

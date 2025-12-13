@@ -4,9 +4,9 @@ import type { Route } from "./+types/withdrawals.request";
 import { AddWithdrawalLayout } from "~/components/templates/AddWithdrawalLayout";
 import { WithdrawalWizardContent } from "~/features/withdrawals/components/WithdrawalWizardContent";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "Request Withdrawal - LMS Alprodas" },
+    { title: "Request Withdrawal - Alprodas LMS" },
     {
       name: "description",
       content: "Create a new withdrawal request for your earnings",

@@ -326,7 +326,7 @@ export function CourseDetailsStep({
               className="px-6 py-3"
             >
               <span className="text-brand-white text-base font-semibold">
-                Next: Course Price
+                Next: Course Token
               </span>
               <ArrowRight className="w-4 h-4 text-white" />
             </Button>

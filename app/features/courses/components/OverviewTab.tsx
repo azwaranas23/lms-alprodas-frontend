@@ -18,7 +18,6 @@ interface Course {
 	description: string;
 	about?: string;
 	tools?: string;
-	price: number;
 	status: string;
 	total_lessons: number;
 	total_students: number;
@@ -79,7 +78,10 @@ interface OverviewTabProps {
 	course: Course;
 }
 
-function formatCurrency(amount: number): string {
+function formatCurrency(amount: number | undefined | null): string {
+	if (amount === undefined || amount === null || isNaN(amount)) {
+		return "Rp 0";
+	}
 	if (amount >= 1000000000) {
 		return `Rp ${(amount / 1000000000).toFixed(1).replace(/\.0$/, "")}B`;
 	}
@@ -134,9 +136,6 @@ export function OverviewTab({ course }: OverviewTabProps) {
 		: "0.0";
 
 	const totalReviews = course.reviews?.length || 0;
-
-	// Calculate total revenue (price * total students)
-	const totalRevenue = course.price * course.total_students;
 
 	// Initialize charts when component mounts
 	useEffect(() => {
@@ -420,24 +419,6 @@ export function OverviewTab({ course }: OverviewTabProps) {
 					<div className="flex items-center justify-between">
 						<div>
 							<p className="text-brand-dark text-base font-medium">
-								Total Revenue
-							</p>
-							<p className="text-brand-dark text-3xl font-extrabold leading-tight my-2">
-								{formatCurrency(totalRevenue)}
-							</p>
-							<p className="text-success text-base font-medium">
-								This course
-							</p>
-						</div>
-						<div className="w-12 h-12 bg-purple-50 rounded-[16px] flex items-center justify-center">
-							<DollarSign className="w-6 h-6 text-purple-600" />
-						</div>
-					</div>
-				</div>
-				<div className="bg-white border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 transition-all duration-300 p-5">
-					<div className="flex items-center justify-between">
-						<div>
-							<p className="text-brand-dark text-base font-medium">
 								Average Rating
 							</p>
 							<p className="text-brand-dark text-3xl font-extrabold leading-tight my-2">
@@ -621,14 +602,6 @@ export function OverviewTab({ course }: OverviewTabProps) {
 							</span>
 							<span className="text-brand-dark text-base font-medium">
 								{course.subject?.name || "Web Development"}
-							</span>
-						</div>
-						<div className="flex justify-between items-center">
-							<span className="text-brand-light text-base">
-								Price
-							</span>
-							<span className="text-brand-dark text-base font-medium">
-								{formatCurrency(course.price)}
 							</span>
 						</div>
 						<div className="flex justify-between items-center">

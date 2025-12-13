@@ -12,7 +12,7 @@ import type { Subject } from "~/services/subjects.service";
 
 export function meta() {
   return [
-    { title: "Subjects - LMS Alprodas" },
+    { title: "Subjects - Alprodas LMS" },
     {
       name: "description",
       content: "Manage and organize learning subjects across the platform",
@@ -195,7 +195,7 @@ export default function Subjects() {
                       onEdit={() =>
                         navigate(`/dashboard/subjects/edit/${subject.id}`)
                       }
-                      onView={() => {}}
+                      onView={() => { }}
                     />
                   ))}
                 </div>

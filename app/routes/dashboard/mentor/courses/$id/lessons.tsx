@@ -2,7 +2,7 @@ import { CourseLessonsPage } from "~/features/courses/components/CourseLessonsPa
 
 export function meta() {
   return [
-    { title: "Course Lessons - LMS Alprodas" },
+    { title: "Course Lessons - Alprodas LMS" },
     { name: "description", content: "Manage course lessons and content" },
   ];
 }
