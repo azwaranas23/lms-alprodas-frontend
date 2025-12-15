@@ -41,6 +41,8 @@ interface BaseSidebarProps {
   variant?: "normal" | "wizard" | "learning";
   role?: "manager" | "mentor" | "student";
   className?: string;
+  isCollapsed?: boolean;
+  toggleSidebar?: () => void;
 }
 
 function NavLink({
@@ -48,14 +50,19 @@ function NavLink({
   icon: Icon,
   label,
   isActive = false,
+  isCollapsed = false,
 }: {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   label: string;
   isActive?: boolean;
+  isCollapsed?: boolean;
 }) {
   const baseClasses =
-    "nav-link border rounded-[20px] transition-all duration-300 flex items-center gap-3 px-4 py-3";
+    "nav-link border rounded-[20px] transition-all duration-300 flex items-center";
+  const expandedClasses = "gap-3 px-4 py-3";
+  const collapsedClasses = "justify-center p-2 w-10 h-10 mx-auto";
+
   const activeClasses =
     "nav-link-active border-[#0B1042] relative overflow-hidden hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] bg-gradient-to-r from-[#0C51D9] to-[#2151A0]";
   const inactiveClasses =
@@ -64,16 +71,19 @@ function NavLink({
   return (
     <Link
       to={href}
-      className={`${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}
+      title={isCollapsed ? label : undefined}
+      className={`${baseClasses} ${isCollapsed ? collapsedClasses : expandedClasses} ${isActive ? activeClasses : inactiveClasses}`}
     >
       <Icon
-        className={`w-5 h-5 ${isActive ? "text-white" : "text-gray-600"}`}
+        className={`${isCollapsed ? "w-6 h-6" : "w-5 h-5"} ${isActive ? "text-white" : "text-gray-600"}`}
       />
-      <span
-        className={`text-base ${isActive ? "font-semibold text-white" : "font-medium text-brand-dark"}`}
-      >
-        {label}
-      </span>
+      {!isCollapsed && (
+        <span
+          className={`text-base ${isActive ? "font-semibold text-white" : "font-medium text-brand-dark"}`}
+        >
+          {label}
+        </span>
+      )}
     </Link>
   );
 }
@@ -82,6 +92,8 @@ export function BaseSidebar({
   variant = "normal",
   role,
   className = "",
+  isCollapsed = false,
+  toggleSidebar,
 }: BaseSidebarProps) {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -369,7 +381,8 @@ export function BaseSidebar({
 
   // Variant-specific styling
   const getSidebarClasses = () => {
-    const baseClasses = "w-64 bg-white border-r border-[#DCDEDD] flex flex-col";
+    const widthClass = isCollapsed ? "w-20" : "w-64";
+    const baseClasses = `${widthClass} bg-white border-r border-[#DCDEDD] flex flex-col transition-all duration-300`;
 
     switch (variant) {
       case "wizard":
@@ -384,35 +397,77 @@ export function BaseSidebar({
   const sections = getSections();
 
   return (
-    <aside className={`${getSidebarClasses()} ${className}`}>
+    <aside className={`${getSidebarClasses()} ${className} relative group`}>
+      {/* Toggle Button */}
+      {toggleSidebar && (
+        <button
+          onClick={toggleSidebar}
+          className="absolute -right-4 top-24 bg-[#0C51D9] border-4 border-[#F9F9F9] rounded-full w-8 h-8 flex items-center justify-center shadow-md hover:shadow-lg hover:bg-[#093cba] transition-all z-50 text-white cursor-pointer"
+        >
+          {isCollapsed ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          )}
+        </button>
+      )}
+
       {/* Logo Section */}
-      <div className="px-6 py-4 border-b border-[#DCDEDD]">
+      <div className={`px-4 py-4 border-b border-[#DCDEDD] flex items-center ${isCollapsed ? 'justify-center' : ''} h-[88px]`}>
         <Link
           to="/"
-          className="flex items-center gap-4 hover:opacity-80 transition-opacity duration-300"
+          className="flex items-center gap-4 hover:opacity-80 transition-opacity duration-300 overflow-hidden"
         >
-          <div className="w-14 h-14 relative flex items-center justify-center">
-            <div className="w-14 h-14 absolute bg-gradient-to-br from-primary-100 to-primary-200 rounded-full"></div>
-            <div className="w-10 h-10 absolute bg-gradient-to-br from-primary-500 to-primary-600 rounded-full opacity-90"></div>
-            <GraduationCap className="w-5 h-5 text-white relative z-10" />
+          <div className="w-10 h-10 relative flex-shrink-0 flex items-center justify-center">
+            <div className="w-10 h-10 absolute bg-gradient-to-br from-primary-100 to-primary-200 rounded-full"></div>
+            <div className="w-7 h-7 absolute bg-gradient-to-br from-primary-500 to-primary-600 rounded-full opacity-90"></div>
+            <GraduationCap className="w-4 h-4 text-white relative z-10" />
           </div>
-          <div>
-            <h1 className="text-brand-dark text-lg font-bold">Alprodas LMS</h1>
-            <p className="text-brand-dark text-xs font-normal">
-              {getLogoSubtitle()}
-            </p>
-          </div>
+          {!isCollapsed && (
+            <div className="whitespace-nowrap transition-opacity duration-300 min-w-[200px]">
+              <h1 className="text-brand-dark text-lg font-bold">Alprodas LMS</h1>
+              <p className="text-brand-dark text-xs font-normal">
+                {getLogoSubtitle()}
+              </p>
+            </div>
+          )}
         </Link>
       </div>
 
       {/* Navigation Menu */}
-      <nav className="px-6 py-4 space-y-6">
+      <nav className={`px-4 py-4 space-y-6 overflow-y-auto ${isCollapsed ? 'scrollbar-none' : ''}`}>
         {sections.map((section) => (
           <div key={section.title}>
-            <h3 className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-3">
-              {section.title}
-            </h3>
-            <div className="space-y-3">
+            {!isCollapsed && (
+              <h3 className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-3 px-2">
+                {section.title}
+              </h3>
+            )}
+            <div className="space-y-2">
               {section.items.map((item) => {
                 // Check permissions if specified
                 if (item.permission && !hasPermission(item.permission)) {
@@ -430,6 +485,7 @@ export function BaseSidebar({
                     icon={item.icon}
                     label={item.label}
                     isActive={isActive}
+                    isCollapsed={isCollapsed}
                   />
                 );
               })}

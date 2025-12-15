@@ -40,54 +40,49 @@ function SubjectCard({ subject }: SubjectCardProps) {
   };
 
   return (
-    <Card hover className="p-4">
-      <div className="flex gap-4 h-full">
-        {/* Subject Image */}
-        <div
-          className={`w-36 h-full bg-gradient-to-br ${getGradient(subject.id)} relative overflow-hidden rounded-[12px] flex-shrink-0`}
-        >
-          <Image
-            src={subject.image || undefined}
-            alt={subject.name}
-            className="w-full h-full object-cover rounded-[12px]"
-            imageType="subject"
-            identifier={subject.id.toString()}
-          />
-        </div>
+    <Card hover className="h-full flex flex-col p-4">
+      {/* Subject Image */}
+      <div
+        className={`w-full h-48 bg-gradient-to-br ${getGradient(subject.id)} relative overflow-hidden rounded-[12px] mb-4`}
+      >
+        <Image
+          src={subject.image || undefined}
+          alt={subject.name}
+          className="w-full h-full object-cover rounded-[12px]"
+          imageType="subject"
+          identifier={subject.id.toString()}
+        />
+      </div>
 
-        {/* Content */}
-        <div className="flex-1 flex flex-col">
-          <div className="flex-1 mb-3">
-            <h4 className="text-brand-dark text-lg font-bold mb-2">
-              {subject.name}
-            </h4>
-            <p className="text-brand-light text-sm line-clamp-2 mb-3">
-              {subject.description || "Explore this subject area"}
-            </p>
+      {/* Content */}
+      <div className="flex-1 flex flex-col">
+        <h4 className="text-brand-dark text-lg font-bold mb-2">
+          {subject.name}
+        </h4>
+        <p className="text-brand-light text-sm line-clamp-2 mb-4 flex-1">
+          {subject.description || "Explore this subject area"}
+        </p>
 
-            <div className="flex items-center gap-6 text-sm text-gray-600 mb-3">
-              <div className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4" />
-                <span>{subject.total_courses} Courses</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4" />
-                <span>{subject.total_students} Students</span>
-              </div>
-            </div>
+        <div className="flex items-center gap-6 text-sm text-gray-600 mb-6">
+          <div className="flex items-center gap-2">
+            <BookOpen className="w-4 h-4" />
+            <span>{subject.total_courses} Courses</span>
           </div>
-
-          <div className="flex">
-            <div className="w-full">
-              <a href="/courses">
-                <Button variant="outline" className="px-8 py-4 text-lg">
-                  View All Courses
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </a>
-            </div>
+          <div className="flex items-center gap-2">
+            <Users className="w-4 h-4" />
+            <span>{subject.total_students} Students</span>
           </div>
         </div>
+
+        <a href="/courses" className="mt-auto">
+          <Button
+            variant="outline"
+            className="w-full py-2 text-sm flex justify-center items-center gap-2"
+          >
+            View All Courses
+            <ArrowRight className="w-4 h-4" />
+          </Button>
+        </a>
       </div>
     </Card>
   );
@@ -309,34 +304,27 @@ export function TopicContentSection({ topicId }: TopicContentSectionProps) {
 
               {/* Subjects Grid */}
               {subjectsLoading ? (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {[1, 2, 3, 4].map((i) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[1, 2, 3].map((i) => (
                     <div
                       key={i}
-                      className="border border-[#DCDEDD] rounded-[20px] p-4 animate-pulse"
+                      className="border border-[#DCDEDD] rounded-[20px] p-4 animate-pulse flex flex-col"
                     >
-                      <div className="flex gap-4 h-full">
-                        <div className="w-36 h-24 bg-gray-200 rounded-[12px] flex-shrink-0"></div>
-                        <div className="flex-1 flex flex-col">
-                          <div className="flex-1 mb-3">
-                            <div className="h-6 bg-gray-200 rounded mb-2"></div>
-                            <div className="h-4 bg-gray-200 rounded mb-3"></div>
-                            <div className="flex items-center gap-6 mb-3">
-                              <div className="h-4 bg-gray-200 rounded w-20"></div>
-                              <div className="h-4 bg-gray-200 rounded w-16"></div>
-                            </div>
-                          </div>
-                          <div className="flex gap-2">
-                            <div className="flex-1 h-8 bg-gray-200 rounded"></div>
-                            <div className="flex-1 h-8 bg-gray-200 rounded"></div>
-                          </div>
+                      <div className="w-full h-48 bg-gray-200 rounded-[12px] mb-4"></div>
+                      <div className="flex-1 flex flex-col">
+                        <div className="h-6 bg-gray-200 rounded mb-2 w-3/4"></div>
+                        <div className="h-4 bg-gray-200 rounded mb-4 w-full"></div>
+                        <div className="flex justify-between items-center mb-4">
+                          <div className="h-4 bg-gray-200 rounded w-20"></div>
+                          <div className="h-4 bg-gray-200 rounded w-20"></div>
                         </div>
+                        <div className="h-10 bg-gray-200 rounded w-full mt-auto"></div>
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {subjects.map((subject) => (
                     <SubjectCard key={subject.id} subject={subject} />
                   ))}

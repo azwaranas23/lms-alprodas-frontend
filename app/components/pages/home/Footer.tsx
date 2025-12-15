@@ -1,270 +1,130 @@
 import {
   GraduationCap,
-  Mail,
-  Users,
-  Book,
-  Award,
-  TrendingUp,
-  Component,
-  Code,
-  Palette,
-  BarChart3,
-  Smartphone,
   Twitter,
   Linkedin,
   Instagram,
   Youtube,
+  Send,
 } from "lucide-react";
-import { Button } from "~/components/atoms/Button";
-import { Input } from "~/components/atoms/Input";
-
-interface SocialLink {
-  name: string;
-  href: string;
-  icon: React.ComponentType<any>;
-  bgColor: string;
-  hoverBgColor: string;
-}
-
-const socialLinks: SocialLink[] = [
-  {
-    name: "Twitter",
-    href: "#",
-    icon: Twitter,
-    bgColor: "bg-blue-600/20",
-    hoverBgColor: "group-hover:bg-blue-600/40",
-  },
-  {
-    name: "LinkedIn",
-    href: "#",
-    icon: Linkedin,
-    bgColor: "bg-blue-700/20",
-    hoverBgColor: "group-hover:bg-blue-700/40",
-  },
-  {
-    name: "Instagram",
-    href: "#",
-    icon: Instagram,
-    bgColor: "bg-pink-600/20",
-    hoverBgColor: "group-hover:bg-pink-600/40",
-  },
-  {
-    name: "YouTube",
-    href: "#",
-    icon: Youtube,
-    bgColor: "bg-red-600/20",
-    hoverBgColor: "group-hover:bg-red-600/40",
-  },
-];
-
-interface TrendingCourse {
-  name: string;
-  href: string;
-  icon: React.ComponentType<any>;
-  iconColor: string;
-}
-
-const trendingCourses: TrendingCourse[] = [
-  {
-    name: "React Development",
-    href: "#",
-    icon: Component,
-    iconColor: "text-blue-400",
-  },
-  {
-    name: "Python Programming",
-    href: "#",
-    icon: Code,
-    iconColor: "text-green-400",
-  },
-  {
-    name: "UI/UX Design",
-    href: "#",
-    icon: Palette,
-    iconColor: "text-purple-400",
-  },
-  {
-    name: "Data Science",
-    href: "#",
-    icon: BarChart3,
-    iconColor: "text-orange-400",
-  },
-  {
-    name: "Mobile Development",
-    href: "#",
-    icon: Smartphone,
-    iconColor: "text-pink-400",
-  },
-];
-
-const companyLinks = [
-  { name: "About Us", href: "#" },
-  { name: "Our Team", href: "#" },
-  { name: "Careers", href: "#" },
-  { name: "Press", href: "#" },
-  { name: "Blog", href: "#" },
-];
-
-const supportLinks = [
-  { name: "Help Center", href: "#" },
-  { name: "Contact Us", href: "#" },
-  { name: "Privacy Policy", href: "#" },
-  { name: "Terms of Service", href: "#" },
-  { name: "Cookie Policy", href: "#" },
-];
+import { Link } from "react-router";
 
 export function Footer() {
+  const categories = [
+    { name: "Basic Programming", href: "#" },
+    { name: "Development", href: "#" },
+    { name: "Network & Security", href: "#" },
+    { name: "Multimedia", href: "#" },
+    { name: "Embedded System", href: "#" },
+    { name: "Cloud Computing", href: "#" },
+  ];
+
+  const tags = [
+    "REACT", "PYTHON", "UI/UX", "JAVA",
+    "WEB", "MOBILE", "DESIGN", "CSS",
+    "ALGORITHM", "DATA", "C++"
+  ];
+
+  const socialLinks = [
+    { name: "Twitter", href: "#", icon: Twitter },
+    { name: "LinkedIn", href: "#", icon: Linkedin },
+    { name: "Instagram", href: "#", icon: Instagram },
+    { name: "YouTube", href: "#", icon: Youtube },
+  ];
+
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-16">
+    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
-          {/* Company Info */}
-          <div className="lg:col-span-1 space-y-4">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 relative flex items-center justify-center">
-                <div className="w-12 h-12 absolute bg-gradient-to-br from-primary-500 to-primary-600 rounded-full"></div>
-                <GraduationCap className="w-6 h-6 text-white relative z-10" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+
+          {/* Column 1: Brand */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 relative flex items-center justify-center bg-[#0C51D9] rounded-full">
+                <GraduationCap className="w-5 h-5 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-brand-white">
+              <h3 className="text-xl font-bold tracking-wide">
                 Alprodas LMS
               </h3>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Empowering the next generation of developers with world-class
-              courses and expert mentorship.
+              Empowering the next generation of developers with world-class courses and expert mentorship. Join us to master the skills of tomorrow.
             </p>
+          </div>
 
-            {/* Community Stats */}
-            <div className="space-y-2 pt-2">
-              <div className="flex items-center gap-2 text-sm">
-                <Users className="w-4 h-4 text-primary-500" />
-                <span className="text-white font-semibold">10,000+</span>
-                <span className="text-gray-400">Students</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <Book className="w-4 h-4 text-primary-500" />
-                <span className="text-white font-semibold">500+</span>
-                <span className="text-gray-400">Courses</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <Award className="w-4 h-4 text-primary-500" />
-                <span className="text-white font-semibold">50+</span>
-                <span className="text-gray-400">Expert Mentors</span>
-              </div>
+          {/* Column 2: Categories */}
+          <div>
+            <h4 className="text-lg font-bold mb-6 tracking-wider uppercase">Categories</h4>
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-3">
+              {categories.map((cat) => (
+                <li key={cat.name}>
+                  <Link
+                    to={cat.href}
+                    className="text-gray-400 hover:text-[#0C51D9] transition-colors text-sm"
+                  >
+                    {cat.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: Tag Cloud */}
+          <div>
+            <h4 className="text-lg font-bold mb-6 tracking-wider uppercase">Tag Cloud</h4>
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <Link
+                  key={tag}
+                  to="#"
+                  className="px-4 py-2 bg-[#2a2a2a] text-xs font-bold text-gray-300 border border-gray-700 rounded-full hover:bg-[#0C51D9] hover:text-white hover:border-[#0C51D9] transition-all uppercase"
+                >
+                  {tag}
+                </Link>
+              ))}
             </div>
           </div>
 
-          {/* Featured Courses */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-brand-white flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-primary-500" />
-              Trending Courses
-            </h4>
-            <ul className="space-y-3">
-              {trendingCourses.map((course) => {
-                const IconComponent = course.icon;
-                return (
-                  <li key={course.name} className="flex items-center gap-3">
-                    <IconComponent className={`w-4 h-4 ${course.iconColor}`} />
-                    <a
-                      href={course.href}
-                      className="text-gray-300 hover:text-white transition-colors text-sm"
-                    >
-                      {course.name}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          {/* Column 4: Subscribe */}
+          <div>
+            <h4 className="text-lg font-bold mb-6 tracking-wider uppercase">Subscribe</h4>
+            <div className="flex mb-8">
+              <input
+                type="email"
+                placeholder="Enter email address"
+                className="rounded-full w-full bg-[#2a2a2a] border border-gray-700 text-white px-4 py-3 rounded-l-lg text-sm focus:outline-none focus:border-[#0C51D9] placeholder:text-gray-500"
+              />
+              <button className="bg-[#f1c40f] text-gray-900 px-4 py-3 rounded-r-lg hover:bg-yellow-500 transition-colors flex items-center justify-center font-bold">
+                <Send size={18} />
+              </button>
+            </div>
 
-          {/* Company */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-brand-white">Company</h4>
-            <ul className="space-y-2">
-              {companyLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors text-sm"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-brand-white">Support</h4>
-            <ul className="space-y-2">
-              {supportLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors text-sm"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Connect & Social */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-brand-white">
-              Connect With Us
-            </h4>
-            <div className="space-y-3">
+            <h4 className="text-sm font-bold mb-4 tracking-wider uppercase">Follow Us</h4>
+            <div className="flex gap-4">
               {socialLinks.map((social) => {
-                const IconComponent = social.icon;
+                const Icon = social.icon;
                 return (
-                  <a
+                  <Link
                     key={social.name}
-                    href={social.href}
-                    className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors text-sm group"
+                    to={social.href}
+                    className="w-10 h-10 flex items-center justify-center bg-[#2a2a2a] text-gray-400 rounded-full hover:bg-[#0C51D9] hover:text-white transition-all"
                   >
-                    <div
-                      className={`w-8 h-8 rounded-full ${social.bgColor} flex items-center justify-center ${social.hoverBgColor} transition-colors`}
-                    >
-                      <IconComponent className="w-4 h-4" />
-                    </div>
-                    {social.name}
-                  </a>
+                    <Icon size={18} />
+                  </Link>
                 );
               })}
             </div>
           </div>
         </div>
 
-        {/* Bottom Footer */}
-        <div className="border-t border-gray-700/50 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm">
-              © 2025 Alprodas LMS. All rights reserved.
-            </p>
-            <div className="flex items-center gap-6">
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors text-sm"
-              >
-                Privacy
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors text-sm"
-              >
-                Terms
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors text-sm"
-              >
-                Cookies
-              </a>
-            </div>
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-500 text-sm">
+            Copyright ©2025 All rights reserved
+          </p>
+          <div className="flex gap-6">
+            <Link to="#" className="text-gray-500 hover:text-white text-xs uppercase tracking-wide">Terms</Link>
+            <Link to="#" className="text-gray-500 hover:text-white text-xs uppercase tracking-wide">Privacy</Link>
+            <Link to="#" className="text-gray-500 hover:text-white text-xs uppercase tracking-wide">Compliances</Link>
           </div>
         </div>
       </div>

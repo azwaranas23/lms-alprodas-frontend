@@ -8,6 +8,9 @@ import {
   UserPlus,
   GraduationCap,
   UserCheck,
+  Eye,
+  EyeOff,
+  Loader2,
 } from "lucide-react";
 import { Navbar } from "~/components/organisms/Navbar";
 import { ProfilePhotoUpload } from "~/features/auth/components/ProfilePhotoUpload";
@@ -59,10 +62,18 @@ export default function SignupPage() {
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
+  // UI States
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const validateField = (
     name: string,
-    value: string | File | null | boolean
+    value: string | File | null | boolean,
+    data?: FormData
   ): string => {
+    const currentData = data || formData;
+
     // Handle File type for profilePhoto
     if (name === "profilePhoto") {
       return ""; // File validation can be done separately if needed
@@ -89,11 +100,13 @@ export default function SignupPage() {
           ? "Please enter a valid email address."
           : "";
       case "password":
-        return (stringValue?.length || 0) < 8
-          ? "Password must be at least 8 characters long."
-          : "";
+        if (!stringValue) return "Password is required.";
+        if (stringValue.length < 8) return "Password must be at least 8 characters.";
+        if (!/[A-Z]/.test(stringValue)) return "Password must contain at least one uppercase letter.";
+        if (!/[0-9]/.test(stringValue)) return "Password must contain at least one number.";
+        return "";
       case "confirmPassword":
-        return stringValue !== formData.password
+        return stringValue !== currentData.password
           ? "Passwords do not match."
           : "";
       case "terms":
@@ -104,7 +117,8 @@ export default function SignupPage() {
   };
 
   const handleInputChange = (name: string, value: string | File | null) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const nextFormData = { ...formData, [name]: value };
+    setFormData(nextFormData);
 
     // Clear error when user starts typing
     if (errors[name]) {
@@ -112,20 +126,25 @@ export default function SignupPage() {
     }
 
     // Real-time validation for confirm password
+    // We check if content changed affects confirm password validity
     if (
       name === "confirmPassword" ||
-      (name === "password" && formData.confirmPassword)
+      (name === "password" && nextFormData.confirmPassword)
     ) {
       const confirmError = validateField(
         "confirmPassword",
-        name === "confirmPassword" ? value : formData.confirmPassword
+        name === "confirmPassword" ? value : nextFormData.confirmPassword,
+        nextFormData
       );
       setErrors((prev) => ({ ...prev, confirmPassword: confirmError }));
     }
+
+    // Also validate the current field if you want immediate feedback (optional, usually onBlur is better for general fields)
+    // allowing onBlur to handle standard validation to avoid annoyance.
   };
 
   const handleBlur = (name: string, value: string | File | null) => {
-    const error = validateField(name, value);
+    const error = validateField(name, value, formData);
     setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
@@ -148,6 +167,8 @@ export default function SignupPage() {
 
     // If no errors, submit form
     if (Object.keys(newErrors).length === 0) {
+      setLoading(true); // Start loading
+
       try {
         // Prepare form data for API
         const apiFormData = new FormData();
@@ -191,6 +212,8 @@ export default function SignupPage() {
           axiosError.response?.data?.message ||
           "Registration failed. Please try again.";
         setApiError(errorMessage);
+      } finally {
+        setLoading(false); // Stop loading regardless of outcome (unless redirected)
       }
     }
   };
@@ -288,8 +311,8 @@ export default function SignupPage() {
                     }
                     onBlur={(e) => handleBlur("fullName", e.target.value)}
                     className={`w-full pl-10 pr-4 py-3 bg-white border rounded-[16px] transition-all duration-300 ${errors.fullName
-                        ? "border-[#DC2626] border-2"
-                        : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white"
+                      ? "border-[#DC2626] border-2"
+                      : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white"
                       }`}
                     placeholder="Enter your full name"
                   />
@@ -358,8 +381,8 @@ export default function SignupPage() {
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     onBlur={(e) => handleBlur("email", e.target.value)}
                     className={`w-full pl-10 pr-4 py-3 bg-white border rounded-[16px] transition-all duration-300 ${errors.email
-                        ? "border-[#DC2626] border-2"
-                        : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white"
+                      ? "border-[#DC2626] border-2"
+                      : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white"
                       }`}
                     placeholder="Enter your email address"
                   />
@@ -382,11 +405,11 @@ export default function SignupPage() {
                   Password *
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                     <Lock className="h-4 w-4 text-gray-400" />
                   </div>
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id="password"
                     name="password"
                     required
@@ -396,12 +419,23 @@ export default function SignupPage() {
                       handleInputChange("password", e.target.value)
                     }
                     onBlur={(e) => handleBlur("password", e.target.value)}
-                    className={`w-full pl-10 pr-4 py-3 bg-white border rounded-[16px] transition-all duration-300 ${errors.password
-                        ? "border-[#DC2626] border-2"
-                        : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white"
+                    className={`w-full pl-10 pr-10 py-3 bg-white border rounded-[16px] transition-all duration-300 ${errors.password
+                      ? "border-[#DC2626] border-2"
+                      : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white"
                       }`}
                     placeholder="Create a password"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
                 </div>
                 {errors.password && (
                   <div className="mt-2">
@@ -421,11 +455,11 @@ export default function SignupPage() {
                   Confirm Password *
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                     <Lock className="h-4 w-4 text-gray-400" />
                   </div>
                   <input
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     id="confirmPassword"
                     name="confirmPassword"
                     required
@@ -436,12 +470,23 @@ export default function SignupPage() {
                     onBlur={(e) =>
                       handleBlur("confirmPassword", e.target.value)
                     }
-                    className={`w-full pl-10 pr-4 py-3 bg-white border rounded-[16px] transition-all duration-300 ${errors.confirmPassword
-                        ? "border-[#DC2626] border-2"
-                        : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white"
+                    className={`w-full pl-10 pr-10 py-3 bg-white border rounded-[16px] transition-all duration-300 ${errors.confirmPassword
+                      ? "border-[#DC2626] border-2"
+                      : "border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white"
                       }`}
                     placeholder="Confirm your password"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
                 </div>
                 {errors.confirmPassword && (
                   <div className="mt-2">
@@ -499,10 +544,21 @@ export default function SignupPage() {
               {/* Sign Up Button */}
               <button
                 type="submit"
-                className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-3 flex items-center gap-2 w-full justify-center text-brand-white text-sm font-semibold"
+                disabled={loading}
+                className={`btn-primary rounded-[8px] border border-[#2151A0] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-3 flex items-center gap-2 w-full justify-center text-brand-white text-sm font-semibold
+                  ${loading ? "opacity-70 cursor-not-allowed" : "hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9]"}`}
               >
-                <UserPlus className="w-4 h-4" />
-                Create Account
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Creating Account...
+                  </>
+                ) : (
+                  <>
+                    <UserPlus className="w-4 h-4" />
+                    Create Account
+                  </>
+                )}
               </button>
             </form>
 

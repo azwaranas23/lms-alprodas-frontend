@@ -24,50 +24,76 @@ export function LatestCourses({
   onCourseDetails,
 }: LatestCoursesProps) {
   const handleDetailsClick = (id: number) => {
-    if (onCourseDetails) {
-      onCourseDetails(id.toString());
-    }
+    onCourseDetails?.(id.toString());
   };
 
   return (
     <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-5">
-      <div className="flex items-center justify-between mb-4">
+      <div className="mb-4">
         <h3 className="text-brand-dark text-lg font-bold">
           Latest Courses Added
         </h3>
       </div>
-      <div className="space-y-4">
+
+      {/* GRID CARD */}
+      <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {courses.map((course) => (
-          <div key={course.id} className="flex items-center gap-3">
+          <div
+            key={course.id}
+            className="
+              border border-[#DCDEDD]
+              rounded-2xl
+              p-4
+              flex flex-col
+              hover:border-[#0C51D9]
+              hover:shadow-md
+              transition-all duration-300
+            "
+          >
+            {/* IMAGE */}
             <Image
               src={course.image}
               alt={course.title}
-              className="w-24 h-16 rounded-lg object-cover"
               imageType="course"
               identifier={course.id.toString()}
+              className="w-full h-40 rounded-xl object-cover mb-3"
             />
+
+            {/* CONTENT */}
             <div className="flex-1">
-              <div className="mb-1">
-                <p className="text-brand-dark text-lg font-bold">
-                  {course.title}
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Tag className="w-4 h-4 text-gray-500" />
-                <p className="text-brand-dark text-sm font-normal">
-                  {course.subject.name}
-                </p>
-                <BookOpen className="w-4 h-4 text-gray-500" />
-                <p className="text-brand-dark text-sm font-normal">
-                  {course.total_lessons} Lessons
-                </p>
+              <p className="text-brand-dark text-base font-bold leading-snug mb-2">
+                {course.title}
+              </p>
+
+              <div className="flex flex-col gap-1 text-sm text-brand-dark">
+                <div className="flex items-center gap-2">
+                  <Tag className="w-4 h-4 text-gray-500" />
+                  <span>{course.subject.name}</span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <BookOpen className="w-4 h-4 text-gray-500" />
+                  <span>{course.total_lessons} Lessons</span>
+                </div>
               </div>
             </div>
+
+            {/* ACTION */}
             <button
               onClick={() => handleDetailsClick(course.id)}
-              className="btn-details border border-[#DCDEDD] rounded-xl hover:ring-2 hover:ring-[#0C51D9] hover:text-[#0C51D9] transition-all duration-300 py-[14px] px-5 flex items-center justify-center"
+              className="
+                mt-4
+                btn-details
+                border border-[#DCDEDD]
+                rounded-xl
+                py-3
+                flex items-center justify-center
+                hover:ring-2 hover:ring-[#0C51D9]
+                hover:text-[#0C51D9]
+                transition-all duration-300
+              "
             >
-              <span className="text-brand-dark text-base font-medium">
+              <span className="text-brand-dark text-sm font-medium">
                 Details
               </span>
             </button>

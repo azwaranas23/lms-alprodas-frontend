@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { BaseSidebar } from "./BaseSidebar";
 import { BaseHeader } from "./BaseHeader";
 
@@ -23,10 +23,16 @@ export function Layout({
   backButton,
   variant = "normal",
 }: LayoutProps) {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+
   return (
     <div className="min-h-screen bg-[#F9F9F9]">
       <div className="flex h-screen">
-        <BaseSidebar variant={variant} />
+        <BaseSidebar
+          variant={variant}
+          isCollapsed={isSidebarCollapsed}
+          toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+        />
         <div className="flex-1 flex flex-col overflow-hidden">
           {(title || subtitle) && (
             <BaseHeader

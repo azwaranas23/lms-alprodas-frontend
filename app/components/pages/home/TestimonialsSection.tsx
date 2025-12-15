@@ -115,6 +115,36 @@ export function TestimonialsSection({ onSmoothScroll }: TestimonialsSectionProps
     });
   };
 
+  // Touch handling state
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      moveTestimonialsCarousel('next');
+    } else if (isRightSwipe) {
+      moveTestimonialsCarousel('prev');
+    }
+  };
+
   return (
     <section className="py-20 bg-white">
       {/* Centered Header */}
@@ -127,22 +157,26 @@ export function TestimonialsSection({ onSmoothScroll }: TestimonialsSectionProps
         </div>
       </div>
 
-      {/* Full Width Carousel */}
       <div className="relative">
         {/* Navigation Button Left */}
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
+        <div className="hidden md:block absolute left-4 top-1/2 -translate-y-1/2 z-10">
           <Button
             variant="outline"
             size="sm"
             onClick={() => moveTestimonialsCarousel('prev')}
-            className="w-12 h-12 rounded-[20px] p-0"
+            className="w-12 h-12 rounded-[20px] p-0 bg-white"
           >
             <ChevronLeft className="w-6 h-6" />
           </Button>
         </div>
 
         {/* Carousel Container */}
-        <div className="overflow-hidden">
+        <div
+          className="overflow-hidden"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <div
             className={`flex ${isTransitioning ? 'transition-transform duration-500 ease-in-out' : ''}`}
             style={{ transform: `translateX(-${(currentTestimonialIndex + visibleCards) * cardWidth}px)` }}>
@@ -153,18 +187,35 @@ export function TestimonialsSection({ onSmoothScroll }: TestimonialsSectionProps
         </div>
 
         {/* Navigation Button Right */}
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 z-10">
+        <div className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 z-10">
           <Button
             variant="outline"
             size="sm"
             onClick={() => moveTestimonialsCarousel('next')}
-            className="w-12 h-12 rounded-[20px] p-0"
+            className="w-12 h-12 rounded-[20px] p-0 bg-white"
           >
             <ChevronRight className="w-6 h-6" />
           </Button>
         </div>
       </div>
 
+      {/* Pagination Dots */}
+      <div className="flex justify-center gap-2 mt-8">
+        {testimonials.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => {
+              setIsTransitioning(true);
+              setCurrentTestimonialIndex(index);
+            }}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${(currentTestimonialIndex % testimonials.length + testimonials.length) % testimonials.length === index
+              ? "bg-[#0C51D9] w-8"
+              : "bg-gray-300 hover:bg-gray-400"
+              }`}
+            aria-label={`Go to testimonial ${index + 1}`}
+          />
+        ))}
+      </div>
     </section>
   );
 }

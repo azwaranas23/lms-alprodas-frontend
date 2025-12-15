@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Bell, MessageCircle, Settings, ChevronDown, ArrowLeft, LogOut, User } from 'lucide-react';
+import { Bell, MessageCircle, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router';
 import { useUser } from '~/hooks/useUser';
 import { authService } from '~/services/auth.service';
-import { Avatar } from '~/components/atoms/Avatar';
+import { UserProfileDropdown } from '~/components/molecules/UserProfileDropdown';
 
 interface BackButton {
   onClick?: () => void;
@@ -30,13 +30,8 @@ export function BaseHeader({
   showUserProfile = true,
   className = ''
 }: BaseHeaderProps) {
-  const { getFullName, getRoleName, getAvatar, getEmail } = useUser();
-  const [showDropdown, setShowDropdown] = useState(false);
+  const { getFullName } = useUser();
 
-  const handleLogout = () => {
-    authService.logout();
-    window.location.href = '/login';
-  };
 
   // Variant-specific styling
   const getHeaderClasses = () => {
@@ -80,57 +75,7 @@ export function BaseHeader({
   const renderUserProfile = () => {
     if (!showUserProfile) return null;
 
-    return (
-      <div className="relative">
-        <button
-          onClick={() => setShowDropdown(!showDropdown)}
-          className="flex items-center gap-3 hover:bg-gray-50 rounded-lg p-1 transition-colors cursor-pointer"
-          type="button"
-        >
-          <Avatar
-            src={getAvatar() || undefined}
-            name={getFullName()}
-            size="md"
-          />
-          <div className="text-left">
-            <p className="text-brand-dark text-base font-semibold">{getFullName()}</p>
-            <p className="text-brand-dark text-base font-normal leading-7">{getRoleName()}</p>
-          </div>
-          <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
-        </button>
-
-        {/* Dropdown Menu */}
-        {showDropdown && (
-          <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-            <div className="py-2">
-              <button
-                className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer"
-                type="button"
-              >
-                <User className="w-4 h-4" />
-                Profile
-              </button>
-              <button
-                className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer"
-                type="button"
-              >
-                <Settings className="w-4 h-4" />
-                Settings
-              </button>
-              <hr className="my-2 border-gray-200" />
-              <button
-                onClick={handleLogout}
-                className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 cursor-pointer"
-                type="button"
-              >
-                <LogOut className="w-4 h-4" />
-                Logout
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    );
+    return <UserProfileDropdown />;
   };
 
   return (

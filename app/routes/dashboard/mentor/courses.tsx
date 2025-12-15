@@ -231,110 +231,88 @@ export default function MentorCoursesPage() {
                     </p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {courses.map((course: Course) => (
                       <div
                         key={course.id}
-                        className="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4"
+                        className="
+                          border border-[#DCDEDD]
+                          rounded-2xl
+                          p-4
+                          flex flex-col
+                          hover:border-[#0C51D9]
+                          hover:shadow-md
+                          transition-all duration-300
+                          bg-white
+                        "
                       >
-                        <div className="flex gap-4 h-full">
-                          {/* Course Thumbnail */}
-                          <div className="w-36 h-full relative overflow-hidden rounded-[12px] flex-shrink-0">
-                            {course.images && course.images.length > 0 ? (
-                              <Image
-                                src={course.images[0].image_path}
-                                alt={course.title}
-                                className="w-full h-full object-cover"
-                                imageType="course"
-                                identifier={course.id.toString()}
-                              />
-                            ) : (
-                              <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center text-blue-600 font-bold text-2xl">
-                                {course.title.charAt(0).toUpperCase()}
+                        {/* Course Thumbnail */}
+                        <div className="w-full h-48 relative overflow-hidden rounded-xl mb-4 group">
+                          {course.images && course.images.length > 0 ? (
+                            <Image
+                              src={course.images[0].image_path}
+                              alt={course.title}
+                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                              imageType="course"
+                              identifier={course.id.toString()}
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center text-blue-600 font-bold text-2xl transition-transform duration-300 group-hover:scale-110">
+                              {course.title.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                          <div className="absolute top-3 right-3">
+                            <span className={getStatusBadgeClasses(course.status)}>
+                              {course.status}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Content */}
+                        <div className="flex-1 flex flex-col">
+                          <h4 className="text-brand-dark text-lg font-bold leading-tight mb-2 line-clamp-2 min-h-[3.5rem]" title={course.title}>
+                            {course.title}
+                          </h4>
+
+                          <div className="flex flex-col gap-2 mb-4">
+                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                              <Tag className="w-4 h-4 text-gray-400" />
+                              <span className="truncate">
+                                {course.subject?.topic?.name || course.subject?.name || "General"}
+                              </span>
+                            </div>
+
+                            <div className="flex items-center justify-between text-sm text-gray-600">
+                              <div className="flex items-center gap-2">
+                                <BookOpen className="w-4 h-4 text-gray-400" />
+                                <span>{course.total_lessons || 0} Lessons</span>
                               </div>
-                            )}
+                              <div className="flex items-center gap-2">
+                                <Users className="w-4 h-4 text-gray-400" />
+                                <span>{course.total_students?.toLocaleString() || 0} Students</span>
+                              </div>
+                            </div>
                           </div>
 
-                          {/* Content */}
-                          <div className="flex-1 flex flex-col">
-                            <div className="flex-1 mb-3">
-                              <div className="flex items-center gap-2 mb-2">
-                                <h4 className="text-brand-dark text-lg font-bold leading-tight">
-                                  {course.title}
-                                </h4>
-                                <span
-                                  className={getStatusBadgeClasses(
-                                    course.status
-                                  )}
-                                >
-                                  {course.status}
-                                </span>
-                              </div>
-
-                              <div className="flex items-center gap-2 mb-3">
-                                <Tag className="w-4 h-4" />
-                                <span className="text-sm text-gray-600">
-                                  {course.subject?.topic?.name ||
-                                    course.subject?.name ||
-                                    "General"}
-                                </span>
-                              </div>
-
-                              <div className="flex items-center gap-6 text-sm text-gray-600 mb-3">
-                                <div className="flex items-center gap-2">
-                                  <BookOpen className="w-4 h-4" />
-                                  <span>
-                                    {course.total_lessons || 0} Lessons
-                                  </span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <Users className="w-4 h-4" />
-                                  <span>
-                                    {course.total_students?.toLocaleString() ||
-                                      0}{" "}
-                                    Students
-                                  </span>
-                                </div>
-                              </div>
-
-                              <div className="flex items-start gap-2 mb-3">
-                                <Avatar
-                                  src={getAvatar() || undefined}
-                                  name={getFullName()}
-                                  size="md"
-                                />
-                                <div className="text-sm">
-                                  <div className="text-brand-dark font-medium">
-                                    {course.mentor?.name || getFullName()}
-                                  </div>
-                                  <div className="text-gray-500">
-                                    {course.mentor?.profile?.expertise ||
-                                      "Mentor"}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex gap-2">
-                              <button
-                                onClick={() => handleEditCourse(course.id)}
-                                className="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-3.5 flex items-center justify-center gap-2"
-                              >
-                                <Edit className="w-4 h-4 text-gray-600" />
-                                <span className="text-brand-dark text-sm font-semibold">
-                                  Edit Course
-                                </span>
-                              </button>
-                              <button
-                                onClick={() => handleViewDetails(course.id)}
-                                className="flex-1 btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-3 py-3.5 flex items-center justify-center gap-2"
-                              >
-                                <Eye className="w-4 h-4 text-white" />
-                                <span className="text-brand-white text-sm font-semibold">
-                                  Details
-                                </span>
-                              </button>
-                            </div>
+                          <div className="mt-auto pt-4 border-t border-gray-100 flex flex-col sm:flex-row gap-2">
+                            <button
+                              onClick={() => handleEditCourse(course.id)}
+                              className="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-3.5 flex items-center justify-center gap-2"
+                            >
+                              <Edit className="w-4 h-4 text-gray-600" />
+                              <span className="text-brand-dark text-sm font-semibold">
+                                Edit Course
+                              </span>
+                            </button>
+                            <button
+                              onClick={() => handleViewDetails(course.id)}
+                              className="flex-1 btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-3 py-3.5 flex items-center justify-center gap-2"
+                            >
+                              <Eye className="w-4 h-4 text-white" />
+                              <span className="text-brand-white text-sm font-semibold">
+                                Details
+                              </span>
+                            </button>
                           </div>
                         </div>
                       </div>

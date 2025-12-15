@@ -1,4 +1,5 @@
-import { ArrowRight, Play, Star, TrendingUp, Users } from "lucide-react";
+import { ArrowRight, BookOpen, Star, TrendingUp, Users } from "lucide-react";
+import { Link } from "react-router";
 import { Button } from "~/components/atoms/Button";
 import { motion } from "framer-motion";
 
@@ -39,7 +40,7 @@ export function HeroSection({ onSmoothScroll }: HeroSectionProps) {
             <span className="inline-block bg-[linear-gradient(110deg,#1a202c,45%,#2563eb,55%,#1a202c)] bg-[length:200%_100%] bg-clip-text text-transparent animate-background-shine">
               Learn, Practice, Improve,
             </span>
-            <br className="hidden lg:block" />
+            <br />
             <motion.span
               variants={{
                 hidden: { opacity: 0, scale: 0.9 },
@@ -55,20 +56,21 @@ export function HeroSection({ onSmoothScroll }: HeroSectionProps) {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button
-              variant="primary"
-              onClick={(e) => onSmoothScroll(e, "#courses")}
-              className="rounded-full px-8 py-4 text-base font-bold shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-all min-w-[160px]"
-            >
-              Get Started
-            </Button>
+            <Link to="/login">
+              <Button
+                variant="primary"
+                className="rounded-full px-8 py-4 text-base font-bold shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 transition-all min-w-[160px]"
+              >
+                Get Started
+              </Button>
+            </Link>
             <Button
               variant="outline"
-              onClick={(e) => onSmoothScroll(e, "#topics")}
+              onClick={(e) => onSmoothScroll(e, "#courses")}
               className="rounded-full px-8 py-4 text-base font-semibold border-2 hover:bg-gray-50 min-w-[160px] inline-flex justify-center items-center gap-2"
             >
-              <Play className="w-4 h-4 fill-current" />
-              Watch Demo
+              <BookOpen className="w-4 h-4 fill-current" />
+              See Courses
             </Button>
           </div>
         </motion.div>

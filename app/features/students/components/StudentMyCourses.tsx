@@ -222,9 +222,10 @@ export default function StudentMyCourses() {
 
         {/* ==================== BAGIAN ATAS: MY ENROLLED COURSES ==================== */}
         <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 bg-blue-50 rounded-[12px] flex items-center justify-center">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+            {/* LEFT */}
+            <div className="flex items-center gap-4">
+              <div className="w-11 h-11 bg-blue-50 rounded-[12px] flex items-center justify-center flex-shrink-0">
                 <BookOpen className="w-6 h-6 text-blue-600" />
               </div>
               <div>
@@ -232,16 +233,25 @@ export default function StudentMyCourses() {
                   My Courses
                 </h3>
                 <p className="text-brand-light text-sm font-normal">
-                  View and continue your enrolled courses and track your
-                  progress
+                  View and continue your enrolled courses and track your progress
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
+
+            {/* RIGHT */}
+            <div className="flex sm:items-center self-start sm:self-auto">
               <Button
                 variant="primary"
-                className="flex items-center gap-2"
                 onClick={handleScrollToCatalog}
+                className="
+        inline-flex
+        items-center
+        justify-center
+        gap-2
+        px-5
+        py-2.5
+        whitespace-nowrap
+      "
               >
                 <Search className="w-4 h-4 text-white" />
                 <span className="text-brand-white text-sm font-semibold">
@@ -318,7 +328,7 @@ export default function StudentMyCourses() {
               </div>
             )}
 
-          {/* Courses Grid - enrolled */}
+          {/* Courses Grid - Enrolled */}
           {!enrolledLoading &&
             !enrolledError &&
             filteredEnrolledCourses.length > 0 && (
@@ -327,150 +337,145 @@ export default function StudentMyCourses() {
                   <div
                     key={course.id}
                     onClick={() => navigate(`/course/${course.id}`)}
-                    className="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4"
+                    className="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4 flex flex-col cursor-pointer"
                   >
-                    <div className="flex gap-4 h-full">
-                      {/* Course Thumbnail */}
-                      <div className="w-36 h-full bg-gradient-to-br from-blue-100 to-purple-100 relative overflow-hidden rounded-[12px] flex-shrink-0">
-                        <Image
-                          src={course.image}
-                          alt={course.title}
-                          className="w-full h-full object-cover rounded-[12px]"
-                          imageType="course"
-                          identifier={course.id.toString()}
-                        />
+                    {/* Image - Stacked Top */}
+                    <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-purple-100 relative overflow-hidden rounded-[12px] mb-4">
+                      <Image
+                        src={course.image}
+                        alt={course.title}
+                        className="w-full h-full object-cover rounded-[12px]"
+                        imageType="course"
+                        identifier={course.id.toString()}
+                      />
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 flex flex-col">
+                      <h4 className="text-brand-dark text-lg font-bold leading-tight mb-2 line-clamp-2">
+                        {course.title}
+                      </h4>
+
+                      <div className="flex items-center gap-4 mb-3 flex-wrap">
+                        <div className="flex items-center gap-2">
+                          <Tag className="w-4 h-4" />
+                          <span className="text-sm text-gray-600 line-clamp-1">
+                            {course.subject.name}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-blue-600" />
+                          <span className="text-sm font-semibold text-blue-600 whitespace-nowrap">
+                            {course.progress_percentage}% Complete
+                          </span>
+                        </div>
                       </div>
 
-                      {/* Content */}
-                      <div className="flex-1 flex flex-col">
-                        <div className="flex-1 mb-3">
-                          <div className="flex items-center justify-between mb-2">
-                            <h4 className="text-brand-dark text-lg font-bold leading-tight">
-                              {course.title}
-                            </h4>
-                          </div>
+                      <div className="flex items-center gap-3 mb-4">
+                        <img
+                          src={getAvatarSrc(
+                            course.mentor.avatar,
+                            course.mentor.name
+                          )}
+                          alt={course.mentor.name}
+                          className="w-8 h-8 rounded-full object-cover"
+                          onError={(e) => {
+                            e.currentTarget.src = getAvatarSrc(
+                              undefined,
+                              course.mentor.name
+                            );
+                          }}
+                        />
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">
+                            Mentor: {course.mentor.name}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {course.mentor.expertise || "Mentor"}
+                          </p>
+                        </div>
+                      </div>
 
-                          <div className="flex items-center gap-4 mb-3">
-                            <div className="flex items-center gap-2">
-                              <Tag className="w-4 h-4" />
-                              <span className="text-sm text-gray-600">
-                                {course.subject.name}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Clock className="w-4 h-4 text-blue-600" />
-                              <span className="text-sm font-semibold text-blue-600">
-                                {course.progress_percentage}% Complete
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-3 mb-3">
-                            <img
-                              src={getAvatarSrc(
-                                course.mentor.avatar,
-                                course.mentor.name
-                              )}
-                              alt={course.mentor.name}
-                              className="w-8 h-8 rounded-full object-cover"
-                              onError={(e) => {
-                                e.currentTarget.src = getAvatarSrc(
-                                  undefined,
-                                  course.mentor.name
+                      {/* Actions */}
+                      <div className="mt-auto flex flex-col sm:flex-row gap-3">
+                        {course.progress_percentage === 100 &&
+                          course.certificate_id ? (
+                          <>
+                            <Button
+                              variant="outline"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDownloadCertificate(
+                                  course.id,
+                                  course.certificate_id,
+                                  course.title
                                 );
                               }}
-                            />
-                            <div>
-                              <p className="text-sm font-medium text-gray-900">
-                                Mentor: {course.mentor.name}
-                              </p>
-                              <p className="text-xs text-gray-500">
-                                {course.mentor.expertise || "Mentor"}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
+                              disabled={downloadingCertificates[course.id]}
+                              className="flex-1 w-full px-3 py-3.5 flex items-center justify-center gap-2"
+                            >
+                              {downloadingCertificates[course.id] ? (
+                                <>
+                                  <Loader2 className="w-4 h-4 animate-spin" />
+                                  <span className="text-sm font-semibold">
+                                    Downloading...
+                                  </span>
+                                </>
+                              ) : (
+                                <>
+                                  <Download className="w-4 h-4" />
+                                  <span className="text-sm font-semibold">
+                                    Certificate
+                                  </span>
+                                </>
+                              )}
+                            </Button>
 
-                        <div className="flex gap-2">
-                          {course.progress_percentage === 100 &&
-                            course.certificate_id ? (
-                            <>
-                              <Button
-                                variant="outline"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleDownloadCertificate(
-                                    course.id,
-                                    course.certificate_id,
-                                    course.title
-                                  );
-                                }}
-                                disabled={downloadingCertificates[course.id]}
-                                className="flex-1 px-3 py-3.5 flex items-center justify-center gap-2"
-                              >
-                                {downloadingCertificates[course.id] ? (
-                                  <>
-                                    <Loader2 className="w-4 h-4 animate-spin" />
-                                    <span className="text-sm font-semibold">
-                                      Downloading...
-                                    </span>
-                                  </>
-                                ) : (
-                                  <>
-                                    <Download className="w-4 h-4" />
-                                    <span className="text-sm font-semibold">
-                                      Certificate
-                                    </span>
-                                  </>
-                                )}
-                              </Button>
-
-                              <Link
-                                to={`/student/${course.id}/progress`}
-                                onClick={(e) => e.stopPropagation()}
-                                className="flex-1 btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-3 py-3.5 flex items-center justify-center gap-2"
-                              >
-                                <Play className="w-4 h-4 text-white" />
-                                <span className="text-brand-white text-sm font-semibold">
-                                  {course.progress_percentage === 0
-                                    ? "Start"
-                                    : "Continue"}
-                                </span>
-                              </Link>
-                            </>
-                          ) : (
-                            <>
-                              <Link
-                                to={`/course/${course.id}`}
-                                onClick={(e) => e.stopPropagation()}
-                                className="flex-1 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-3.5 flex items-center justify-center gap-2 bg-white"
-                              >
-                                <Eye className="w-4 h-4 text-gray-600" />
-                                <span className="text-brand-dark text-sm font-semibold">
-                                  View Course
-                                </span>
-                              </Link>
-                              <Link
-                                to={`/student/${course.id}/progress`}
-                                onClick={(e) => e.stopPropagation()}
-                                className="flex-1 btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-3 py-3.5 flex items-center justify-center gap-2"
-                              >
-                                <Play className="w-4 h-4 text-white" />
-                                <span className="text-brand-white text-sm font-semibold">
-                                  {course.progress_percentage === 0
-                                    ? "Start"
-                                    : "Continue"}
-                                </span>
-                              </Link>
-                            </>
-                          )}
-                        </div>
+                            <Link
+                              to={`/student/${course.id}/progress`}
+                              onClick={(e) => e.stopPropagation()}
+                              className="flex-1 w-full btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-3 py-3.5 flex items-center justify-center gap-2"
+                            >
+                              <Play className="w-4 h-4 text-white" />
+                              <span className="text-brand-white text-sm font-semibold">
+                                Review
+                              </span>
+                            </Link>
+                          </>
+                        ) : (
+                          <>
+                            <Link
+                              to={`/course/${course.id}`}
+                              onClick={(e) => e.stopPropagation()}
+                              className="flex-1 w-full border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-3.5 flex items-center justify-center gap-2 bg-white"
+                            >
+                              <Eye className="w-4 h-4 text-gray-600" />
+                              <span className="text-brand-dark text-sm font-semibold">
+                                View Course
+                              </span>
+                            </Link>
+                            <Link
+                              to={`/student/${course.id}/progress`}
+                              onClick={(e) => e.stopPropagation()}
+                              className="flex-1 w-full btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-3 py-3.5 flex items-center justify-center gap-2"
+                            >
+                              <Play className="w-4 h-4 text-white" />
+                              <span className="text-brand-white text-sm font-semibold">
+                                {course.progress_percentage === 0
+                                  ? "Start"
+                                  : "Continue"}
+                              </span>
+                            </Link>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
             )}
+
+
 
           {/* Pagination */}
           {!enrolledLoading &&

@@ -4,6 +4,7 @@ import { useLocation } from "react-router";
 import { authService } from "~/services/auth.service";
 import { Button } from "~/components/atoms/Button";
 import { Avatar } from "~/components/atoms/Avatar";
+import { UserProfileDropdown } from "~/components/molecules/UserProfileDropdown";
 import type { User } from "~/types/auth";
 
 interface NavbarProps {
@@ -191,23 +192,8 @@ export function Navbar({ onSmoothScroll, mode = "home" }: NavbarProps) {
           {/* Conditional Auth/User Section */}
           {isAuthenticated && user ? (
             /* User Profile Section */
-            <div className="hidden md:flex items-center">
-              <a
-                href={getDashboardUrl(user)}
-                className="flex items-center gap-3 hover:bg-gray-50 rounded-[12px] p-2 transition-all duration-300"
-              >
-                <Avatar
-                  src={user.avatar || undefined}
-                  name={user.name}
-                  size="md"
-                />
-                <div className="text-left">
-                  <div className="text-brand-dark text-sm font-semibold">
-                    {user.name}
-                  </div>
-                  <div className="text-brand-light text-xs">{user.email}</div>
-                </div>
-              </a>
+            <div className="hidden md:block">
+              <UserProfileDropdown />
             </div>
           ) : (
             /* Auth Buttons */
