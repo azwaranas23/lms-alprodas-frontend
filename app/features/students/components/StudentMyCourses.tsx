@@ -388,7 +388,7 @@ export default function StudentMyCourses() {
                         />
                         <div>
                           <p className="text-sm font-medium text-gray-900">
-                            Mentor: {course.mentor.name}
+                            {course.mentor.name}
                           </p>
                           <p className="text-xs text-gray-500">
                             {course.mentor.expertise || "Mentor"}
@@ -639,7 +639,7 @@ export default function StudentMyCourses() {
                         />
                         <div>
                           <p className="text-sm font-medium text-gray-900">
-                            Mentor: {course.mentor.name}
+                            {course.mentor.name}
                           </p>
                           <p className="text-xs text-gray-500">
                             {course.mentor.expertise || "Mentor"}
