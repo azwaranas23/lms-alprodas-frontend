@@ -37,7 +37,7 @@ export function HeroSection({ onSmoothScroll }: HeroSectionProps) {
             className="text-5xl md:text-7xl font-extrabold text-brand-dark mb-6 leading-tight tracking-tight"
           >
             <span className="inline-block bg-[linear-gradient(110deg,#1a202c,45%,#2563eb,55%,#1a202c)] bg-[length:200%_100%] bg-clip-text text-transparent animate-background-shine">
-              Learn, Practice, Master,
+              Learn, Practice, Improve,
             </span>
             <br className="hidden lg:block" />
             <motion.span
