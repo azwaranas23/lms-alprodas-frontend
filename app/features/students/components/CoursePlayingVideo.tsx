@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router";
 import {
   GraduationCap,
@@ -12,6 +12,9 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  LogOut,
+  Home,
+  LayoutDashboard,
   Clock,
   Calendar,
   Eye,
@@ -22,12 +25,15 @@ import {
   BookOpen,
 } from "lucide-react";
 import { coursesService } from "~/services/courses.service";
+import { authService } from "~/services/auth.service";
 import { getAvatarSrc } from "~/utils/formatters";
 import { useUser } from "~/hooks/useUser";
 
 export default function CoursePlayingVideo() {
   const { courseId } = useParams();
   const navigate = useNavigate();
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
   const { getFullName, getRoleName, getAvatar } = useUser();
 
   const handleGoToCourseResources = () => {
@@ -131,6 +137,24 @@ export default function CoursePlayingVideo() {
     fetchCourseData();
     fetchCourseProgress();
   }, [courseId]);
+
+  // Handle click outside to close profile dropdown
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setIsProfileOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    authService.logout();
+    navigate("/login");
+  };
 
   const fetchLessonDetail = async (lessonId: number) => {
     try {
@@ -487,7 +511,10 @@ export default function CoursePlayingVideo() {
         <aside className="w-80 bg-white border-r border-[#DCDEDD] flex flex-col">
           {/* Logo Section */}
           <div className="px-6 py-4 border-b border-[#DCDEDD]">
-            <div className="flex items-center gap-4">
+            <Link
+              to="/dashboard/student/my-courses"
+              className="flex items-center gap-4 hover:opacity-80 transition-opacity"
+            >
               <div className="w-14 h-14 relative flex items-center justify-center">
                 {/* Background circle */}
                 <div className="w-14 h-14 absolute bg-gradient-to-br from-primary-100 to-primary-200 rounded-full"></div>
@@ -504,7 +531,7 @@ export default function CoursePlayingVideo() {
                   Student Dashboard
                 </p>
               </div>
-            </div>
+            </Link>
           </div>
 
           {/* Course Sections Navigation */}
@@ -531,8 +558,8 @@ export default function CoursePlayingVideo() {
                         </div>
                         <ChevronDown
                           className={`w-4 h-4 text-gray-500 accordion-chevron transition-transform ${openSections.includes(section.id)
-                              ? "rotate-180"
-                              : ""
+                            ? "rotate-180"
+                            : ""
                             }`}
                         />
                       </div>
@@ -642,25 +669,70 @@ export default function CoursePlayingVideo() {
                 <div className="w-px h-8 bg-[#DCDEDD] mx-5"></div>
 
                 {/* User Profile */}
-                <div className="flex items-center gap-3">
-                  <img
-                    src={getAvatarSrc(getAvatar(), getFullName())}
-                    alt="User Avatar"
-                    className="w-12 h-12 rounded-full object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = getAvatarSrc(undefined, getFullName());
-                    }}
-                  />
-                  <div className="text-left">
-                    <p className="text-brand-dark text-base font-semibold">
-                      {getFullName()}
-                    </p>
-                    <p className="text-brand-dark text-base font-normal leading-7">
-                      {getRoleName()}
-                    </p>
-                  </div>
-                  <ChevronDown className="w-4 h-4 text-gray-400" />
+                <div className="relative" ref={profileRef}>
+                  <button
+                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                    className="flex items-center gap-3 hover:bg-gray-50 rounded-lg p-2 transition-colors"
+                  >
+                    <img
+                      src={getAvatarSrc(getAvatar(), getFullName())}
+                      alt="User Avatar"
+                      className="w-12 h-12 rounded-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = getAvatarSrc(undefined, getFullName());
+                      }}
+                    />
+                    <div className="text-left hidden md:block">
+                      <p className="text-brand-dark text-base font-semibold">
+                        {getFullName()}
+                      </p>
+                      <p className="text-brand-dark text-base font-normal leading-7">
+                        {getRoleName()}
+                      </p>
+                    </div>
+                    <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  {isProfileOpen && (
+                    <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-[#DCDEDD] rounded-xl shadow-lg py-2 z-50 animate-in fade-in zoom-in-95 duration-200">
+                      <div className="px-4 py-2 border-b border-gray-100 md:hidden">
+                        <p className="text-sm font-semibold text-gray-900">{getFullName()}</p>
+                        <p className="text-xs text-gray-500">{getRoleName()}</p>
+                      </div>
+                      <div className="py-1 border-b border-gray-100">
+                        <Link
+                          to="/"
+                          className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 transition-colors"
+                        >
+                          <Home className="w-4 h-4" />
+                          Home
+                        </Link>
+                        <Link
+                          to="/courses"
+                          className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 transition-colors"
+                        >
+                          <BookOpen className="w-4 h-4" />
+                          Courses
+                        </Link>
+                        <Link
+                          to="/dashboard/student/my-courses"
+                          className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 transition-colors"
+                        >
+                          <LayoutDashboard className="w-4 h-4" />
+                          Dashboard
+                        </Link>
+                      </div>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Logout
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
