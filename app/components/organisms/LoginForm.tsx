@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router';
 import { Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { useLogin } from '~/hooks/useAuth';
 import { loginSchema, type LoginFormData } from '~/schemas/auth';
@@ -171,9 +172,9 @@ export function LoginForm() {
               Remember me
             </label>
           </div>
-          <a href="#" className="text-blue-500 text-sm font-semibold hover:brightness-110 transition-all duration-300">
+          <Link to="/forgot-password" className="text-blue-500 text-sm font-semibold hover:brightness-110 transition-all duration-300">
             Forgot password?
-          </a>
+          </Link>
         </div>
 
         {/* Login Button */}
