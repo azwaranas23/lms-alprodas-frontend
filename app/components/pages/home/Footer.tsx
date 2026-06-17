@@ -91,9 +91,14 @@ export function Footer() {
               <input
                 type="email"
                 placeholder="Enter email address"
+                aria-label="Email address for newsletter"
                 className="rounded-full w-full bg-[#2a2a2a] border border-gray-700 text-white px-4 py-3 rounded-l-lg text-sm focus:outline-none focus:border-[#0C51D9] placeholder:text-gray-500"
               />
-              <button className="bg-[#f1c40f] text-gray-900 px-4 py-3 rounded-r-lg hover:bg-yellow-500 transition-colors flex items-center justify-center font-bold">
+              <button 
+                type="button"
+                aria-label="Subscribe to newsletter"
+                className="bg-[#f1c40f] text-gray-900 px-4 py-3 rounded-r-lg hover:bg-yellow-500 transition-colors flex items-center justify-center font-bold"
+              >
                 <Send size={18} />
               </button>
             </div>
@@ -106,6 +111,7 @@ export function Footer() {
                   <Link
                     key={social.name}
                     to={social.href}
+                    aria-label={social.name}
                     className="w-10 h-10 flex items-center justify-center bg-[#2a2a2a] text-gray-400 rounded-full hover:bg-[#0C51D9] hover:text-white transition-all"
                   >
                     <Icon size={18} />
