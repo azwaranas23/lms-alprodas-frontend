@@ -88,9 +88,13 @@ export function HeroSection({ onSmoothScroll }: HeroSectionProps) {
           {/* Main Character Image */}
           <div className="relative z-10">
             <img
-              src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+              src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=900&q=80&fm=webp"
               alt="Happy Student"
               className="w-full max-w-[800px] mx-auto rounded-[40px] shadow-2xl border-4 border-white"
+              loading="eager"
+              fetchPriority="high"
+              width={800}
+              height={533}
             />
           </div>
 

@@ -9,6 +9,10 @@ export interface ImageProps {
 	placeholder?: React.ReactNode;
 	imageType?: ImageType;
 	identifier?: string;
+	loading?: "lazy" | "eager";
+	fetchPriority?: "high" | "low" | "auto";
+	width?: number | string;
+	height?: number | string;
 }
 
 // Image URLs for different content types (for onError fallback)
@@ -58,6 +62,10 @@ export function Image({
 	placeholder,
 	imageType,
 	identifier,
+	loading = "lazy",
+	fetchPriority,
+	width,
+	height,
 }: ImageProps) {
 	const [hasError, setHasError] = useState(false);
 	const imageSrc = getImageSrc(src, fallback, imageType, identifier);
@@ -101,6 +109,10 @@ export function Image({
 			alt={alt}
 			className={className}
 			onError={handleError}
+			loading={loading}
+			fetchPriority={fetchPriority}
+			width={width}
+			height={height}
 		/>
 	);
 }

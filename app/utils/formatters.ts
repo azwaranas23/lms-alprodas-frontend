@@ -69,6 +69,21 @@ const courseImageUrls = [
 
 export type ImageType = "topic" | "subject" | "course";
 
+export const optimizeUnsplashUrl = (url: string, width = 600, quality = 80): string => {
+	if (!url || !url.includes("images.unsplash.com")) return url;
+	try {
+		const parsedUrl = new URL(url);
+		parsedUrl.searchParams.set("auto", "format");
+		parsedUrl.searchParams.set("fit", "crop");
+		parsedUrl.searchParams.set("w", width.toString());
+		parsedUrl.searchParams.set("q", quality.toString());
+		parsedUrl.searchParams.set("fm", "webp");
+		return parsedUrl.toString();
+	} catch (e) {
+		return url;
+	}
+};
+
 export const getImageSrc = (
 	imagePath?: string,
 	fallbackUrl?: string,
@@ -76,12 +91,15 @@ export const getImageSrc = (
 	identifier?: string
 ): string => {
 	if (imagePath) {
+		if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
+			return optimizeUnsplashUrl(imagePath, 800, 80);
+		}
 		return `${import.meta.env.VITE_BASE_URL}${imagePath}`;
 	}
 
 	// If fallbackUrl is explicitly provided, use it
 	if (fallbackUrl) {
-		return fallbackUrl;
+		return optimizeUnsplashUrl(fallbackUrl, 800, 80);
 	}
 
 	// Use type-specific fallback with consistent hash-based selection
@@ -101,15 +119,18 @@ export const getImageSrc = (
 				urls = topicImageUrls;
 		}
 		const index = hashString(identifier) % urls.length;
-		return urls[index];
+		return optimizeUnsplashUrl(urls[index], 800, 80);
 	}
 
 	// Default fallback
-	return "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900&auto=format&fit=crop&q=60";
+	return "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80&fm=webp";
 };
 
 export const getAvatarSrc = (avatarPath?: string, name?: string): string => {
 	if (avatarPath) {
+		if (avatarPath.startsWith("http://") || avatarPath.startsWith("https://")) {
+			return optimizeUnsplashUrl(avatarPath, 150, 80);
+		}
 		return `${import.meta.env.VITE_BASE_URL}${avatarPath}`;
 	}
 
@@ -128,7 +149,7 @@ export const getAvatarSrc = (avatarPath?: string, name?: string): string => {
 	// Use hash of name to get consistent avatar for same user
 	const identifier = name || "User";
 	const index = hashString(identifier) % avatarUrls.length;
-	return avatarUrls[index];
+	return optimizeUnsplashUrl(avatarUrls[index], 150, 80);
 };
 
 export const truncateText = (text: string, maxLength: number = 30): string => {

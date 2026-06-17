@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import { Card } from "../molecules/Card";
+import { Avatar } from "../atoms/Avatar";
 
 interface Testimonial {
 	id: number;
@@ -28,10 +29,10 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
 				"{testimonial.content}"
 			</p>
 			<div className="flex items-center gap-3">
-				<img
+				<Avatar
 					src={testimonial.author.avatar}
-					alt={testimonial.author.name}
-					className="w-12 h-12 rounded-full object-cover"
+					name={testimonial.author.name}
+					size="md"
 				/>
 				<div>
 					<div className="text-brand-dark text-sm font-semibold">

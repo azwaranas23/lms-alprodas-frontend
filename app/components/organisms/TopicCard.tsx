@@ -18,6 +18,8 @@ export function TopicCard({ topic }: TopicCardProps) {
 						className="w-full h-full object-cover"
 						imageType="topic"
 						identifier={topic.id.toString()}
+						width={280}
+						height={128}
 					/>
 				</div>
 				<div className="p-6 text-center">

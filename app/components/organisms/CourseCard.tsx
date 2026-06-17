@@ -35,6 +35,8 @@ export function CourseCard({ course }: CourseCardProps): JSX.Element {
             className="w-full h-full object-cover rounded-[12px]"
             imageType="course"
             identifier={course.id.toString()}
+            width={384}
+            height={192}
           />
           {/* Enrolled Badge */}
           {course.is_enrolled && (

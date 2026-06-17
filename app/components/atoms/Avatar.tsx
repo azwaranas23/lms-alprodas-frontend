@@ -5,6 +5,7 @@ export interface AvatarProps {
 	name?: string;
 	size?: "sm" | "md" | "lg" | "xl";
 	className?: string;
+	loading?: "lazy" | "eager";
 }
 
 const sizeClasses = {
@@ -36,13 +37,22 @@ const hashString = (str: string): number => {
 	return Math.abs(hash);
 };
 
+const sizeDimensions = {
+	sm: { width: 32, height: 32 },
+	md: { width: 48, height: 48 },
+	lg: { width: 64, height: 64 },
+	xl: { width: 80, height: 80 },
+};
+
 export function Avatar({
 	src,
 	name,
 	size = "md",
 	className = "",
+	loading = "lazy",
 }: AvatarProps) {
 	const sizeClass = sizeClasses[size];
+	const dimensions = sizeDimensions[size];
 
 	return (
 		<div
@@ -52,6 +62,9 @@ export function Avatar({
 				src={getAvatarSrc(src, name)}
 				alt={name || "User"}
 				className="w-full h-full object-cover"
+				loading={loading}
+				width={dimensions.width}
+				height={dimensions.height}
 				onError={(e) => {
 					const target = e.target as HTMLImageElement;
 					// Use hash of name or src to get consistent fallback avatar

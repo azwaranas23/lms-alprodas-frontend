@@ -226,9 +226,10 @@ export default function SignupPage() {
         {/* Left Side - Image */}
         <div className="hidden lg:flex lg:w-1/2 relative">
           <img
-            src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=2274&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1000&q=80&fm=webp"
             alt="Students learning together"
             className="object-cover w-full h-full"
+            loading="lazy"
           />
         </div>
 
