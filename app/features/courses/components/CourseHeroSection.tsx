@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft, Play, X } from "lucide-react";
-import { Link } from "react-router";
 import { coursesService } from "~/services/courses.service";
 import type { Course } from "~/types/courses";
 import { Image } from "~/components/atoms/Image";
@@ -72,41 +71,7 @@ export function CourseHeroSection({ courseId }: CourseHeroSectionProps) {
 
   return (
     <>
-      <section className="bg-white">
-        {/* Breadcrumb Navigation */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-          <div className="flex items-center gap-2 mb-6">
-            <Link to="/" className="text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">Home</Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            {course && (
-              <>
-                {course.subject && (
-                  <>
-                    <Link to={`/subject/${course.subject.id}`} className="text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
-                      {course.subject.name}
-                    </Link>
-                    <ChevronRight className="w-4 h-4 text-gray-400" />
-                  </>
-                )}
-                {!course.subject && (
-                  <>
-                    <span className="text-blue-600 text-sm font-medium">General Course</span>
-                    <ChevronRight className="w-4 h-4 text-gray-400" />
-                  </>
-                )}
-                <span className="text-gray-600 text-sm font-medium">{course.title}</span>
-              </>
-            )}
-            {loading && (
-              <>
-                <div className="h-4 bg-gray-200 rounded w-24 animate-pulse"></div>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
-                <div className="h-4 bg-gray-200 rounded w-32 animate-pulse"></div>
-              </>
-            )}
-          </div>
-        </div>
-
+      <section className="bg-white pt-8">
         {/* Full Width Hero Image Carousel */}
         <div className="w-full">
           <div className="relative mb-8">

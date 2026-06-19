@@ -24,7 +24,7 @@ export default function CoursesPage(): JSX.Element {
     const fetchCourses = async () => {
       try {
         setLoading(true);
-        const res = await coursesService.getCourses({
+        const res = await coursesService.getFrontCourses({
           page: 1,
           limit: 30,
         } as any);

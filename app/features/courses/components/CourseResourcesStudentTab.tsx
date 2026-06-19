@@ -1,6 +1,7 @@
-import { Download, FileText, FolderOpen } from "lucide-react";
+import { Download, FileText, FolderOpen, Lock } from "lucide-react";
 import { useStudentCourseResources } from "~/hooks/api/useCourseResources";
 import type { CourseResourceResponse } from "~/services/course-resources.service";
+import { authService } from "~/services/auth.service";
 
 interface CourseResourcesStudentTabProps {
   courseId: number;
@@ -63,7 +64,28 @@ export function CourseResourcesStudentTab({
       )}
 
       {!isLoading && error && (
-        <p className="text-sm text-red-600">Failed to load course resources.</p>
+        !authService.isAuthenticated() ? (
+          <div className="text-center py-12 border border-dashed border-[#DCDEDD] rounded-[16px] p-8 bg-gray-50/50">
+            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Lock className="w-8 h-8 text-[#0C51D9]" />
+            </div>
+            <h3 className="text-[#151515] text-xl font-bold mb-2">
+              Login to See Course Resources
+            </h3>
+            <p className="text-[#6B6B6B] text-sm md:text-base max-w-md mx-auto mb-6">
+              Supplementary materials and downloadable resources are only available for logged-in students.
+            </p>
+            <button
+              type="button"
+              onClick={() => window.location.href = "/login"}
+              className="inline-flex items-center justify-center px-6 py-3 bg-[#0C51D9] hover:bg-[#093EB3] text-white text-sm md:text-base font-semibold rounded-[12px] transition-colors shadow-sm cursor-pointer"
+            >
+              Login to Account
+            </button>
+          </div>
+        ) : (
+          <p className="text-sm text-red-600">Failed to load course resources.</p>
+        )
       )}
 
       {!isLoading && !error && resources.length === 0 && (

@@ -187,6 +187,19 @@ export const coursesService = {
     return response.data;
   },
 
+  // Get all front/public courses with pagination and filters
+  async getFrontCourses(params?: CoursesListParams): Promise<CoursesListResponse> {
+    const response = await apiClient.get("/front/courses", { params });
+    const validatedResponse = coursesResponseSchema.safeParse(response.data);
+    if (!validatedResponse.success) {
+      logger.warn("API response validation failed for getFrontCourses", {
+        action: "getFrontCourses",
+        metadata: { error: validatedResponse.error },
+      });
+    }
+    return response.data;
+  },
+
   // Get course by ID (admin/dashboard)
   async getCourseById(id: number): Promise<CourseDetailResponse> {
     const response = await apiClient.get(`/courses/${id}`);
