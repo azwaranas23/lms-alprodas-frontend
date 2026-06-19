@@ -61,7 +61,7 @@ export function Navbar({ onSmoothScroll, mode = "home" }: NavbarProps) {
     } else if (location.pathname.startsWith("/topic/")) {
       // On topic pages, set topics as active
       setActiveSection("topics");
-    } else if (location.pathname.startsWith("/course/")) {
+    } else if (location.pathname.startsWith("/courses/")) {
       // On course pages, set courses as active
       setActiveSection("courses");
     } else {

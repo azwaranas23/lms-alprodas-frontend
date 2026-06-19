@@ -178,7 +178,7 @@ function CourseCard({ course }: CourseCardProps) {
         <div className="text-2xl font-bold text-brand-dark">
           {course.is_enrolled ? "Enrolled" : "Enroll Now"}
         </div>
-        <Link to={`/course/${course.id}`}>
+        <Link to={`/courses/${course.id}`}>
           <Button variant="primary" className="px-4 py-2 rounded-[8px] text-sm">
             View Course
           </Button>

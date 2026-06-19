@@ -336,7 +336,7 @@ export default function StudentMyCourses() {
                 {filteredEnrolledCourses.map((course: any) => (
                   <div
                     key={course.id}
-                    onClick={() => navigate(`/course/${course.id}`)}
+                    onClick={() => navigate(`/courses/${course.id}`)}
                     className="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4 flex flex-col cursor-pointer"
                   >
                     {/* Image - Stacked Top */}
@@ -445,7 +445,7 @@ export default function StudentMyCourses() {
                         ) : (
                           <>
                             <Link
-                              to={`/course/${course.id}`}
+                              to={`/courses/${course.id}`}
                               onClick={(e) => e.stopPropagation()}
                               className="flex-1 w-full border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-3.5 flex items-center justify-center gap-2 bg-white"
                             >
@@ -650,7 +650,7 @@ export default function StudentMyCourses() {
 
                     <div className="mt-auto">
                       <Link
-                        to={`/course/${course.id}`}
+                        to={`/courses/${course.id}`}
                         className="w-full flex items-center justify-center gap-2 border border-[#DCDEDD] rounded-[8px] hover:border-[#0C51D9] hover:border-2 hover:bg-gray-50 transition-all duration-300 px-3 py-3.5 bg-white"
                       >
                         <Eye className="w-4 h-4 text-gray-600" />

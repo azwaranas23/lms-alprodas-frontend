@@ -38,7 +38,7 @@ export default function CoursePlayingVideo() {
 
   const handleGoToCourseResources = () => {
     if (courseId) {
-      navigate(`/course/${courseId}?tab=resources`, {
+      navigate(`/courses/${courseId}?tab=resources`, {
         preventScrollReset: true,
       });
     }
@@ -91,12 +91,13 @@ export default function CoursePlayingVideo() {
       setCourseData(response.data);
 
       // Find first incomplete lesson and auto-expand its section
-      if (response.data.sections.length > 0) {
+      const sections = response.data.sections || [];
+      if (sections.length > 0) {
         let firstIncompleteLesson = null;
         let sectionToExpand = null;
 
         // Look for first incomplete lesson across all sections
-        for (const section of response.data.sections) {
+        for (const section of sections) {
           if (section.lessons && section.lessons.length > 0) {
             const incompleteLesson = section.lessons.find(
               (lesson: any) => !lesson.progress?.is_completed
@@ -111,7 +112,7 @@ export default function CoursePlayingVideo() {
 
         // If no incomplete lesson found, use first lesson of first section
         if (!firstIncompleteLesson) {
-          const firstSection = response.data.sections.find(
+          const firstSection = sections.find(
             (s: any) => s.lessons && s.lessons.length > 0
           );
           if (firstSection && firstSection.lessons.length > 0) {

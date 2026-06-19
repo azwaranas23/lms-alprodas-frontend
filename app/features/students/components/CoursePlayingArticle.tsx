@@ -58,7 +58,7 @@ export default function CoursePlayingArticle() {
 
   const handleGoToCourseResources = () => {
     if (courseId) {
-      navigate(`/course/${courseId}#resources`);
+      navigate(`/courses/${courseId}#resources`);
     }
   };
 

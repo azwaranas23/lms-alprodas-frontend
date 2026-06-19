@@ -88,7 +88,7 @@ export function CourseCard({ course }: CourseCardProps): JSX.Element {
         )}
       </div>
       <div className="mt-3 w-full">
-        <Link to={`/course/${course.id}`} className="w-full block">
+        <Link to={`/courses/${course.id}`} className="w-full block">
           <Button
             variant="primary"
             size="sm"

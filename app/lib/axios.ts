@@ -40,7 +40,7 @@ apiClient.interceptors.response.use(
         currentPath === "/signup" ||
         currentPath === "/verify-email" ||
         currentPath === "/courses" ||
-        currentPath.startsWith("/course/") ||
+        currentPath.startsWith("/courses/") ||
         currentPath.startsWith("/topic/") ||
         currentPath === "/";
 
