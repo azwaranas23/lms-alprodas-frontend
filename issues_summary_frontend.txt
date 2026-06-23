@@ -1,0 +1,1086 @@
+Total Issues: 500
+
+========================================================================
+FILE: app/routes/dashboard/mentor/courses/$id/lessons/$lessonId/edit.tsx (19 issues)
+========================================================================
+Line 109 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Use the "RegExp.exec()" method instead.
+Line 113 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Use the "RegExp.exec()" method instead.
+Line 117 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Use the "RegExp.exec()" method instead.
+Line 140 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+Line 141 | [MINOR] [VULNERABILITY] [SECURITY:LOW]: Make sure not using resource integrity feature is safe here.
+Line 145 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+Line 150 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+Line 154 | [CRITICAL] [CODE_SMELL] [MAINTAINABILITY:HIGH]: Refactor this code to not nest functions more than 4 levels deep.
+Line 206 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "course".
+Line 265 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Refactor this code to not use nested template literals.
+Line 332 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must have accessible text.
+Line 358 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: This assertion is unnecessary since the receiver accepts the original type of the expression.
+Line 375 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must have accessible text.
+Line 401 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: This assertion is unnecessary since the receiver accepts the original type of the expression.
+Line 438 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 453 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 466 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Prefer `Number.parseInt` over `parseInt`.
+Line 494 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 534 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+
+========================================================================
+FILE: app/features/courses/components/LessonsTab.tsx (14 issues)
+========================================================================
+Line 49 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'course' PropType is defined but prop is never used
+Line 52 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 87 | [INFO] [CODE_SMELL] [MAINTAINABILITY:INFO]: Complete the task associated to this "TODO" comment.
+Line 90 | [INFO] [CODE_SMELL] [MAINTAINABILITY:INFO]: Complete the task associated to this "TODO" comment.
+Line 97 | [INFO] [CODE_SMELL] [MAINTAINABILITY:INFO]: Complete the task associated to this "TODO" comment.
+Line 100 | [INFO] [CODE_SMELL] [MAINTAINABILITY:INFO]: Complete the task associated to this "TODO" comment.
+Line 106 | [INFO] [CODE_SMELL] [MAINTAINABILITY:INFO]: Complete the task associated to this "TODO" comment.
+Line 109 | [INFO] [CODE_SMELL] [MAINTAINABILITY:INFO]: Complete the task associated to this "TODO" comment.
+Line 187 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+Line 215 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 321 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 352 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 401 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 402 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+
+========================================================================
+FILE: app/routes/dashboard/mentor/courses/$id/lessons/$sectionId/add.tsx (14 issues)
+========================================================================
+Line 15 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'Youtube' is deprecated.
+Line 22 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Hash'.
+Line 50 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "sectionId".
+Line 121 | [INFO] [CODE_SMELL] [MAINTAINABILITY:INFO]: Complete the task associated to this "TODO" comment.
+Line 280 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must have accessible text.
+Line 306 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: This assertion is unnecessary since the receiver accepts the original type of the expression.
+Line 323 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must have accessible text.
+Line 349 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: This assertion is unnecessary since the receiver accepts the original type of the expression.
+Line 386 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 408 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 425 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Prefer `Number.parseInt` over `parseInt`.
+Line 442 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'Youtube' is deprecated.
+Line 455 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 499 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+
+========================================================================
+FILE: app/features/students/components/CoursePlayingVideo.tsx (13 issues)
+========================================================================
+Line 32 | [CRITICAL] [CODE_SMELL] [MAINTAINABILITY:HIGH]: Refactor this function to reduce its Cognitive Complexity from 31 to the 15 allowed.
+Line 80 | [CRITICAL] [CODE_SMELL] [MAINTAINABILITY:HIGH]: Refactor this function to reduce its Cognitive Complexity from 22 to the 15 allowed.
+Line 130 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Handle this exception or don't catch it at all.
+Line 314 | [CRITICAL] [CODE_SMELL] [MAINTAINABILITY:HIGH]: Refactor this code to not nest functions more than 4 levels deep.
+Line 474 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+Line 498 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM; RELIABILITY:LOW]: The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles.
+Line 573 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 573 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 879 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 912 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 912 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 942 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 942 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+
+========================================================================
+FILE: app/components/templates/MentorSidebar.tsx (13 issues)
+========================================================================
+Line 6 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'CreditCard'.
+Line 7 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Banknote'.
+Line 8 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Folder'.
+Line 9 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Video'.
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'ClipboardCheck'.
+Line 11 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'BarChart3'.
+Line 12 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'HelpCircle'.
+Line 13 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'MessageSquare'.
+Line 16 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'ChevronLeft'.
+Line 17 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'ChevronRight'.
+Line 28 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'toggleSidebar' PropType is defined but prop is never used
+Line 31 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 59 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/routes/dashboard/mentor/courses/$id/lessons/add.tsx (13 issues)
+========================================================================
+Line 15 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'Youtube' is deprecated.
+Line 22 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Hash'.
+Line 122 | [INFO] [CODE_SMELL] [MAINTAINABILITY:INFO]: Complete the task associated to this "TODO" comment.
+Line 295 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must have accessible text.
+Line 321 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: This assertion is unnecessary since the receiver accepts the original type of the expression.
+Line 338 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must have accessible text.
+Line 364 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: This assertion is unnecessary since the receiver accepts the original type of the expression.
+Line 401 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 423 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 440 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Prefer `Number.parseInt` over `parseInt`.
+Line 457 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'Youtube' is deprecated.
+Line 470 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 514 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+
+========================================================================
+FILE: app/components/templates/StudentSidebar.tsx (11 issues)
+========================================================================
+Line 3 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Home'.
+Line 5 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Star'.
+Line 6 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'CreditCard'.
+Line 7 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Trophy'.
+Line 8 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'HelpCircle'.
+Line 9 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'MessageSquare'.
+Line 28 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 52 | [MAJOR] [BUG] [RELIABILITY:MEDIUM]: This conditional operation returns the same value whether the condition is "true" or "false".
+Line 65 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 86 | [MAJOR] [BUG] [RELIABILITY:MEDIUM]: This conditional operation returns the same value whether the condition is "true" or "false".
+Line 92 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/courses/components/CourseHeroSection.tsx (11 issues)
+========================================================================
+Line 11 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 15 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "loading".
+Line 62 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "openVideoModal".
+Line 93 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+Line 118 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+Line 134 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 134 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 138 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 138 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 165 | [MINOR] [CODE_SMELL] [RELIABILITY:LOW]: <iframe> elements must have a unique title property.
+Line 168 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'frameBorder' is deprecated.
+
+========================================================================
+FILE: app/features/courses/components/wizard-steps/steps/CourseInfoStep.tsx (11 issues)
+========================================================================
+Line 18 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'APISubject'.
+Line 20 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'env'.
+Line 22 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'z'.
+Line 46 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 85 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Prefer using an optional chain expression instead, as it's more concise and easier to read.
+Line 132 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Prefer using an optional chain expression instead, as it's more concise and easier to read.
+Line 167 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 192 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 231 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 495 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 495 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+
+========================================================================
+FILE: app/features/courses/components/CourseEnrollmentCard.tsx (9 issues)
+========================================================================
+Line 6 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'formatCurrency'.
+Line 15 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 121 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 147 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+Line 161 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 161 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 165 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 165 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 198 | [MINOR] [CODE_SMELL] [RELIABILITY:LOW]: <iframe> elements must have a unique title property.
+
+========================================================================
+FILE: app/features/subjects/components/TopicModal.tsx (9 issues)
+========================================================================
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'selectedTopicId' PropType is defined but prop is never used
+Line 13 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 50 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Prefer using an optional chain expression instead, as it's more concise and easier to read.
+Line 94 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 94 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 142 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 148 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 151 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 151 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+
+========================================================================
+FILE: app/features/students/components/StudentMyCourses.tsx (8 issues)
+========================================================================
+Line 5 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Filter'.
+Line 57 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Handle this exception or don't catch it at all.
+Line 75 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Handle this exception or don't catch it at all.
+Line 139 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+Line 148 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Prefer `childNode.remove()` over `parentNode.removeChild(childNode)`.
+Line 149 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+Line 337 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 337 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+
+========================================================================
+FILE: app/components/pages/home/Footer.tsx (8 issues)
+========================================================================
+Line 3 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'Twitter' is deprecated.
+Line 4 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'Linkedin' is deprecated.
+Line 5 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'Instagram' is deprecated.
+Line 6 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'Youtube' is deprecated.
+Line 28 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'Twitter' is deprecated.
+Line 29 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'Linkedin' is deprecated.
+Line 30 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'Instagram' is deprecated.
+Line 31 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'Youtube' is deprecated.
+
+========================================================================
+FILE: app/components/templates/BaseHeader.tsx (8 issues)
+========================================================================
+Line 1 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'useState'.
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Bell'.
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'MessageCircle'.
+Line 5 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'authService'.
+Line 24 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 33 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "getFullName".
+Line 69 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 69 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+
+========================================================================
+FILE: app/routes/dashboard/mentor/courses.tsx (8 issues)
+========================================================================
+Line 1 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'useMemo'.
+Line 11 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Download'.
+Line 22 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'env'.
+Line 24 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Avatar'.
+Line 55 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "getAvatar".
+Line 55 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "getFullName".
+Line 86 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "handleExportData".
+Line 353 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:LOW]: Use `new Array()` instead of `Array()`.
+
+========================================================================
+FILE: app/services/auth.service.ts (8 issues)
+========================================================================
+Line 13 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+Line 50 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+Line 57 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+Line 63 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+Line 68 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+Line 88 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+Line 96 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+Line 101 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+
+========================================================================
+FILE: app/features/courses/components/CourseResourcesTab.tsx (8 issues)
+========================================================================
+Line 8 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'FolderOpen'.
+Line 19 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'course' PropType is defined but prop is never used
+Line 22 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 32 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "isLoading".
+Line 98 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:LOW]: Prefer `String#replaceAll()` over `String#replace()`.
+Line 108 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+Line 177 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 190 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+
+========================================================================
+FILE: app/features/courses/components/CourseWizard.tsx (8 issues)
+========================================================================
+Line 6 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'DollarSign'.
+Line 11 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Bell'.
+Line 12 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'MessageCircle'.
+Line 13 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Settings'.
+Line 70 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 213 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 224 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 237 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+
+========================================================================
+FILE: app/features/subjects/components/SubjectForm.tsx (8 issues)
+========================================================================
+Line 22 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 193 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 201 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM; RELIABILITY:LOW]: Redundant alt attribute. Screen-readers already announce `img` tags as an image. You donât need to use the words `image`, `photo,` or `picture` (or any specified custom words) in the alt prop.
+Line 211 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 211 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 264 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 293 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 321 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+
+========================================================================
+FILE: app/features/topics/components/TopicContentSection.tsx (8 issues)
+========================================================================
+Line 5 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Map'.
+Line 18 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'env'.
+Line 21 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'formatCurrency'.
+Line 22 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Tooltip'.
+Line 29 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 95 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 96 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Update this function so that its implementation is not identical to the one on line 30.
+Line 195 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/withdrawals/components/wizard-steps/steps/WithdrawalDetailsStep.tsx (8 issues)
+========================================================================
+Line 11 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'X'.
+Line 23 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 59 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Prefer `Number.parseInt` over `parseInt`.
+Line 72 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Prefer `Number.parseInt` over `parseInt`.
+Line 105 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Prefer `Number.parseInt` over `parseInt`.
+Line 178 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 231 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 273 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+
+========================================================================
+FILE: app/features/courses/components/wizard-steps/steps/ReviewSummaryStep.tsx (7 issues)
+========================================================================
+Line 5 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'DollarSign'.
+Line 49 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 221 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM; RELIABILITY:LOW]: Redundant alt attribute. Screen-readers already announce `img` tags as an image. You donât need to use the words `image`, `photo,` or `picture` (or any specified custom words) in the alt prop.
+Line 240 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM; RELIABILITY:LOW]: Redundant alt attribute. Screen-readers already announce `img` tags as an image. You donât need to use the words `image`, `photo,` or `picture` (or any specified custom words) in the alt prop.
+Line 318 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+Line 343 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+Line 371 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+
+========================================================================
+FILE: app/features/topics/components/TopicForm.tsx (7 issues)
+========================================================================
+Line 21 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 163 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 171 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM; RELIABILITY:LOW]: Redundant alt attribute. Screen-readers already announce `img` tags as an image. You donât need to use the words `image`, `photo,` or `picture` (or any specified custom words) in the alt prop.
+Line 181 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 181 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 234 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 263 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+
+========================================================================
+FILE: app/features/withdrawals/components/wizard-steps/steps/AccountVerificationStep.tsx (7 issues)
+========================================================================
+Line 23 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 129 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM; RELIABILITY:LOW]: Redundant alt attribute. Screen-readers already announce `img` tags as an image. You donât need to use the words `image`, `photo,` or `picture` (or any specified custom words) in the alt prop.
+Line 151 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 169 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 187 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 209 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 226 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Unexpected negated condition.
+
+========================================================================
+FILE: app/components/templates/BaseSidebar.tsx (6 issues)
+========================================================================
+Line 13 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Calendar'.
+Line 15 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Award'.
+Line 23 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'LogOut'.
+Line 48 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 91 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 100 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "user".
+
+========================================================================
+FILE: app/features/courses/components/wizard-steps/steps/CoursePhotosStep.tsx (6 issues)
+========================================================================
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Check'.
+Line 31 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 106 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM; RELIABILITY:LOW]: Redundant alt attribute. Screen-readers already announce `img` tags as an image. You donât need to use the words `image`, `photo,` or `picture` (or any specified custom words) in the alt prop.
+Line 122 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 122 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 172 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/students/components/course-learning/VideoPlayer.tsx (6 issues)
+========================================================================
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Pause'.
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Settings'.
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Volume2'.
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Maximize'.
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 44 | [MINOR] [CODE_SMELL] [RELIABILITY:LOW]: Media elements such as <audio> and <video> must have a <track> for captions.
+
+========================================================================
+FILE: app/features/withdrawals/components/wizard-steps/steps/ReviewSubmitStep.tsx (6 issues)
+========================================================================
+Line 13 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 41 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+Line 255 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM; RELIABILITY:LOW]: Ambiguous spacing before next element a
+Line 255 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM; RELIABILITY:LOW]: Ambiguous spacing after previous element a
+Line 255 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM; RELIABILITY:LOW]: The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles.
+Line 256 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM; RELIABILITY:LOW]: The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles.
+
+========================================================================
+FILE: app/components/pages/home/HeroSection.tsx (5 issues)
+========================================================================
+Line 1 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'ArrowRight'.
+Line 1 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Users'.
+Line 1 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Star'.
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 110 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+
+========================================================================
+FILE: app/features/courses/components/wizard-steps/steps/CoursePriceStep.tsx (5 issues)
+========================================================================
+Line 42 | [BLOCKER] [VULNERABILITY] [SECURITY:BLOCKER]: "TOKEN_CHARS" detected here, make sure this is not a hard-coded secret.
+Line 57 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 174 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 179 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must have accessible text.
+Line 208 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must have accessible text.
+
+========================================================================
+FILE: app/features/courses/components/wizard-steps/steps/CourseTokenStep.tsx (5 issues)
+========================================================================
+Line 42 | [BLOCKER] [VULNERABILITY] [SECURITY:BLOCKER]: "TOKEN_CHARS" detected here, make sure this is not a hard-coded secret.
+Line 57 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 174 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 179 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must have accessible text.
+Line 208 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must have accessible text.
+
+========================================================================
+FILE: app/lib/axios.ts (5 issues)
+========================================================================
+Line 16 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+Line 36 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+Line 37 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+Line 52 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+Line 53 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+
+========================================================================
+FILE: app/features/students/components/CoursePlayingArticle.tsx (5 issues)
+========================================================================
+Line 259 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+Line 588 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 588 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 618 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 618 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+
+========================================================================
+FILE: app/features/courses/components/wizard-steps/steps/CourseDetailsStep.tsx (5 issues)
+========================================================================
+Line 7 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Check'.
+Line 8 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Lightbulb'.
+Line 36 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 89 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Prefer using an optional chain expression instead, as it's more concise and easier to read.
+Line 291 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+
+========================================================================
+FILE: app/components/templates/AddCourseLayout.tsx (5 issues)
+========================================================================
+Line 6 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'DollarSign'.
+Line 29 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 79 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 94 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 109 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+
+========================================================================
+FILE: app/features/mentors/components/MentorTransactionsList.tsx (5 issues)
+========================================================================
+Line 11 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: '~/constants/api' imported multiple times.
+Line 12 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'BASE_URL'.
+Line 12 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: '~/constants/api' imported multiple times.
+Line 138 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 144 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+
+========================================================================
+FILE: app/features/students/components/StudentTransactionsList.tsx (5 issues)
+========================================================================
+Line 14 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: '~/constants/api' imported multiple times.
+Line 15 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'BASE_URL'.
+Line 15 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: '~/constants/api' imported multiple times.
+Line 129 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 135 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+
+========================================================================
+FILE: app/routes/dashboard/mentor/courses/$id/sections/$sectionId/lessons/$lessonId/edit.tsx (5 issues)
+========================================================================
+Line 20 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: 'Youtube' is deprecated.
+Line 105 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Use the "RegExp.exec()" method instead.
+Line 109 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Use the "RegExp.exec()" method instead.
+Line 113 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Use the "RegExp.exec()" method instead.
+Line 152 | [INFO] [CODE_SMELL] [MAINTAINABILITY:INFO]: Complete the task associated to this "TODO" comment.
+
+========================================================================
+FILE: app/features/courses/components/CourseResourcesStudentTab.tsx (4 issues)
+========================================================================
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 46 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:LOW]: Prefer `String#replaceAll()` over `String#replace()`.
+Line 67 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Unexpected negated condition.
+Line 80 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+
+========================================================================
+FILE: app/components/pages/home/TestimonialsSection.tsx (4 issues)
+========================================================================
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'PlayCircle'.
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'GraduationCap'.
+Line 68 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 206 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+
+========================================================================
+FILE: app/components/organisms/StudentDetailModal.tsx (4 issues)
+========================================================================
+Line 32 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 42 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+Line 42 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 104 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Unexpected negated condition.
+
+========================================================================
+FILE: app/features/courses/components/OverviewTab.tsx (4 issues)
+========================================================================
+Line 5 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'DollarSign'.
+Line 82 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Prefer `Number.isNaN` over `isNaN`.
+Line 127 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 142 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+
+========================================================================
+FILE: app/components/molecules/SearchSection.tsx (4 issues)
+========================================================================
+Line 1 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'ChevronDown'.
+Line 1 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Layers'.
+Line 1 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'CheckCircle'.
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Select'.
+
+========================================================================
+FILE: app/components/organisms/RichTextEditor.tsx (4 issues)
+========================================================================
+Line 61 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 81 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+Line 101 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Prefer `childNode.remove()` over `parentNode.removeChild(childNode)`.
+Line 111 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+
+========================================================================
+FILE: app/components/templates/AddWithdrawalLayout.tsx (4 issues)
+========================================================================
+Line 27 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 82 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 97 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+Line 112 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+
+========================================================================
+FILE: app/features/auth/components/RoleBasedRoute.tsx (4 issues)
+========================================================================
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 18 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 26 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 35 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/students/components/course-learning/LessonSidebar.tsx (4 issues)
+========================================================================
+Line 14 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 35 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `.at(â¦)` over `[â¦.length - index]`.
+Line 108 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Unexpected negated condition.
+Line 113 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+
+========================================================================
+FILE: app/features/withdrawals/components/wizard-steps/steps/BankInformationStep.tsx (4 issues)
+========================================================================
+Line 58 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 154 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 331 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 331 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+
+========================================================================
+FILE: app/routes/reset-password.tsx (3 issues)
+========================================================================
+Line 17 | [CRITICAL] [CODE_SMELL] [MAINTAINABILITY:HIGH]: Refactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.
+Line 95 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Unexpected negated condition.
+Line 108 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Extract this nested ternary operation into an independent statement.
+
+========================================================================
+FILE: app/components/molecules/UserProfileDropdown.tsx (3 issues)
+========================================================================
+Line 11 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "getAvatar".
+Line 11 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "getRoleName".
+Line 25 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+
+========================================================================
+FILE: app/routes/signup.tsx (3 issues)
+========================================================================
+Line 74 | [CRITICAL] [CODE_SMELL] [MAINTAINABILITY:HIGH]: Refactor this function to reduce its Cognitive Complexity from 25 to the 15 allowed.
+Line 106 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Use concise character class syntax '\d' instead of '[0-9]'.
+Line 109 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Unexpected negated condition.
+
+========================================================================
+FILE: app/features/mentors/components/dashboard-components/dashboard/MentorQuickActions.tsx (3 issues)
+========================================================================
+Line 1 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Settings'.
+Line 1 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'User'.
+Line 12 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/courses/components/CourseWizardContent.tsx (3 issues)
+========================================================================
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'DollarSign'.
+Line 53 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 154 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: This case's code block is the same as the block for the case on line 108.
+
+========================================================================
+FILE: app/app.css (3 issues)
+========================================================================
+Line 2337 | [MAJOR] [BUG] [RELIABILITY:MEDIUM]: Missing generic font family
+Line 2891 | [MAJOR] [BUG] [RELIABILITY:MEDIUM]: Duplicate property "content"
+Line 2900 | [MAJOR] [BUG] [RELIABILITY:MEDIUM]: Duplicate property "content"
+
+========================================================================
+FILE: app/components/molecules/Modal.tsx (3 issues)
+========================================================================
+Line 23 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 65 | [MINOR] [BUG] [RELIABILITY:LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+Line 65 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+
+========================================================================
+FILE: app/components/templates/DynamicSidebar.tsx (3 issues)
+========================================================================
+Line 31 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 59 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "getRoleName".
+Line 72 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "getUserRoleDisplay".
+
+========================================================================
+FILE: app/contexts/WithdrawalContext.tsx (3 issues)
+========================================================================
+Line 5 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'useEffect'.
+Line 65 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 77 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: The 'value' object passed as the value prop to the Context provider changes every render. To fix this consider wrapping it in a useMemo hook.
+
+========================================================================
+FILE: app/features/auth/components/PermissionRoute.tsx (3 issues)
+========================================================================
+Line 12 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 46 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+Line 63 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+
+========================================================================
+FILE: app/features/auth/components/ProfilePhotoUpload.tsx (3 issues)
+========================================================================
+Line 8 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 54 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+Line 57 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Unexpected negated condition.
+
+========================================================================
+FILE: app/features/auth/components/ProtectedRoute.tsx (3 issues)
+========================================================================
+Line 4 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'UserRole'.
+Line 11 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 34 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+
+========================================================================
+FILE: app/features/students/components/SuccessIcon.tsx (3 issues)
+========================================================================
+Line 9 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis.window` over `window`.
+Line 9 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+
+========================================================================
+FILE: app/features/transactions/components/TransactionDetails.tsx (3 issues)
+========================================================================
+Line 53 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 174 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:LOW]: Prefer `String#replaceAll()` over `String#replace()`.
+Line 359 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:LOW]: Prefer `String#replaceAll()` over `String#replace()`.
+
+========================================================================
+FILE: app/components/atoms/Avatar.tsx (2 issues)
+========================================================================
+Line 33 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:LOW]: Prefer `String#codePointAt()` over `String#charCodeAt()`.
+Line 47 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/atoms/Image.tsx (2 issues)
+========================================================================
+Line 50 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:LOW]: Prefer `String#codePointAt()` over `String#charCodeAt()`.
+Line 57 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/utils/formatters.ts (2 issues)
+========================================================================
+Line 73 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Prefer using an optional chain expression instead, as it's more concise and easier to read.
+Line 82 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Handle this exception or don't catch it at all.
+
+========================================================================
+FILE: app/features/courses/components/CourseTestimonialsTab.tsx (2 issues)
+========================================================================
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 75 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/routes/dashboard/mentor/courses/$id.tsx (2 issues)
+========================================================================
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'useNavigate'.
+Line 246 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Unexpected negated condition.
+
+========================================================================
+FILE: app/routes/dashboard/mentor/students.tsx (2 issues)
+========================================================================
+Line 61 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Prefer `Number.parseInt` over `parseInt`.
+Line 186 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Prefer `Number.parseInt` over `parseInt`.
+
+========================================================================
+FILE: app/features/checkout/components/PaymentDetailsCard.tsx (2 issues)
+========================================================================
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 40 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must be associated with a control.
+
+========================================================================
+FILE: app/components/atoms/ApiErrorMessage.tsx (2 issues)
+========================================================================
+Line 19 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 45 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+
+========================================================================
+FILE: app/components/molecules/FormField.tsx (2 issues)
+========================================================================
+Line 12 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 29 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/molecules/Pagination.tsx (2 issues)
+========================================================================
+Line 12 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 100 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+
+========================================================================
+FILE: app/components/organisms/CourseCard.tsx (2 issues)
+========================================================================
+Line 7 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'formatCurrency'.
+Line 15 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/organisms/TransactionCard.tsx (2 issues)
+========================================================================
+Line 4 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Avatar'.
+Line 28 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/auth/components/RadioOption.tsx (2 issues)
+========================================================================
+Line 14 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 25 | [MAJOR] [CODE_SMELL] [RELIABILITY:MEDIUM]: A form label must have accessible text.
+
+========================================================================
+FILE: app/features/courses/components/CourseLessonsPage.tsx (2 issues)
+========================================================================
+Line 34 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 77 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+
+========================================================================
+FILE: app/features/courses/components/OtherTabs.tsx (2 issues)
+========================================================================
+Line 23 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 72 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+
+========================================================================
+FILE: app/features/dashboard/components/LatestUsers.tsx (2 issues)
+========================================================================
+Line 20 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 69 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/mentors/components/MentorGrid.tsx (2 issues)
+========================================================================
+Line 1 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Search'.
+Line 23 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/mentors/components/dashboard-components/dashboard/MentorStatsGrid.tsx (2 issues)
+========================================================================
+Line 13 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+Line 47 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/subjects/components/SubjectCard.tsx (2 issues)
+========================================================================
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'BASE_URL'.
+Line 13 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/withdrawals/components/WithdrawalWizardContent.tsx (2 issues)
+========================================================================
+Line 1 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'useState'.
+Line 15 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/hooks/useAuth.ts (2 issues)
+========================================================================
+Line 30 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:HIGH]: Prefer `return value` over `return Promise.resolve(value)`.
+Line 35 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+
+========================================================================
+FILE: app/routes/dashboard/mentor/courses/$id.edit.tsx (2 issues)
+========================================================================
+Line 55 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Prefer `Number.parseInt` over `parseInt`.
+Line 111 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: This assertion is unnecessary since it does not change the type of the expression.
+
+========================================================================
+FILE: app/components/pages/home/FeaturesSection.tsx (1 issues)
+========================================================================
+Line 93 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+
+========================================================================
+FILE: app/features/courses/components/CourseAboutTab.tsx (1 issues)
+========================================================================
+Line 9 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/courses/components/CourseBenefitsTab.tsx (1 issues)
+========================================================================
+Line 62 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Do not use Array index in keys
+
+========================================================================
+FILE: app/features/courses/components/CourseLessonsTab.tsx (1 issues)
+========================================================================
+Line 9 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/courses/components/CourseTabs.tsx (1 issues)
+========================================================================
+Line 21 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/templates/Layout.tsx (1 issues)
+========================================================================
+Line 19 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/mentors/components/dashboard-components/dashboard/LatestCourses.tsx (1 issues)
+========================================================================
+Line 22 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/routes/dashboard/mentor/dashboard.tsx (1 issues)
+========================================================================
+Line 8 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'SearchSection'.
+
+========================================================================
+FILE: app/routes/enrollment-success.$id.tsx (1 issues)
+========================================================================
+Line 77 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM; RELIABILITY:LOW]: Ambiguous spacing after previous element span
+
+========================================================================
+FILE: app/components/organisms/UserNavbar.tsx (1 issues)
+========================================================================
+Line 5 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'Avatar'.
+
+========================================================================
+FILE: app/routes/courses/success.tsx (1 issues)
+========================================================================
+Line 39 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "categoryLabel".
+
+========================================================================
+FILE: app/routes/dashboard/mentor/courses/add.tsx (1 issues)
+========================================================================
+Line 34 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "getUser".
+
+========================================================================
+FILE: app/components/atoms/Badge.tsx (1 issues)
+========================================================================
+Line 19 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/atoms/Checkbox.tsx (1 issues)
+========================================================================
+Line 11 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/atoms/ErrorMessage.tsx (1 issues)
+========================================================================
+Line 7 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/atoms/Form.tsx (1 issues)
+========================================================================
+Line 9 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/atoms/Logo.tsx (1 issues)
+========================================================================
+Line 7 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/atoms/StatsCard.tsx (1 issues)
+========================================================================
+Line 11 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/atoms/Tab.tsx (1 issues)
+========================================================================
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/atoms/Tooltip.tsx (1 issues)
+========================================================================
+Line 11 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/atoms/TransactionStatusBadge.tsx (1 issues)
+========================================================================
+Line 22 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/molecules/Card.tsx (1 issues)
+========================================================================
+Line 15 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/molecules/PhotoPreviewModal.tsx (1 issues)
+========================================================================
+Line 12 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/molecules/StudentsSearchSection.tsx (1 issues)
+========================================================================
+Line 8 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/molecules/TransactionItem.tsx (1 issues)
+========================================================================
+Line 46 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/organisms/LatestTransactions.tsx (1 issues)
+========================================================================
+Line 31 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/organisms/LoginForm.tsx (1 issues)
+========================================================================
+Line 16 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Remove this useless assignment to variable "hasSubmitted".
+
+========================================================================
+FILE: app/components/organisms/StudentCard.tsx (1 issues)
+========================================================================
+Line 35 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/organisms/TestimonialCard.tsx (1 issues)
+========================================================================
+Line 19 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/organisms/TopicCard.tsx (1 issues)
+========================================================================
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/pages/home/Navbar.tsx (1 issues)
+========================================================================
+Line 18 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/templates/DynamicHeader.tsx (1 issues)
+========================================================================
+Line 14 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/templates/Header.tsx (1 issues)
+========================================================================
+Line 15 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/templates/MentorLayout.tsx (1 issues)
+========================================================================
+Line 11 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/templates/Sidebar.tsx (1 issues)
+========================================================================
+Line 23 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/components/templates/StudentLayout.tsx (1 issues)
+========================================================================
+Line 11 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/auth/components/GuestRoute.tsx (1 issues)
+========================================================================
+Line 13 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/checkout/components/CourseInfoCard.tsx (1 issues)
+========================================================================
+Line 16 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/checkout/components/PurchaseSuccessIcon.tsx (1 issues)
+========================================================================
+Line 44 | [MAJOR] [CODE_SMELL] [MAINTAINABILITY:MEDIUM]: Prefer `childNode.remove()` over `parentNode.removeChild(childNode)`.
+
+========================================================================
+FILE: app/features/checkout/components/PurchasedCourseCard.tsx (1 issues)
+========================================================================
+Line 15 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/checkout/components/StudentInfoCard.tsx (1 issues)
+========================================================================
+Line 14 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/courses/components/CourseContentSection.tsx (1 issues)
+========================================================================
+Line 14 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/dashboard/components/QuickActions.tsx (1 issues)
+========================================================================
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/dashboard/components/RevenueCard.tsx (1 issues)
+========================================================================
+Line 7 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/mentors/components/MentorCard.tsx (1 issues)
+========================================================================
+Line 29 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/mentors/components/PaginationControls.tsx (1 issues)
+========================================================================
+Line 13 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/mentors/components/dashboard-components/dashboard/LatestTransactions.tsx (1 issues)
+========================================================================
+Line 27 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/mentors/components/dashboard-components/dashboard/MentorRevenueCard.tsx (1 issues)
+========================================================================
+Line 9 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/students/components/CourseCompletionCard.tsx (1 issues)
+========================================================================
+Line 27 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/students/components/course-learning/CourseHeader.tsx (1 issues)
+========================================================================
+Line 12 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/students/components/course-learning/LessonContent.tsx (1 issues)
+========================================================================
+Line 13 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/subjects/components/PhotoPreviewModal.tsx (1 issues)
+========================================================================
+Line 9 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/topics/components/PhotoPreviewModal.tsx (1 issues)
+========================================================================
+Line 9 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/transactions/components/LatestTransactions.tsx (1 issues)
+========================================================================
+Line 26 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/features/withdrawals/components/WithdrawalRequestModal.tsx (1 issues)
+========================================================================
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/hooks/api/useCourses.ts (1 issues)
+========================================================================
+Line 17 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+
+========================================================================
+FILE: app/hooks/api/useWithdrawals.ts (1 issues)
+========================================================================
+Line 18 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+
+========================================================================
+FILE: app/hooks/useUser.ts (1 issues)
+========================================================================
+Line 2 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Remove this unused import of 'User'.
+
+========================================================================
+FILE: app/providers/QueryProvider.tsx (1 issues)
+========================================================================
+Line 10 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/root.tsx (1 issues)
+========================================================================
+Line 33 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Mark the props of the component as read-only.
+
+========================================================================
+FILE: app/routes/course.$id.tsx (1 issues)
+========================================================================
+Line 8 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW; RELIABILITY:MEDIUM]: Prefer `Number.parseInt` over `parseInt`.
+
+========================================================================
+FILE: app/routes/dashboard/mentor/courses/$id/lessons/$lessonId.tsx (1 issues)
+========================================================================
+Line 101 | [MINOR] [CODE_SMELL] [MAINTAINABILITY:LOW]: Prefer `globalThis` over `window`.
+

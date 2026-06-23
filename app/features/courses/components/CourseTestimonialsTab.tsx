@@ -96,7 +96,7 @@ function TestimonialCard({ review, date }: TestimonialCardProps) {
       <div className="flex items-center gap-3">
         <img
           src={getAvatarSrc(
-            review.student.profile?.avatar,
+            review.student.profile?.avatar ?? undefined,
             review.student.name
           )}
           alt={review.student.name}

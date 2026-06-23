@@ -10,7 +10,7 @@ export const authService = {
       credentials
     );
 
-    if (response.data.data?.access_token && typeof window !== "undefined") {
+    if (response.data.data?.access_token && globalThis.window !== undefined) {
       localStorage.setItem("access_token", response.data.data.access_token);
       localStorage.setItem("user", JSON.stringify(response.data.data.user));
     }
@@ -47,25 +47,25 @@ export const authService = {
   },
 
   logout() {
-    if (typeof window !== "undefined") {
+    if (globalThis.window !== undefined) {
       localStorage.removeItem("access_token");
       localStorage.removeItem("user");
     }
   },
 
   getUser(): User | null {
-    if (typeof window === "undefined") return null;
+    if (globalThis.window === undefined) return null;
     const userStr = localStorage.getItem("user");
     return userStr ? JSON.parse(userStr) : null;
   },
 
   getToken() {
-    if (typeof window === "undefined") return null;
+    if (globalThis.window === undefined) return null;
     return localStorage.getItem("access_token");
   },
 
   isAuthenticated() {
-    if (typeof window === "undefined") return false;
+    if (globalThis.window === undefined) return false;
     return !!localStorage.getItem("access_token");
   },
 
@@ -85,7 +85,7 @@ export const authService = {
   },
 
   hasPermission(permission: string): boolean {
-    if (typeof window === "undefined") return false;
+    if (globalThis.window === undefined) return false;
     const user = this.getUser();
     if (!user || !user.role?.permissions) return false;
 
@@ -93,12 +93,12 @@ export const authService = {
   },
 
   hasAnyPermission(permissions: string[]): boolean {
-    if (typeof window === "undefined") return false;
+    if (globalThis.window === undefined) return false;
     return permissions.some((permission) => this.hasPermission(permission));
   },
 
   getUserPermissions(): string[] {
-    if (typeof window === "undefined") return [];
+    if (globalThis.window === undefined) return [];
     const user = this.getUser();
     if (!user || !user.role?.permissions) return [];
 

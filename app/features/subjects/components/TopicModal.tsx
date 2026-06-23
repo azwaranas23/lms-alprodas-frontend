@@ -4,10 +4,9 @@ import { topicsService, type Topic } from '~/services/topics.service';
 import { BASE_URL } from '~/constants/api';
 
 interface TopicModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSelectTopic: (topic: Topic) => void;
-  selectedTopicId?: string;
+  readonly isOpen: boolean;
+  readonly onClose: () => void;
+  readonly onSelectTopic: (topic: Topic) => void;
 }
 
 export function TopicModal({ isOpen, onClose, onSelectTopic }: TopicModalProps) {
@@ -90,12 +89,93 @@ export function TopicModal({ isOpen, onClose, onSelectTopic }: TopicModalProps) 
     return `${BASE_URL}${image}`;
   };
 
+  const renderContent = () => {
+    if (loading) {
+      return (
+        <div className="text-center py-8">
+          <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+          <p className="text-brand-light text-sm">Loading topics...</p>
+        </div>
+      );
+    }
+
+    if (error) {
+      return (
+        <div className="text-center py-8">
+          <X className="w-12 h-12 text-red-400 mx-auto mb-3" />
+          <h4 className="text-brand-dark text-base font-semibold mb-1">Error loading topics</h4>
+          <p className="text-brand-light text-sm">{error}</p>
+        </div>
+      );
+    }
+
+    if (filteredTopics.length > 0) {
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {filteredTopics.map((topic) => (
+            <button
+              key={topic.id}
+              type="button"
+              className="topic-card border border-[#DCDEDD] rounded-[16px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4 cursor-pointer text-left bg-white w-full"
+              onClick={() => {
+                onSelectTopic(topic);
+                onClose();
+              }}
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-28 h-16 relative overflow-hidden rounded-[12px] flex-shrink-0">
+                  <img
+                    src={getImageUrl(topic.image)}
+                    alt={topic.name}
+                    className="w-28 h-16 rounded-[12px] object-cover"
+                    onError={(e) => {
+                      // Fallback to default image if image fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3';
+                    }}
+                  />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-brand-dark text-base font-bold">{topic.name}</h4>
+                  <p className="text-brand-light text-sm font-normal line-clamp-1">
+                    {topic.description || 'No description available'}
+                  </p>
+                  <div className="flex gap-2 mt-1">
+                    <span className="text-xs text-gray-500">{topic.subject_count} subjects</span>
+                    <span className="text-xs text-gray-500">•</span>
+                    <span className="text-xs text-gray-500">{topic.course_count} courses</span>
+                  </div>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      );
+    }
+
+    return (
+      <div className="text-center py-8">
+        <SearchX className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+        <h4 className="text-brand-dark text-base font-semibold mb-1">No topics found</h4>
+        <p className="text-brand-light text-sm">
+          {searchTerm ? 'Try adjusting your search terms' : 'No topics available'}
+        </p>
+      </div>
+    );
+  };
+
   return (
-    <div
-      className="fixed inset-0 backdrop-blur-sm z-50 flex items-center justify-center"
-      onClick={handleBackdropClick}
-    >
-      <div className="bg-white rounded-[20px] border border-[#DCDEDD] w-full max-w-4xl mx-4 max-h-[80vh] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop overlay */}
+      <button
+        type="button"
+        className="absolute inset-0 backdrop-blur-sm bg-black/50 border-none p-0 w-full h-full cursor-default"
+        onClick={onClose}
+        aria-label="Close dialog"
+      />
+
+      {/* Modal Card */}
+      <div className="relative bg-white rounded-[20px] border border-[#DCDEDD] w-full max-w-4xl mx-4 max-h-[80vh] overflow-hidden z-10">
         <div className="p-6 border-b border-[#DCDEDD]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -134,65 +214,7 @@ export function TopicModal({ isOpen, onClose, onSelectTopic }: TopicModalProps) 
         </div>
 
         <div className="p-6 overflow-y-auto max-h-96">
-          {loading ? (
-            <div className="text-center py-8">
-              <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
-              <p className="text-brand-light text-sm">Loading topics...</p>
-            </div>
-          ) : error ? (
-            <div className="text-center py-8">
-              <X className="w-12 h-12 text-red-400 mx-auto mb-3" />
-              <h4 className="text-brand-dark text-base font-semibold mb-1">Error loading topics</h4>
-              <p className="text-brand-light text-sm">{error}</p>
-            </div>
-          ) : filteredTopics.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {filteredTopics.map((topic) => (
-                <div
-                  key={topic.id}
-                  className="topic-card border border-[#DCDEDD] rounded-[16px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4 cursor-pointer"
-                  onClick={() => {
-                    onSelectTopic(topic);
-                    onClose();
-                  }}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-28 h-16 relative overflow-hidden rounded-[12px]">
-                      <img
-                        src={getImageUrl(topic.image)}
-                        alt={topic.name}
-                        className="w-28 h-16 rounded-[12px] object-cover"
-                        onError={(e) => {
-                          // Fallback to default image if image fails to load
-                          const target = e.target as HTMLImageElement;
-                          target.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3';
-                        }}
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-brand-dark text-base font-bold">{topic.name}</h4>
-                      <p className="text-brand-light text-sm font-normal">
-                        {topic.description || 'No description available'}
-                      </p>
-                      <div className="flex gap-2 mt-1">
-                        <span className="text-xs text-gray-500">{topic.subject_count} subjects</span>
-                        <span className="text-xs text-gray-500">•</span>
-                        <span className="text-xs text-gray-500">{topic.course_count} courses</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8">
-              <SearchX className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-              <h4 className="text-brand-dark text-base font-semibold mb-1">No topics found</h4>
-              <p className="text-brand-light text-sm">
-                {searchTerm ? 'Try adjusting your search terms' : 'No topics available'}
-              </p>
-            </div>
-          )}
+          {renderContent()}
         </div>
       </div>
     </div>

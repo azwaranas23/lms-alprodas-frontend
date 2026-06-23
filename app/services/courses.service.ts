@@ -4,6 +4,11 @@ import type {
   MostJoinedCoursesResponse,
   Course,
 } from "../types/courses";
+import type {
+  CourseProgress,
+  LessonDetail,
+  CourseLearningData,
+} from "~/types/course-learning";
 import {
   courseResponseSchema,
   coursesResponseSchema,
@@ -17,48 +22,6 @@ export interface CompleteCourseResponse {
   data: {
     success: boolean;
     certificate_id?: string;
-  };
-}
-
-export interface CourseProgress {
-  course_id: number;
-  completed_lessons: number;
-  total_lessons: number;
-  completion_percentage: number;
-  progress_percentage: number;
-  started_at: string;
-  last_accessed_lesson_id?: number;
-  current_lesson?: {
-    id: number;
-    title: string;
-    section_name: string;
-  };
-  sections?: Array<{
-    id: number;
-    name: string;
-    lessons: Array<{
-      id: number;
-      title: string;
-      is_completed: boolean;
-      order: number;
-    }>;
-  }>;
-}
-
-export interface LessonDetail {
-  id: number;
-  title: string;
-  description?: string;
-  content: string;
-  duration: number;
-  duration_minutes: number;
-  video_url?: string;
-  type: "VIDEO" | "ARTICLE";
-  is_completed: boolean;
-  order: number;
-  section: {
-    id: number;
-    name: string;
   };
 }
 
@@ -328,7 +291,7 @@ export const coursesService = {
   // Get course learning structure with lessons and progress
   async getCourseLearning(
     courseId: number
-  ): Promise<{ message: string; data: CourseProgress }> {
+  ): Promise<{ message: string; data: CourseLearningData }> {
     const response = await apiClient.get(`/courses/${courseId}/learn`);
     return response.data;
   },

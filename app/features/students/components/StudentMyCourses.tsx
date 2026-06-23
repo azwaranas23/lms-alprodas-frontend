@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link, useSearchParams } from "react-router";
 import {
   BookOpen,
-  Filter,
   Search,
   Tag,
   Clock,
@@ -55,6 +54,7 @@ export default function StudentMyCourses() {
       setEnrolledCourses(response.data.items);
       setTotalPages(response.data.meta.total_pages);
     } catch (err) {
+      console.error("Failed to load your courses:", err);
       setEnrolledError("Failed to load your courses. Please try again.");
     } finally {
       setEnrolledLoading(false);
@@ -73,6 +73,7 @@ export default function StudentMyCourses() {
       } as any); // cast ringan karena CoursesListParams punya optional lain
       setCatalogCourses(response.data.items);
     } catch (err) {
+      console.error("Failed to load course catalog:", err);
       setCatalogError("Failed to load course catalog. Please try again.");
     } finally {
       setCatalogLoading(false);
@@ -136,7 +137,7 @@ export default function StudentMyCourses() {
 
       const blob = await coursesService.downloadCertificate(certificateId);
 
-      const url = window.URL.createObjectURL(blob);
+      const url = globalThis.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
       link.download = `certificate-${courseTitle
@@ -145,8 +146,8 @@ export default function StudentMyCourses() {
       document.body.appendChild(link);
       link.click();
 
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
+      link.remove();
+      globalThis.URL.revokeObjectURL(url);
     } catch (err) {
       console.error("Failed to download certificate:", err);
       alert("Failed to download certificate. Please try again.");
@@ -336,8 +337,7 @@ export default function StudentMyCourses() {
                 {filteredEnrolledCourses.map((course: any) => (
                   <div
                     key={course.id}
-                    onClick={() => navigate(`/courses/${course.id}`)}
-                    className="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4 flex flex-col cursor-pointer"
+                    className="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4 flex flex-col"
                   >
                     {/* Image - Stacked Top */}
                     <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-purple-100 relative overflow-hidden rounded-[12px] mb-4">

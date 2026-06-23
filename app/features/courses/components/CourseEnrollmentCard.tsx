@@ -8,8 +8,8 @@ import { authService } from "~/services/auth.service";
 import { Image } from "~/components/atoms/Image";
 
 interface CourseEnrollmentCardProps {
-  courseId: number;
-  course: Course;
+  readonly courseId: number;
+  readonly course: Course;
 }
 
 export function CourseEnrollmentCard({
@@ -28,6 +28,12 @@ export function CourseEnrollmentCard({
   const closeVideoModal = () => {
     setShowVideoModal(false);
     document.body.style.overflow = "auto";
+  };
+
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      closeVideoModal();
+    }
   };
 
   const getTotalDuration = (sections: Course["sections"]) => {
@@ -81,6 +87,44 @@ export function CourseEnrollmentCard({
     "Direct instructor support",
   ];
 
+  const renderEnrollButton = () => {
+    if (course.is_enrolled) {
+      return (
+        <Button
+          variant="outline"
+          className="w-full px-6 py-4 text-lg mb-6"
+          onClick={() => navigate(`/student/${courseId}/progress`)}
+        >
+          <BookOpen className="w-5 h-5 mr-2" />
+          Continue Learning
+        </Button>
+      );
+    }
+
+    if (user) {
+      return (
+        <Link to={`/checkout/${courseId}`}>
+          <Button
+            variant="primary"
+            className="w-full px-6 py-4 text-lg mb-6"
+          >
+            Enroll with Token
+          </Button>
+        </Link>
+      );
+    }
+
+    return (
+      <Button
+        variant="primary"
+        className="w-full px-6 py-4 text-lg mb-6"
+        onClick={() => navigate("/login")}
+      >
+        Login to Enroll
+      </Button>
+    );
+  };
+
   return (
     <>
       <div className="sticky top-24">
@@ -109,33 +153,7 @@ export function CourseEnrollmentCard({
           <div className="text-center mb-6"></div>
 
           {/* Enroll Button */}
-          {course.is_enrolled ? (
-            <Button
-              variant="outline"
-              className="w-full px-6 py-4 text-lg mb-6"
-              onClick={() => navigate(`/student/${courseId}/progress`)}
-            >
-              <BookOpen className="w-5 h-5 mr-2" />
-              Continue Learning
-            </Button>
-          ) : user ? (
-            <Link to={`/checkout/${courseId}`}>
-              <Button
-                variant="primary"
-                className="w-full px-6 py-4 text-lg mb-6"
-              >
-                Enroll with Token
-              </Button>
-            </Link>
-          ) : (
-            <Button
-              variant="primary"
-              className="w-full px-6 py-4 text-lg mb-6"
-              onClick={() => navigate("/login")}
-            >
-              Login to Enroll
-            </Button>
-          )}
+          {renderEnrollButton()}
 
           {/* What's Included */}
           <div className="space-y-4 mb-6">
@@ -143,8 +161,8 @@ export function CourseEnrollmentCard({
               What's included:
             </h3>
             <div className="space-y-3">
-              {courseIncludes.map((item, index) => (
-                <div key={index} className="flex items-start gap-3">
+              {courseIncludes.map((item) => (
+                <div key={item} className="flex items-start gap-3">
                   <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Check className="w-3 h-3 text-green-600" />
                   </div>
@@ -158,13 +176,17 @@ export function CourseEnrollmentCard({
 
       {/* Video Modal */}
       {showVideoModal && (
-        <div
-          className="fixed inset-0 backdrop-blur-sm z-50 flex items-center justify-center"
-          onClick={closeVideoModal}
-        >
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <button
+            type="button"
+            className="absolute inset-0 backdrop-blur-sm bg-black/50 border-none p-0 w-full h-full cursor-default"
+            onClick={closeVideoModal}
+            aria-label="Close modal"
+          />
+          {/* Modal Content */}
           <div
-            className="bg-white rounded-[20px] border border-[#DCDEDD] w-full max-w-4xl mx-4 max-h-[90vh] overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
+            className="relative bg-white rounded-[20px] border border-[#DCDEDD] w-full max-w-4xl mx-4 max-h-[90vh] overflow-hidden z-10"
           >
             {/* Modal Header */}
             <div className="p-6 border-b border-[#DCDEDD]">
@@ -197,6 +219,7 @@ export function CourseEnrollmentCard({
                 {firstVideoLesson?.video_url ? (
                   <iframe
                     src={firstVideoLesson.video_url}
+                    title="Course Preview Video"
                     className="w-full h-full rounded-[12px] border-0"
                     allowFullScreen
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

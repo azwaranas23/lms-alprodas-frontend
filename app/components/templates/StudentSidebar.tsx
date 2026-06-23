@@ -1,28 +1,22 @@
 import { Link, useLocation, useNavigate } from "react-router";
 import {
-  Home,
   BookOpen,
-  Star,
-  CreditCard,
-  Trophy,
-  HelpCircle,
-  MessageSquare,
   LogOut,
   GraduationCap,
 } from "lucide-react";
 import { authService } from "~/services/auth.service";
 
 interface StudentSidebarProps {
-  isCollapsed?: boolean;
-  toggleSidebar?: () => void;
+  readonly isCollapsed?: boolean;
+  readonly toggleSidebar?: () => void;
 }
 
 interface StudentNavLinkProps {
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  isActive?: boolean;
-  isCollapsed?: boolean;
+  readonly href: string;
+  readonly icon: React.ComponentType<{ className?: string }>;
+  readonly label: string;
+  readonly isActive?: boolean;
+  readonly isCollapsed?: boolean;
 }
 
 function StudentNavLink({
@@ -49,7 +43,7 @@ function StudentNavLink({
       className={`${baseClasses} ${isCollapsed ? collapsedClasses : expandedClasses} ${isActive ? activeClasses : inactiveClasses}`}
     >
       <Icon
-        className={`${isCollapsed ? "w-6 h-6" : "w-6 h-6"} ${isActive ? "text-white" : "text-gray-600"}`}
+        className={`w-6 h-6 ${isActive ? "text-white" : "text-gray-600"}`}
       />
       {!isCollapsed && (
         <span
@@ -62,7 +56,7 @@ function StudentNavLink({
   );
 }
 
-function LogoutButton({ isCollapsed }: { isCollapsed?: boolean }) {
+function LogoutButton({ isCollapsed }: { readonly isCollapsed?: boolean }) {
   const navigate = useNavigate();
   const baseClasses =
     "nav-link border rounded-[20px] transition-all duration-300 flex items-center";
@@ -83,7 +77,7 @@ function LogoutButton({ isCollapsed }: { isCollapsed?: boolean }) {
       title={isCollapsed ? "Logout" : undefined}
       className={`${baseClasses} ${isCollapsed ? collapsedClasses : expandedClasses} ${inactiveClasses} w-full`}
     >
-      <LogOut className={`w-6 h-6 text-gray-600 ${isCollapsed ? "w-6 h-6" : "w-6 h-6"}`} />
+      <LogOut className="w-6 h-6 text-gray-600" />
       {!isCollapsed && <span className="text-base font-medium text-brand-dark">Logout</span>}
     </button>
   );

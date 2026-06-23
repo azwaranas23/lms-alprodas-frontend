@@ -6,3 +6,26 @@
 /build/
 
 .env
+
+tests/
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+
+# SonarQube
+.scannerwork/
+.sonar/
+sonar-project.properties
+
+# SonarQube exported reports
+sonarqube-*.csv
+sonarqube-*.txt
+
+# Coverage reports
+coverage/

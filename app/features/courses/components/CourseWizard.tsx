@@ -3,14 +3,10 @@ import {
   ArrowLeft,
   BookOpen,
   Layers,
-  DollarSign,
   Image,
   CheckCircle,
   Check,
   Lightbulb,
-  Bell,
-  MessageCircle,
-  Settings,
   ChevronDown,
   Key,
   GraduationCap,
@@ -23,10 +19,10 @@ import { CourseTokenStep } from "./wizard-steps/steps/CourseTokenStep";
 import { ReviewSummaryStep } from "./wizard-steps/steps/ReviewSummaryStep";
 
 interface CourseWizardProps {
-  onComplete: (courseData: CourseData) => void;
-  onCancel: () => void;
-  onStepChange?: (step: number) => void;
-  isLoading?: boolean;
+  readonly onComplete: (courseData: CourseData) => void;
+  readonly onCancel: () => void;
+  readonly onStepChange?: (step: number) => void;
+  readonly isLoading?: boolean;
 }
 
 interface StepConfig {
@@ -74,6 +70,9 @@ export function CourseWizard({
   isLoading,
 }: CourseWizardProps) {
   const { getFullName, getRoleName, getAvatar } = useUser();
+  const avatar = getAvatar();
+  const fullName = getFullName();
+  const roleName = getRoleName();
   const [currentStep, setCurrentStep] = useState(1);
   const [courseData, setCourseData] = useState<CourseData>({
     name: "",
@@ -85,6 +84,24 @@ export function CourseWizard({
     courseToken: "",
     availability: "published",
   });
+
+  const getStepIconBgClass = (stepId: number) => {
+    if (currentStep === stepId) return "bg-blue-600";
+    if (currentStep > stepId) return "bg-green-600";
+    return "bg-gray-200 text-gray-500";
+  };
+
+  const getStepTitleClass = (stepId: number) => {
+    if (currentStep === stepId) return "text-blue-600";
+    if (currentStep > stepId) return "text-green-600";
+    return "text-gray-500";
+  };
+
+  const getStepLineClass = (stepId: number) => {
+    if (currentStep > stepId) return "bg-green-600";
+    if (currentStep === stepId) return "bg-blue-600";
+    return "bg-gray-200";
+  };
 
   const updateCourseData = (data: Partial<CourseData>) => {
     setCourseData((prev) => ({ ...prev, ...data }));
@@ -200,31 +217,19 @@ export function CourseWizard({
           {/* Step Progress */}
           <div className="space-y-8 flex-1 mt-36 px-6">
             {steps.map((step, index) => {
-              const isActive = currentStep === step.id;
-              const isCompleted = currentStep > step.id;
               const isConnected = index < steps.length - 1;
 
               return (
                 <div key={step.id}>
                   <div className="flex items-center gap-4">
                     <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center text-white flex-shrink-0 ${isActive
-                        ? "bg-blue-600"
-                        : isCompleted
-                          ? "bg-green-600"
-                          : "bg-gray-200 text-gray-500"
-                        }`}
+                      className={`w-12 h-12 rounded-full flex items-center justify-center text-white flex-shrink-0 ${getStepIconBgClass(step.id)}`}
                     >
                       <step.icon className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
                       <h3
-                        className={`text-lg font-bold ${isActive
-                          ? "text-blue-600"
-                          : isCompleted
-                            ? "text-green-600"
-                            : "text-gray-500"
-                          }`}
+                        className={`text-lg font-bold ${getStepTitleClass(step.id)}`}
                       >
                         {step.title}
                       </h3>
@@ -232,12 +237,7 @@ export function CourseWizard({
                   </div>
                   {isConnected && (
                     <div
-                      className={`ml-6 w-0.5 h-8 ${isCompleted
-                        ? "bg-green-600"
-                        : isActive
-                          ? "bg-blue-600"
-                          : "bg-gray-200"
-                        }`}
+                      className={`ml-6 w-0.5 h-8 ${getStepLineClass(step.id)}`}
                     ></div>
                   )}
                 </div>
@@ -275,12 +275,12 @@ export function CourseWizard({
                 {/* User Profile */}
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-                    {getAvatar() ? (
+                    {avatar ? (
                       <img
                         src={
-                          getAvatar().startsWith("http")
-                            ? getAvatar()
-                            : `${import.meta.env.VITE_BASE_URL}/${getAvatar()}`
+                          avatar.startsWith("http")
+                            ? avatar
+                            : `${import.meta.env.VITE_BASE_URL}/${avatar}`
                         }
                         alt="User Avatar"
                         className="w-full h-full object-cover"
@@ -295,17 +295,17 @@ export function CourseWizard({
                     ) : null}
                     <div
                       className="w-full h-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold"
-                      style={{ display: getAvatar() ? "none" : "flex" }}
+                      style={{ display: avatar ? "none" : "flex" }}
                     >
-                      {getFullName().charAt(0).toUpperCase()}
+                      {fullName.charAt(0).toUpperCase()}
                     </div>
                   </div>
                   <div className="text-left">
                     <p className="text-brand-dark text-base font-semibold">
-                      {getFullName()}
+                      {fullName}
                     </p>
                     <p className="text-brand-dark text-base font-normal leading-7">
-                      {getRoleName()}
+                      {roleName}
                     </p>
                   </div>
                   <ChevronDown className="w-4 h-4 text-gray-400" />

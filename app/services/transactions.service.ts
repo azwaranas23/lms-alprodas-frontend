@@ -64,6 +64,7 @@ export interface TransactionsListParams {
   page?: number;
   limit?: number;
   status?: "PENDING" | "PAID" | "FAILED" | "EXPIRED";
+  search?: string;
 }
 
 export interface TransactionsListResponse {

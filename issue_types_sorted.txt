@@ -1,0 +1,274 @@
+=== ISSUE TYPES AND COUNTS ===
+[122] LOW]: Mark the props of the component as read-only.
+[37] MEDIUM]: A form label must be associated with a control.
+[23] LOW]: Prefer `globalThis` over `window`.
+[23] MEDIUM]: Extract this nested ternary operation into an independent statement.
+[20] LOW]: Visible, non-interactive elements with click handlers must have at least one keyboard listener.
+[20] LOW; RELIABILITY:MEDIUM]: Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element.
+[14] LOW]: Prefer `globalThis.window` over `window`.
+[14] MEDIUM]: Do not use Array index in keys
+[11] MEDIUM]: A form label must have accessible text.
+[10] LOW; RELIABILITY:MEDIUM]: Prefer `Number.parseInt` over `parseInt`.
+[9] INFO]: Complete the task associated to this "TODO" comment.
+[8] LOW]: Unexpected negated condition.
+[7] LOW]: 'Youtube' is deprecated.
+[6] LOW]: Use the "RegExp.exec()" method instead.
+[6] LOW]: This assertion is unnecessary since the receiver accepts the original type of the expression.
+[6] MEDIUM; RELIABILITY:LOW]: Redundant alt attribute. Screen-readers already announce `img` tags as an image. You donât need to use the words `image`, `photo,` or `picture` (or any specified custom words) in the alt prop.
+[5] MEDIUM]: Prefer using an optional chain expression instead, as it's more concise and easier to read.
+[5] LOW]: Remove this unused import of 'DollarSign'.
+[4] LOW]: Handle this exception or don't catch it at all.
+[4] LOW; RELIABILITY:LOW]: Prefer `String#replaceAll()` over `String#replace()`.
+[4] LOW]: '~/constants/api' imported multiple times.
+[3] MEDIUM; RELIABILITY:LOW]: The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles.
+[3] LOW]: Remove this unused import of 'env'.
+[3] LOW]: Remove this unused import of 'formatCurrency'.
+[3] MEDIUM]: Prefer `childNode.remove()` over `parentNode.removeChild(childNode)`.
+[3] LOW]: Remove this unused import of 'Avatar'.
+[3] LOW]: Remove this unused import of 'Settings'.
+[3] LOW]: Remove this unused import of 'BASE_URL'.
+[2] HIGH]: Refactor this code to not nest functions more than 4 levels deep.
+[2] LOW]: 'course' PropType is defined but prop is never used
+[2] LOW]: Remove this unused import of 'Hash'.
+[2] LOW]: Remove this unused import of 'CreditCard'.
+[2] LOW]: Remove this unused import of 'HelpCircle'.
+[2] LOW]: Remove this unused import of 'MessageSquare'.
+[2] LOW]: Remove this unused import of 'Star'.
+[2] MEDIUM]: This conditional operation returns the same value whether the condition is "true" or "false".
+[2] LOW]: <iframe> elements must have a unique title property.
+[2] LOW]: 'Twitter' is deprecated.
+[2] LOW]: 'Linkedin' is deprecated.
+[2] LOW]: 'Instagram' is deprecated.
+[2] LOW]: Remove this unused import of 'useState'.
+[2] LOW]: Remove this unused import of 'Bell'.
+[2] LOW]: Remove this unused import of 'MessageCircle'.
+[2] MEDIUM]: Remove this useless assignment to variable "getFullName".
+[2] MEDIUM]: Remove this useless assignment to variable "getAvatar".
+[2] LOW]: Remove this unused import of 'Check'.
+[2] BLOCKER]: "TOKEN_CHARS" detected here, make sure this is not a hard-coded secret.
+[2] MEDIUM]: Remove this useless assignment to variable "getRoleName".
+[2] LOW]: Remove this unused import of 'User'.
+[2] MEDIUM]: Duplicate property "content"
+[2] LOW; RELIABILITY:LOW]: Prefer `String#codePointAt()` over `String#charCodeAt()`.
+[2] LOW]: Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+[1] LOW]: Make sure not using resource integrity feature is safe here.
+[1] MEDIUM]: Remove this useless assignment to variable "course".
+[1] MEDIUM]: Refactor this code to not use nested template literals.
+[1] MEDIUM]: Remove this useless assignment to variable "sectionId".
+[1] HIGH]: Refactor this function to reduce its Cognitive Complexity from 31 to the 15 allowed.
+[1] HIGH]: Refactor this function to reduce its Cognitive Complexity from 22 to the 15 allowed.
+[1] LOW]: Remove this unused import of 'Banknote'.
+[1] LOW]: Remove this unused import of 'Folder'.
+[1] LOW]: Remove this unused import of 'Video'.
+[1] LOW]: Remove this unused import of 'ClipboardCheck'.
+[1] LOW]: Remove this unused import of 'BarChart3'.
+[1] LOW]: Remove this unused import of 'ChevronLeft'.
+[1] LOW]: Remove this unused import of 'ChevronRight'.
+[1] LOW]: 'toggleSidebar' PropType is defined but prop is never used
+[1] LOW]: Remove this unused import of 'Home'.
+[1] LOW]: Remove this unused import of 'Trophy'.
+[1] MEDIUM]: Remove this useless assignment to variable "loading".
+[1] MEDIUM]: Remove this useless assignment to variable "openVideoModal".
+[1] LOW]: 'frameBorder' is deprecated.
+[1] LOW]: Remove this unused import of 'APISubject'.
+[1] LOW]: Remove this unused import of 'z'.
+[1] LOW]: 'selectedTopicId' PropType is defined but prop is never used
+[1] LOW]: Remove this unused import of 'Filter'.
+[1] LOW]: Remove this unused import of 'authService'.
+[1] LOW]: Remove this unused import of 'useMemo'.
+[1] LOW]: Remove this unused import of 'Download'.
+[1] MEDIUM]: Remove this useless assignment to variable "handleExportData".
+[1] LOW; RELIABILITY:LOW]: Use `new Array()` instead of `Array()`.
+[1] LOW]: Remove this unused import of 'FolderOpen'.
+[1] MEDIUM]: Remove this useless assignment to variable "isLoading".
+[1] LOW]: Remove this unused import of 'Map'.
+[1] LOW]: Remove this unused import of 'Tooltip'.
+[1] MEDIUM]: Update this function so that its implementation is not identical to the one on line 30.
+[1] LOW]: Remove this unused import of 'X'.
+[1] LOW]: Remove this unused import of 'Calendar'.
+[1] LOW]: Remove this unused import of 'Award'.
+[1] LOW]: Remove this unused import of 'LogOut'.
+[1] MEDIUM]: Remove this useless assignment to variable "user".
+[1] LOW]: Remove this unused import of 'Pause'.
+[1] LOW]: Remove this unused import of 'Volume2'.
+[1] LOW]: Remove this unused import of 'Maximize'.
+[1] LOW]: Media elements such as <audio> and <video> must have a <track> for captions.
+[1] MEDIUM; RELIABILITY:LOW]: Ambiguous spacing before next element a
+[1] MEDIUM; RELIABILITY:LOW]: Ambiguous spacing after previous element a
+[1] LOW]: Remove this unused import of 'ArrowRight'.
+[1] LOW]: Remove this unused import of 'Users'.
+[1] LOW]: Remove this unused import of 'Lightbulb'.
+[1] LOW]: Remove this unused import of 'PlayCircle'.
+[1] LOW]: Remove this unused import of 'GraduationCap'.
+[1] LOW; RELIABILITY:MEDIUM]: Prefer `Number.isNaN` over `isNaN`.
+[1] LOW]: Remove this unused import of 'ChevronDown'.
+[1] LOW]: Remove this unused import of 'Layers'.
+[1] LOW]: Remove this unused import of 'CheckCircle'.
+[1] LOW]: Remove this unused import of 'Select'.
+[1] LOW]: Prefer `.at(â¦)` over `[â¦.length - index]`.
+[1] HIGH]: Refactor this function to reduce its Cognitive Complexity from 18 to the 15 allowed.
+[1] HIGH]: Refactor this function to reduce its Cognitive Complexity from 25 to the 15 allowed.
+[1] LOW]: Use concise character class syntax '\d' instead of '[0-9]'.
+[1] MEDIUM]: This case's code block is the same as the block for the case on line 108.
+[1] MEDIUM]: Missing generic font family
+[1] MEDIUM]: Remove this useless assignment to variable "getUserRoleDisplay".
+[1] LOW]: Remove this unused import of 'useEffect'.
+[1] MEDIUM]: The 'value' object passed as the value prop to the Context provider changes every render. To fix this consider wrapping it in a useMemo hook.
+[1] LOW]: Remove this unused import of 'UserRole'.
+[1] LOW]: Remove this unused import of 'useNavigate'.
+[1] LOW]: Remove this unused import of 'Search'.
+[1] HIGH]: Prefer `return value` over `return Promise.resolve(value)`.
+[1] LOW]: This assertion is unnecessary since it does not change the type of the expression.
+[1] LOW]: Remove this unused import of 'SearchSection'.
+[1] MEDIUM; RELIABILITY:LOW]: Ambiguous spacing after previous element span
+[1] MEDIUM]: Remove this useless assignment to variable "categoryLabel".
+[1] MEDIUM]: Remove this useless assignment to variable "getUser".
+[1] MEDIUM]: Remove this useless assignment to variable "hasSubmitted".
+
+=== TOP AFFECTED FILES ===
+[19] app/routes/dashboard/mentor/courses/$id/lessons/$lessonId/edit.tsx
+[14] app/features/courses/components/LessonsTab.tsx
+[14] app/routes/dashboard/mentor/courses/$id/lessons/$sectionId/add.tsx
+[13] app/features/students/components/CoursePlayingVideo.tsx
+[13] app/components/templates/MentorSidebar.tsx
+[13] app/routes/dashboard/mentor/courses/$id/lessons/add.tsx
+[11] app/components/templates/StudentSidebar.tsx
+[11] app/features/courses/components/CourseHeroSection.tsx
+[11] app/features/courses/components/wizard-steps/steps/CourseInfoStep.tsx
+[9] app/features/courses/components/CourseEnrollmentCard.tsx
+[9] app/features/subjects/components/TopicModal.tsx
+[8] app/features/students/components/StudentMyCourses.tsx
+[8] app/components/pages/home/Footer.tsx
+[8] app/components/templates/BaseHeader.tsx
+[8] app/routes/dashboard/mentor/courses.tsx
+[8] app/services/auth.service.ts
+[8] app/features/courses/components/CourseResourcesTab.tsx
+[8] app/features/courses/components/CourseWizard.tsx
+[8] app/features/subjects/components/SubjectForm.tsx
+[8] app/features/topics/components/TopicContentSection.tsx
+[8] app/features/withdrawals/components/wizard-steps/steps/WithdrawalDetailsStep.tsx
+[7] app/features/courses/components/wizard-steps/steps/ReviewSummaryStep.tsx
+[7] app/features/topics/components/TopicForm.tsx
+[7] app/features/withdrawals/components/wizard-steps/steps/AccountVerificationStep.tsx
+[6] app/components/templates/BaseSidebar.tsx
+[6] app/features/courses/components/wizard-steps/steps/CoursePhotosStep.tsx
+[6] app/features/students/components/course-learning/VideoPlayer.tsx
+[6] app/features/withdrawals/components/wizard-steps/steps/ReviewSubmitStep.tsx
+[5] app/components/pages/home/HeroSection.tsx
+[5] app/features/courses/components/wizard-steps/steps/CoursePriceStep.tsx
+[5] app/features/courses/components/wizard-steps/steps/CourseTokenStep.tsx
+[5] app/lib/axios.ts
+[5] app/features/students/components/CoursePlayingArticle.tsx
+[5] app/features/courses/components/wizard-steps/steps/CourseDetailsStep.tsx
+[5] app/components/templates/AddCourseLayout.tsx
+[5] app/features/mentors/components/MentorTransactionsList.tsx
+[5] app/features/students/components/StudentTransactionsList.tsx
+[5] app/routes/dashboard/mentor/courses/$id/sections/$sectionId/lessons/$lessonId/edit.tsx
+[4] app/features/courses/components/CourseResourcesStudentTab.tsx
+[4] app/components/pages/home/TestimonialsSection.tsx
+[4] app/components/organisms/StudentDetailModal.tsx
+[4] app/features/courses/components/OverviewTab.tsx
+[4] app/components/molecules/SearchSection.tsx
+[4] app/components/organisms/RichTextEditor.tsx
+[4] app/components/templates/AddWithdrawalLayout.tsx
+[4] app/features/auth/components/RoleBasedRoute.tsx
+[4] app/features/students/components/course-learning/LessonSidebar.tsx
+[4] app/features/withdrawals/components/wizard-steps/steps/BankInformationStep.tsx
+[3] app/routes/reset-password.tsx
+[3] app/components/molecules/UserProfileDropdown.tsx
+[3] app/routes/signup.tsx
+[3] app/features/mentors/components/dashboard-components/dashboard/MentorQuickActions.tsx
+[3] app/features/courses/components/CourseWizardContent.tsx
+[3] app/app.css
+[3] app/components/molecules/Modal.tsx
+[3] app/components/templates/DynamicSidebar.tsx
+[3] app/contexts/WithdrawalContext.tsx
+[3] app/features/auth/components/PermissionRoute.tsx
+[3] app/features/auth/components/ProfilePhotoUpload.tsx
+[3] app/features/auth/components/ProtectedRoute.tsx
+[3] app/features/students/components/SuccessIcon.tsx
+[3] app/features/transactions/components/TransactionDetails.tsx
+[2] app/components/atoms/Avatar.tsx
+[2] app/components/atoms/Image.tsx
+[2] app/utils/formatters.ts
+[2] app/features/courses/components/CourseTestimonialsTab.tsx
+[2] app/routes/dashboard/mentor/courses/$id.tsx
+[2] app/routes/dashboard/mentor/students.tsx
+[2] app/features/checkout/components/PaymentDetailsCard.tsx
+[2] app/components/atoms/ApiErrorMessage.tsx
+[2] app/components/molecules/FormField.tsx
+[2] app/components/molecules/Pagination.tsx
+[2] app/components/organisms/CourseCard.tsx
+[2] app/components/organisms/TransactionCard.tsx
+[2] app/features/auth/components/RadioOption.tsx
+[2] app/features/courses/components/CourseLessonsPage.tsx
+[2] app/features/courses/components/OtherTabs.tsx
+[2] app/features/dashboard/components/LatestUsers.tsx
+[2] app/features/mentors/components/MentorGrid.tsx
+[2] app/features/mentors/components/dashboard-components/dashboard/MentorStatsGrid.tsx
+[2] app/features/subjects/components/SubjectCard.tsx
+[2] app/features/withdrawals/components/WithdrawalWizardContent.tsx
+[2] app/hooks/useAuth.ts
+[2] app/routes/dashboard/mentor/courses/$id.edit.tsx
+[1] app/components/pages/home/FeaturesSection.tsx
+[1] app/features/courses/components/CourseAboutTab.tsx
+[1] app/features/courses/components/CourseBenefitsTab.tsx
+[1] app/features/courses/components/CourseLessonsTab.tsx
+[1] app/features/courses/components/CourseTabs.tsx
+[1] app/components/templates/Layout.tsx
+[1] app/features/mentors/components/dashboard-components/dashboard/LatestCourses.tsx
+[1] app/routes/dashboard/mentor/dashboard.tsx
+[1] app/routes/enrollment-success.$id.tsx
+[1] app/components/organisms/UserNavbar.tsx
+[1] app/routes/courses/success.tsx
+[1] app/routes/dashboard/mentor/courses/add.tsx
+[1] app/components/atoms/Badge.tsx
+[1] app/components/atoms/Checkbox.tsx
+[1] app/components/atoms/ErrorMessage.tsx
+[1] app/components/atoms/Form.tsx
+[1] app/components/atoms/Logo.tsx
+[1] app/components/atoms/StatsCard.tsx
+[1] app/components/atoms/Tab.tsx
+[1] app/components/atoms/Tooltip.tsx
+[1] app/components/atoms/TransactionStatusBadge.tsx
+[1] app/components/molecules/Card.tsx
+[1] app/components/molecules/PhotoPreviewModal.tsx
+[1] app/components/molecules/StudentsSearchSection.tsx
+[1] app/components/molecules/TransactionItem.tsx
+[1] app/components/organisms/LatestTransactions.tsx
+[1] app/components/organisms/LoginForm.tsx
+[1] app/components/organisms/StudentCard.tsx
+[1] app/components/organisms/TestimonialCard.tsx
+[1] app/components/organisms/TopicCard.tsx
+[1] app/components/pages/home/Navbar.tsx
+[1] app/components/templates/DynamicHeader.tsx
+[1] app/components/templates/Header.tsx
+[1] app/components/templates/MentorLayout.tsx
+[1] app/components/templates/Sidebar.tsx
+[1] app/components/templates/StudentLayout.tsx
+[1] app/features/auth/components/GuestRoute.tsx
+[1] app/features/checkout/components/CourseInfoCard.tsx
+[1] app/features/checkout/components/PurchaseSuccessIcon.tsx
+[1] app/features/checkout/components/PurchasedCourseCard.tsx
+[1] app/features/checkout/components/StudentInfoCard.tsx
+[1] app/features/courses/components/CourseContentSection.tsx
+[1] app/features/dashboard/components/QuickActions.tsx
+[1] app/features/dashboard/components/RevenueCard.tsx
+[1] app/features/mentors/components/MentorCard.tsx
+[1] app/features/mentors/components/PaginationControls.tsx
+[1] app/features/mentors/components/dashboard-components/dashboard/LatestTransactions.tsx
+[1] app/features/mentors/components/dashboard-components/dashboard/MentorRevenueCard.tsx
+[1] app/features/students/components/CourseCompletionCard.tsx
+[1] app/features/students/components/course-learning/CourseHeader.tsx
+[1] app/features/students/components/course-learning/LessonContent.tsx
+[1] app/features/subjects/components/PhotoPreviewModal.tsx
+[1] app/features/topics/components/PhotoPreviewModal.tsx
+[1] app/features/transactions/components/LatestTransactions.tsx
+[1] app/features/withdrawals/components/WithdrawalRequestModal.tsx
+[1] app/hooks/api/useCourses.ts
+[1] app/hooks/api/useWithdrawals.ts
+[1] app/hooks/useUser.ts
+[1] app/providers/QueryProvider.tsx
+[1] app/root.tsx
+[1] app/routes/course.$id.tsx
+[1] app/routes/dashboard/mentor/courses/$id/lessons/$lessonId.tsx

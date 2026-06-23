@@ -3,29 +3,18 @@ import {
   Home,
   BookOpen,
   Users,
-  CreditCard,
-  Banknote,
-  Folder,
-  Video,
-  ClipboardCheck,
-  BarChart3,
-  HelpCircle,
-  MessageSquare,
   GraduationCap,
   LogOut,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
 import { authService } from "~/services/auth.service";
 
 interface MentorNavLinkProps {
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  isActive?: boolean;
-  isCollapsed?: boolean;
-  toggleSidebar?: () => void;
+  readonly href: string;
+  readonly icon: React.ComponentType<{ className?: string }>;
+  readonly label: string;
+  readonly isActive?: boolean;
+  readonly isCollapsed?: boolean;
 }
 
 function LogoutButton({ isCollapsed }: { isCollapsed: boolean }) {

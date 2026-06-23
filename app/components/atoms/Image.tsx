@@ -2,17 +2,17 @@ import { useState } from "react";
 import { getImageSrc, type ImageType } from "~/utils/formatters";
 
 export interface ImageProps {
-	src?: string;
-	alt: string;
-	fallback?: string;
-	className?: string;
-	placeholder?: React.ReactNode;
-	imageType?: ImageType;
-	identifier?: string;
-	loading?: "lazy" | "eager";
-	fetchPriority?: "high" | "low" | "auto";
-	width?: number | string;
-	height?: number | string;
+	readonly src?: string;
+	readonly alt: string;
+	readonly fallback?: string;
+	readonly className?: string;
+	readonly placeholder?: React.ReactNode;
+	readonly imageType?: ImageType;
+	readonly identifier?: string;
+	readonly loading?: "lazy" | "eager";
+	readonly fetchPriority?: "high" | "low" | "auto";
+	readonly width?: number | string;
+	readonly height?: number | string;
 }
 
 // Image URLs for different content types (for onError fallback)
@@ -47,7 +47,7 @@ const courseImageUrls = [
 const hashString = (str: string): number => {
 	let hash = 0;
 	for (let i = 0; i < str.length; i++) {
-		const char = str.charCodeAt(i);
+		const char = str.codePointAt(i) || 0;
 		hash = (hash << 5) - hash + char;
 		hash = hash & hash; // Convert to 32bit integer
 	}

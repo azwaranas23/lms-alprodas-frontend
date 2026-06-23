@@ -3,8 +3,8 @@ import { KeyRound } from "lucide-react";
 import { Button } from "~/components/atoms/Button";
 
 interface EnrollmentTokenCardProps {
-  isProcessing?: boolean;
-  onEnroll: (token: string) => void;
+  readonly isProcessing?: boolean;
+  readonly onEnroll: (token: string) => void;
 }
 
 export function PaymentDetailsCard({
@@ -37,10 +37,11 @@ export function PaymentDetailsCard({
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-brand-dark mb-2">
+          <label htmlFor="course-token-input" className="block text-sm font-medium text-brand-dark mb-2">
             Course Token
           </label>
           <input
+            id="course-token-input"
             type="text"
             value={token}
             onChange={(e) => setToken(e.target.value)}

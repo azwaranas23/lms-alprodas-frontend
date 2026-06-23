@@ -54,41 +54,39 @@ export default function CourseCompletedPage() {
           );
           const enrollmentData = response.data;
 
+          const totalDurationMinutes = enrollmentData.course.sections?.reduce(
+            (total: number, section) =>
+              total +
+              (section.lessons?.reduce(
+                (sectionTotal: number, lesson: any) =>
+                  sectionTotal + (lesson.duration_minutes || 0),
+                0
+              ) || 0),
+            0
+          ) || 0;
+
           const courseCompletionData: CourseCompletionData = {
             title: enrollmentData.course.title,
-            category: enrollmentData.course.subject.name,
-            thumbnail: enrollmentData.course.images[0]?.image_path || "",
+            category: enrollmentData.course.subject?.name || "General",
+            thumbnail: enrollmentData.course.images?.main || enrollmentData.course.images?.preview || "",
             mentor: {
-              name: enrollmentData.course.mentor.name,
-              title:
-                enrollmentData.course.mentor.profile?.expertise ||
-                "Course Mentor",
-              avatar: enrollmentData.course.mentor.profile?.avatar || "",
+              name: enrollmentData.course.mentor?.name || "Course Mentor",
+              title: "Course Mentor",
+              avatar: enrollmentData.course.mentor?.profile_picture || "",
             },
             stats: {
               lessonsCompleted: `${enrollmentData.course.total_lessons} / ${enrollmentData.course.total_lessons}`,
-              totalDuration: `${Math.ceil(
-                enrollmentData.course.sections.reduce(
-                  (total: number, section: any) =>
-                    total +
-                    section.lessons.reduce(
-                      (sectionTotal: number, lesson: any) =>
-                        sectionTotal + lesson.duration_minutes,
-                      0
-                    ),
-                  0
-                ) / 60
-              )} hours`,
+              totalDuration: `${Math.ceil(totalDurationMinutes / 60)} hours`,
               completionDate: new Date(
-                enrollmentData.completed_at
+                enrollmentData.completed_at || new Date().toISOString()
               ).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
               }),
-              certificateId: certificateId || enrollmentData.certificate_id,
+              certificateId: certificateId || enrollmentData.certificate_id || "N/A",
             },
-            achievement: `${enrollmentData.course.subject.name} Master`,
+            achievement: `${enrollmentData.course.subject?.name || "Course"} Master`,
           };
 
           setCourseData(courseCompletionData);

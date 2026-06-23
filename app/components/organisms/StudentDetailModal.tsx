@@ -2,18 +2,18 @@ import { X, Mail, BookOpen, Calendar, User } from "lucide-react";
 import { getAvatarSrc } from "~/utils/formatters";
 
 interface StudentDetailModalProps {
-    student: {
-        id: string;
-        name: string;
-        email: string;
-        specialization: string;
-        enrolledCourses: number;
-        status: "Active" | "Inactive" | "Graduated";
-        avatar: string;
-        latestEnrollment?: string;
+    readonly student: {
+        readonly id: string;
+        readonly name: string;
+        readonly email: string;
+        readonly specialization: string;
+        readonly enrolledCourses: number;
+        readonly status: "Active" | "Inactive" | "Graduated";
+        readonly avatar: string;
+        readonly latestEnrollment?: string;
     } | null;
-    isOpen: boolean;
-    onClose: () => void;
+    readonly isOpen: boolean;
+    readonly onClose: () => void;
 }
 
 const getStatusStyle = (status: string) => {
@@ -39,13 +39,15 @@ export function StudentDetailModal({
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
             {/* Backdrop */}
-            <div
-                className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            <button
+                type="button"
+                className="absolute inset-0 bg-black/50 backdrop-blur-sm border-none p-0 w-full h-full cursor-default"
                 onClick={onClose}
+                aria-label="Close modal"
             />
 
             {/* Modal */}
-            <div className="relative bg-white rounded-[20px] w-full max-w-md mx-4 shadow-2xl border border-[#DCDEDD] animate-in fade-in zoom-in duration-200">
+            <div className="relative bg-white rounded-[20px] w-full max-w-md mx-4 shadow-2xl border border-[#DCDEDD] animate-in fade-in zoom-in duration-200 z-10">
                 {/* Close Button */}
                 <button
                     onClick={onClose}
@@ -101,7 +103,7 @@ export function StudentDetailModal({
                         <div>
                             <p className="text-xs text-gray-500 font-medium">Enrolled Courses</p>
                             <p className="text-sm text-gray-900 font-semibold">
-                                {student.enrolledCourses} Course{student.enrolledCourses !== 1 ? "s" : ""}
+                                {student.enrolledCourses} Course{student.enrolledCourses === 1 ? "" : "s"}
                             </p>
                         </div>
                     </div>

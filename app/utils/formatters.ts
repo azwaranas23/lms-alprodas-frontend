@@ -32,7 +32,7 @@ export const formatDate = (dateString: string): string => {
 const hashString = (str: string): number => {
 	let hash = 0;
 	for (let i = 0; i < str.length; i++) {
-		const char = str.charCodeAt(i);
+		const char = str.codePointAt(i) || 0;
 		hash = (hash << 5) - hash + char;
 		hash = hash & hash; // Convert to 32bit integer
 	}
@@ -70,7 +70,7 @@ const courseImageUrls = [
 export type ImageType = "topic" | "subject" | "course";
 
 export const optimizeUnsplashUrl = (url: string, width = 600, quality = 80): string => {
-	if (!url || !url.includes("images.unsplash.com")) return url;
+	if (!url?.includes("images.unsplash.com")) return url;
 	try {
 		const parsedUrl = new URL(url);
 		parsedUrl.searchParams.set("auto", "format");
@@ -79,7 +79,7 @@ export const optimizeUnsplashUrl = (url: string, width = 600, quality = 80): str
 		parsedUrl.searchParams.set("q", quality.toString());
 		parsedUrl.searchParams.set("fm", "webp");
 		return parsedUrl.toString();
-	} catch (e) {
+	} catch {
 		return url;
 	}
 };

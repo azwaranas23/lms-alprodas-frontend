@@ -103,20 +103,37 @@ export interface CourseProgress {
 	last_accessed_at?: string;
 	completed_at?: string;
 	certificate_id?: string;
+	completion_percentage?: number;
+	current_lesson?: {
+		id: number;
+		title: string;
+		section_name: string;
+	};
+	sections?: Array<{
+		id: number;
+		name: string;
+		lessons: Array<{
+			id: number;
+			title: string;
+			is_completed: boolean;
+			order: number;
+		}>;
+	}>;
 }
 
 export interface LessonDetail {
 	id: number;
 	title: string;
-	description: string;
+	description?: string;
 	video_url?: string;
 	content?: string;
 	duration_minutes: number;
 	order: number;
 	section: {
 		id: number;
-		title: string;
-		order: number;
+		title?: string;
+		name?: string;
+		order?: number;
 	};
 	resources?: LessonResource[];
 	quiz?: LessonQuiz;

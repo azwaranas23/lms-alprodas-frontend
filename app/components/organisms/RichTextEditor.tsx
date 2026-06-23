@@ -106,6 +106,8 @@ export function RichTextEditor({
   useEffect(() => {
     if (!scriptLoaded || !editorRef.current || editor || disabled) return;
 
+    let activeEditor: CKEditorInstance | null = null;
+
     const initEditor = async () => {
       try {
         const editorInstance = await window.ClassicEditor!.create(editorRef.current!, {
@@ -152,6 +154,7 @@ export function RichTextEditor({
           onChange(data);
         });
 
+        activeEditor = editorInstance;
         setEditor(editorInstance);
       } catch (error) {
         console.error('Error initializing CKEditor:', error);
@@ -161,8 +164,8 @@ export function RichTextEditor({
     initEditor();
 
     return () => {
-      if (editor) {
-        editor.destroy().catch((error: unknown) => {
+      if (activeEditor) {
+        activeEditor.destroy().catch((error: unknown) => {
           console.error('Error destroying CKEditor:', error);
         });
       }

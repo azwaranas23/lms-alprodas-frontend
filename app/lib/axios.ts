@@ -13,7 +13,7 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     // Add auth token if available (only on client side)
-    if (typeof window !== "undefined") {
+    if (globalThis.window !== undefined) {
       const token = localStorage.getItem("access_token");
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
@@ -33,8 +33,8 @@ apiClient.interceptors.response.use(
   },
   (error) => {
     // Handle 401 errors for authenticated routes only
-    if (error.response?.status === 401 && typeof window !== "undefined") {
-      const currentPath = window.location.pathname;
+    if (error.response?.status === 401 && globalThis.window !== undefined) {
+      const currentPath = globalThis.window.location.pathname;
       const isAuthRoute =
         currentPath === "/login" ||
         currentPath === "/signup" ||
@@ -49,8 +49,8 @@ apiClient.interceptors.response.use(
         localStorage.removeItem("access_token");
         localStorage.removeItem("user");
         // Use history.pushState to avoid page reload
-        window.history.pushState({}, "", "/login");
-        window.dispatchEvent(new PopStateEvent("popstate"));
+        globalThis.window.history.pushState({}, "", "/login");
+        globalThis.window.dispatchEvent(new PopStateEvent("popstate"));
       }
     }
     return Promise.reject(error);

@@ -38,14 +38,14 @@ interface CourseTokenStepProps {
 }
 
 // Helper untuk generate token XXXX-XXXX (huruf & angka)
-const TOKEN_CHARS =
+const CHARACTER_POOL =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 function generateTokenSegment(length: number) {
   let result = "";
   for (let i = 0; i < length; i++) {
-    const idx = Math.floor(Math.random() * TOKEN_CHARS.length);
-    result += TOKEN_CHARS[idx];
+    const idx = Math.floor(Math.random() * CHARACTER_POOL.length);
+    result += CHARACTER_POOL[idx];
   }
   return result;
 }

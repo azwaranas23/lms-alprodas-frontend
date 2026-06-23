@@ -10,9 +10,7 @@ import {
   Banknote,
   Wallet,
   GraduationCap,
-  Calendar,
   ClipboardCheck,
-  Award,
   BarChart3,
   HelpCircle,
   MessageSquare,
@@ -20,29 +18,36 @@ import {
   Video,
   Star,
   Trophy,
-  LogOut,
 } from "lucide-react";
 import { useUser } from "~/hooks/useUser";
 
 interface NavItem {
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  permission?: string;
-  isActive?: (currentPath: string) => boolean;
+  readonly href: string;
+  readonly icon: React.ComponentType<{ className?: string }>;
+  readonly label: string;
+  readonly permission?: string;
+  readonly isActive?: (currentPath: string) => boolean;
 }
 
 interface NavSection {
-  title: string;
-  items: NavItem[];
+  readonly title: string;
+  readonly items: NavItem[];
 }
 
 interface BaseSidebarProps {
-  variant?: "normal" | "wizard" | "learning";
-  role?: "manager" | "mentor" | "student";
-  className?: string;
-  isCollapsed?: boolean;
-  toggleSidebar?: () => void;
+  readonly variant?: "normal" | "wizard" | "learning";
+  readonly role?: "manager" | "mentor" | "student";
+  readonly className?: string;
+  readonly isCollapsed?: boolean;
+  readonly toggleSidebar?: () => void;
+}
+
+interface NavLinkProps {
+  readonly href: string;
+  readonly icon: React.ComponentType<{ className?: string }>;
+  readonly label: string;
+  readonly isActive?: boolean;
+  readonly isCollapsed?: boolean;
 }
 
 function NavLink({
@@ -51,13 +56,7 @@ function NavLink({
   label,
   isActive = false,
   isCollapsed = false,
-}: {
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  isActive?: boolean;
-  isCollapsed?: boolean;
-}) {
+}: NavLinkProps) {
   const baseClasses =
     "nav-link border rounded-[20px] transition-all duration-300 flex items-center";
   const expandedClasses = "gap-3 px-4 py-3";
@@ -97,7 +96,7 @@ export function BaseSidebar({
 }: BaseSidebarProps) {
   const location = useLocation();
   const currentPath = location.pathname;
-  const { user, getRole, hasPermission } = useUser();
+  const { getRole, hasPermission } = useUser();
 
   // Determine the role - use prop first, then hook
   const userRole = role || getRole();

@@ -5,7 +5,6 @@ import {
   Download,
   FileText,
   Trash2,
-  FolderOpen,
 } from "lucide-react";
 import { Button } from "~/components/atoms/Button";
 import {
@@ -16,7 +15,7 @@ import {
 import type { CourseResourceResponse } from "~/services/course-resources.service";
 
 interface ResourcesTabProps {
-  course: unknown;
+  readonly course?: unknown;
 }
 
 export function ResourcesTab({}: ResourcesTabProps) {
@@ -29,7 +28,6 @@ export function ResourcesTab({}: ResourcesTabProps) {
 
   const {
     data: resourcesData,
-    isLoading,
     error: queryError,
   } = useCourseResources(courseId);
 
@@ -95,17 +93,17 @@ export function ResourcesTab({}: ResourcesTabProps) {
   };
 
   const handleDownload = (resource: CourseResourceResponse) => {
-    const normalizedPath = resource.resourcePath.replace(/\\/g, "/");
+    const normalizedPath = resource.resourcePath.replaceAll("\\", "/");
     // apiClient baseURL: http://localhost:3005/api -> hilangkan /api
     const baseUrl = (
       import.meta.env.VITE_API_URL ?? "http://localhost:3005/api"
     ).replace(/\/api\/?$/, "");
     const url = `${baseUrl}/${normalizedPath}`;
-    window.open(url, "_blank");
+    globalThis.window.open(url, "_blank");
   };
 
   const handleDelete = (id: number) => {
-    if (!window.confirm("Are you sure you want to delete this resource?")) {
+    if (!globalThis.window.confirm("Are you sure you want to delete this resource?")) {
       return;
     }
     setLocalError(null);
@@ -174,10 +172,11 @@ export function ResourcesTab({}: ResourcesTabProps) {
           className="flex flex-col md:flex-row gap-4 items-start md:items-end"
         >
           <div className="flex-1 w-full">
-            <label className="block text-brand-dark text-sm font-semibold mb-1">
+            <label htmlFor="resource-name-input" className="block text-brand-dark text-sm font-semibold mb-1">
               Resource Name (optional)
             </label>
             <input
+              id="resource-name-input"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -187,9 +186,9 @@ export function ResourcesTab({}: ResourcesTabProps) {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="block text-brand-dark text-sm font-semibold">
+            <span className="block text-brand-dark text-sm font-semibold">
               File (pdf, doc, xls, ppt, txt, zip, rar) *
-            </label>
+            </span>
             <div className="flex items-center gap-3">
               {/* Custom file button */}
               <label className="inline-flex items-center gap-2 border border-[#DCDEDD] rounded-[12px] px-4 py-2 text-sm font-semibold text-brand-dark cursor-pointer hover:border-[#0C51D9] hover:border-2 transition-all duration-200 bg-white">
