@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link, useSearchParams } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import {
   BookOpen,
   Search,
@@ -165,8 +165,6 @@ export default function StudentMyCourses() {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
-
-  const navigate = useNavigate();
 
   return (
     <StudentLayout

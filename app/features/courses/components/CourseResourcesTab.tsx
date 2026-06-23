@@ -14,11 +14,7 @@ import {
 } from "~/hooks/api/useCourseResources";
 import type { CourseResourceResponse } from "~/services/course-resources.service";
 
-interface ResourcesTabProps {
-  readonly course?: unknown;
-}
-
-export function ResourcesTab({}: ResourcesTabProps) {
+export function ResourcesTab() {
   const { id } = useParams();
   const courseId = Number(id);
 

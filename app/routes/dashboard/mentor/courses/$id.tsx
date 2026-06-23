@@ -356,7 +356,7 @@ export default function MentorCourseDetail() {
           <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6">
             {activeTab === "overview" && <OverviewTab course={course} />}
             {activeTab === "lessons" && <LessonsTab course={course} />}
-            {activeTab === "resources" && <ResourcesTab course={course} />}
+            {activeTab === "resources" && <ResourcesTab />}
             {activeTab === "rewards" && (
               <OtherTabs course={course} activeTab="rewards" />
             )}

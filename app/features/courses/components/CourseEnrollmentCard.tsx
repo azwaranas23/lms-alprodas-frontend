@@ -30,12 +30,6 @@ export function CourseEnrollmentCard({
     document.body.style.overflow = "auto";
   };
 
-  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      closeVideoModal();
-    }
-  };
-
   const getTotalDuration = (sections: Course["sections"]) => {
     if (!sections?.length) return "0 hours";
 
