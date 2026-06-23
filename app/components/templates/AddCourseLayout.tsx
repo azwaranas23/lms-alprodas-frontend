@@ -3,7 +3,6 @@ import {
   BookOpen,
   Check,
   CheckCircle,
-  DollarSign,
   GraduationCap,
   Image,
   Layers,

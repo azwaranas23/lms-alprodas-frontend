@@ -1,5 +1,4 @@
-import { Search, Layers, CheckCircle, ChevronDown } from 'lucide-react';
-import { Select } from '~/components/atoms/Select';
+import { Search } from 'lucide-react';
 
 export function SearchSection() {
   return (

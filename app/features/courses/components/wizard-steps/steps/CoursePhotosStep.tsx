@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Image, Upload, ImagePlus, X, Check, ArrowRight, ArrowLeft, AlertCircle } from "lucide-react";
+import { Image, Upload, ImagePlus, X, ArrowRight, ArrowLeft, AlertCircle } from "lucide-react";
 import { env } from "~/config/env";
 
 interface CourseData {

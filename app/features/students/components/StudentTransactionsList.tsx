@@ -12,7 +12,6 @@ import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { studentTransactionsService } from "~/services/student-transactions.service";
 import { QUERY_KEYS } from "~/constants/api";
-import { BASE_URL } from "~/constants/api";
 import type { StudentTransaction } from "~/types/student-transactions";
 import { getAvatarSrc, formatCurrency } from "~/utils/formatters";
 

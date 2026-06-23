@@ -4,8 +4,6 @@ import {
   CheckCircle,
   User,
   Wrench,
-  Check,
-  Lightbulb,
   ArrowRight,
   ArrowLeft,
 } from "lucide-react";

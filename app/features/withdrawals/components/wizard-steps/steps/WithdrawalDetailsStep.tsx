@@ -8,7 +8,6 @@ import {
 	Check,
 	ShieldCheck,
 	Loader2,
-	X,
 } from "lucide-react";
 import { withdrawalsService } from "~/services/withdrawals.service";
 import { useWithdrawal } from "~/contexts/WithdrawalContext";

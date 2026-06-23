@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router";
 import { Play, Check, X, BookOpen } from "lucide-react";
 import type { Course } from "~/types/courses";
 import { Button } from "~/components/atoms/Button";
-import { formatCurrency } from "~/utils/formatters";
 import { authService } from "~/services/auth.service";
 import { Image } from "~/components/atoms/Image";
 

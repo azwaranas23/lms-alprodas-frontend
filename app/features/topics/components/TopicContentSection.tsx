@@ -14,11 +14,9 @@ import { subjectsService } from "~/services/subjects.service";
 import { coursesService } from "~/services/courses.service";
 import type { Subject } from "~/types/subjects";
 import type { Course } from "~/types/courses";
-import { env } from "~/config/env";
 import { Button } from "~/components/atoms/Button";
 import { Card } from "~/components/molecules/Card";
-import { formatCurrency, getAvatarSrc } from "~/utils/formatters";
-import { Tooltip } from "~/components/atoms/Tooltip";
+import { getAvatarSrc } from "~/utils/formatters";
 import { Image } from "~/components/atoms/Image";
 
 interface SubjectCardProps {

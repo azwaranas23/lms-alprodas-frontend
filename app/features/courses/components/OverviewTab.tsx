@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import {
 	Users,
 	CheckCircle,
-	DollarSign,
 	Star,
 	TrendingUp,
 	BookOpen,

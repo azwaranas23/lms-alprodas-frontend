@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, PlayCircle, GraduationCap } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "~/components/atoms/Button";
 import { TestimonialCard, type Testimonial } from "~/components/organisms/TestimonialCard";
 

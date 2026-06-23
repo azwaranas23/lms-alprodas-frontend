@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Play, Pause, Volume2, Maximize, Settings, FileText } from "lucide-react";
+import { Play, FileText } from "lucide-react";
 import type { LessonDetail } from "~/types/course-learning";
 
 interface VideoPlayerProps {

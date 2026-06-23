@@ -1,7 +1,6 @@
 import { type ReactNode, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 import { authService } from '~/services/auth.service';
-import type { UserRole } from '~/types/auth';
 
 interface ProtectedRouteProps {
   children: ReactNode;

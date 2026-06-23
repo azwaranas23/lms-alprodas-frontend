@@ -1,7 +1,6 @@
 import { Eye } from 'lucide-react';
 import { TransactionStatusBadge, type TransactionStatus } from '~/components/atoms/TransactionStatusBadge';
 import { Button } from '../atoms/Button';
-import { Avatar } from '../atoms/Avatar';
 import { Image } from '../atoms/Image';
 import { Card } from '../molecules/Card';
 import { Tooltip } from '../atoms/Tooltip';

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { WithdrawalProvider } from '~/contexts/WithdrawalContext';
 import AccountVerificationStep from './wizard-steps/steps/AccountVerificationStep';
 import WithdrawalDetailsStep from './wizard-steps/steps/WithdrawalDetailsStep';

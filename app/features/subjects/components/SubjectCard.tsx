@@ -1,5 +1,4 @@
 import { BookOpen, Tag, Eye, Edit } from "lucide-react";
-import { BASE_URL } from "~/constants/api";
 import { Tooltip } from "~/components/atoms/Tooltip";
 import type { Subject } from "~/services/subjects.service";
 import { Image } from "~/components/atoms/Image";

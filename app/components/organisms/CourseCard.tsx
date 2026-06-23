@@ -4,7 +4,6 @@ import { Link } from "react-router";
 import type { Course } from "../../types/courses";
 import { Button } from "../atoms/Button";
 import { Card } from "../molecules/Card";
-import { formatCurrency } from "../../utils/formatters";
 import { Image } from "../atoms/Image";
 import { Avatar } from "../atoms/Avatar";
 

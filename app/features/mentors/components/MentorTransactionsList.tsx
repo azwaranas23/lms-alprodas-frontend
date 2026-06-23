@@ -9,7 +9,6 @@ import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { mentorTransactionsService } from "~/services/mentor-transactions.service";
 import { QUERY_KEYS } from "~/constants/api";
-import { BASE_URL } from "~/constants/api";
 import type { MentorTransaction } from "~/types/mentor-transactions";
 import { getAvatarSrc, formatCurrency } from "~/utils/formatters";
 
