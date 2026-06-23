@@ -2334,7 +2334,7 @@
   }
 
   .font-\[\'Plus_Jakarta_Sans\'\] {
-    font-family: "Plus Jakarta Sans";
+    font-family: "Plus Jakarta Sans", sans-serif;
   }
 
   .text-2xl {
@@ -2888,7 +2888,6 @@
 
   .after\:content-\[\'Select\'\] {
     &::after {
-      content: var(--tw-content);
       --tw-content: "Select";
       content: var(--tw-content);
     }
@@ -2897,7 +2896,6 @@
   .group-has-\[\:checked\]\:after\:content-\[\'Selected\'\] {
     &:is(:where(.group):has(*:is(:checked)) *) {
       &::after {
-        content: var(--tw-content);
         --tw-content: "Selected";
         content: var(--tw-content);
       }

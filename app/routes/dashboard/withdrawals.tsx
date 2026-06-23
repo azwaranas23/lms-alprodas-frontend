@@ -455,8 +455,9 @@ export default function WithdrawalsPage() {
                               {withdrawal.user.name}
                             </h5>
                             <p className="text-sm text-gray-600">
-                              {`${withdrawal.user?.expertise} Mentor` ||
-                                "Web Development Mentor"}
+                              {withdrawal.user?.expertise
+                              ? `${withdrawal.user.expertise} Mentor`
+                              : "Web Development Mentor"}
                             </p>
                           </div>
                         </div>

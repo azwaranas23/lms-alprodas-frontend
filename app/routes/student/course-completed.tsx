@@ -153,20 +153,6 @@ export default function CourseCompletedPage() {
     };
 
     fetchCourseEnrollmentData();
-
-    // Load confetti library dynamically
-    const script = document.createElement("script");
-    script.src =
-      "https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js";
-    script.async = true;
-    document.head.appendChild(script);
-
-    return () => {
-      // Cleanup script
-      if (document.head.contains(script)) {
-        document.head.removeChild(script);
-      }
-    };
   }, [searchParams]);
 
   const handleShareAchievement = () => {

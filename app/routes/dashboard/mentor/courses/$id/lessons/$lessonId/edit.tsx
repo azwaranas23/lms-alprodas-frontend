@@ -141,6 +141,9 @@ export default function EditLesson() {
       const script = document.createElement("script");
       script.src =
         "https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js";
+      script.integrity =
+        "sha384-iRqAtUS5zaxUb29RlrazJxjB/+B6yhysd3tFSeMTcmvAgxeXTVWBk4OlbSJWpthT";
+      script.crossOrigin = "anonymous";
       script.onload = () => {
         if ((window as any).ClassicEditor) {
           const editorElement = document.querySelector(

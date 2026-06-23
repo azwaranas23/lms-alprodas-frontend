@@ -52,7 +52,7 @@ const validators: Record<string, (val: any, data: FormData) => string> = {
   fullName: (val) => (val?.trim() ? "" : "Please enter your full name."),
   gender: (val) => (val ? "" : "Please select your gender."),
   email: (val) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(val || "") ? "" : "Please enter a valid email address.";
   },
   password: (val) => {

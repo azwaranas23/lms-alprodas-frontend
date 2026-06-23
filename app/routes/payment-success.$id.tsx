@@ -85,11 +85,12 @@ export default function PurchaseSuccessPage() {
             id: courseData.id.toString(),
           },
           transaction: {
-            id:
-              "TRX-" +
-              new Date().getFullYear() +
-              "-" +
-              Math.random().toString().substring(2, 8),
+            id: (() => {
+              const randomArray = new Uint32Array(1);
+              globalThis.crypto.getRandomValues(randomArray);
+              const trxRandom = ((randomArray[0] % 900000) + 100000).toString();
+              return `TRX-${new Date().getFullYear()}-${trxRandom}`;
+            })(),
             purchaseDate: "Purchased just now",
           },
           user: {

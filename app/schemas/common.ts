@@ -29,7 +29,7 @@ export const passwordSchema = z.string()
   .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, 'Password must contain at least one uppercase letter, one lowercase letter, and one number');
 
 export const strongPasswordSchema = passwordSchema
-  .regex(/(?=.*[!@#$%^&*])/, 'Password must contain at least one special character (!@#$%^&*)');
+  .regex(/[!@#$%^&*]/, 'Password must contain at least one special character (!@#$%^&*)');
 
 export const phoneSchema = z.string()
   .min(1, 'Phone number is required')

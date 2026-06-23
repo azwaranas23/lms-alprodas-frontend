@@ -43,8 +43,10 @@ const CHARACTER_POOL =
 
 function generateTokenSegment(length: number) {
   let result = "";
+  const randomValues = new Uint32Array(length);
+  globalThis.crypto.getRandomValues(randomValues);
   for (let i = 0; i < length; i++) {
-    const idx = Math.floor(Math.random() * CHARACTER_POOL.length);
+    const idx = randomValues[i] % CHARACTER_POOL.length;
     result += CHARACTER_POOL[idx];
   }
   return result;

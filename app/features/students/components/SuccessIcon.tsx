@@ -5,15 +5,18 @@ export function SuccessIcon() {
   useEffect(() => {
     // Trigger confetti celebration
     const timer = setTimeout(() => {
-      // Check if confetti library is available globally
-      if (typeof window !== 'undefined' && 'confetti' in window) {
-        const confetti = (window as any).confetti;
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 }
+      import('canvas-confetti')
+        .then((module) => {
+          const confetti = module.default;
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
+        })
+        .catch((err) => {
+          console.error('Failed to load canvas-confetti:', err);
         });
-      }
     }, 500);
 
     // Success animation
