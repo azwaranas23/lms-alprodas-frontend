@@ -4,7 +4,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router";
 
-function TwitterIcon({ size = 18 }: { size?: number }) {
+function TwitterIcon({ size = 18 }: Readonly<{ size?: number }>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +22,7 @@ function TwitterIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-function LinkedinIcon({ size = 18 }: { size?: number }) {
+function LinkedinIcon({ size = 18 }: Readonly<{ size?: number }>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@ function LinkedinIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-function InstagramIcon({ size = 18 }: { size?: number }) {
+function InstagramIcon({ size = 18 }: Readonly<{ size?: number }>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +62,7 @@ function InstagramIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-function YoutubeIcon({ size = 18 }: { size?: number }) {
+function YoutubeIcon({ size = 18 }: Readonly<{ size?: number }>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
