@@ -11,12 +11,12 @@ interface StructuredApiError {
 }
 
 interface ApiErrorMessageProps {
-  title?: string;
-  message: string | StructuredApiError;
-  className?: string;
+  readonly title?: string;
+  readonly message: string | StructuredApiError;
+  readonly className?: string;
 }
 
-export function ApiErrorMessage({ title = "Error", message, className = '' }: ApiErrorMessageProps) {
+export function ApiErrorMessage({ title = "Error", message, className = '' }: Readonly<ApiErrorMessageProps>) {
   if (!message) return null;
 
   // Safe rendering helper
@@ -42,7 +42,7 @@ export function ApiErrorMessage({ title = "Error", message, className = '' }: Ap
               {message.errors && message.errors.length > 0 && (
                 <ul className="text-danger text-sm font-normal m-0 list-disc list-inside space-y-1">
                   {message.errors.map((error, index) => (
-                    <li key={index}>
+                    <li key={`error-${error.path}-${index}`}>
                       <span className="font-medium capitalize">{renderSafeText(error.path)}:</span> {renderSafeText(error.message)}
                     </li>
                   ))}

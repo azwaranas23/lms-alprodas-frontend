@@ -438,7 +438,7 @@ export default function WithdrawalDetailsPage() {
               <form className="space-y-4">
                 {/* Status Selection */}
                 <div>
-                  <label className="block text-brand-dark text-base font-semibold mb-1">
+                  <label htmlFor="withdrawal-status-select" className="block text-brand-dark text-base font-semibold mb-1">
                     Update Status
                   </label>
                   <div className="relative">
@@ -446,6 +446,7 @@ export default function WithdrawalDetailsPage() {
                       <CheckCircle className="h-5 w-5 text-gray-400" />
                     </div>
                     <select
+                      id="withdrawal-status-select"
                       value={withdrawalStatus}
                       onChange={(e) => setWithdrawalStatus(e.target.value)}
                       className="w-full pl-12 pr-8 py-3 border border-[#DCDEDD] rounded-[16px] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 transition-all duration-300 bg-white appearance-none"
@@ -460,7 +461,7 @@ export default function WithdrawalDetailsPage() {
 
                 {/* Manager Notes */}
                 <div>
-                  <label className="block text-brand-dark text-base font-semibold mb-1">
+                  <label htmlFor="manager-notes-textarea" className="block text-brand-dark text-base font-semibold mb-1">
                     Manager Notes
                   </label>
                   <div className="relative">
@@ -468,6 +469,7 @@ export default function WithdrawalDetailsPage() {
                       <FileText className="h-5 w-5 text-gray-400" />
                     </div>
                     <textarea
+                      id="manager-notes-textarea"
                       rows={4}
                       value={managerNotes}
                       onChange={(e) => setManagerNotes(e.target.value)}
@@ -519,29 +521,35 @@ export default function WithdrawalDetailsPage() {
 
               {/* Photo Upload Section */}
               <div className="mb-4">
-                <label className="block text-brand-dark text-base font-semibold mb-1">
+                <h4 className="block text-brand-dark text-base font-semibold mb-1">
                   Payment Screenshot
-                </label>
+                </h4>
                 <div className="flex items-start gap-4">
                   <div className="w-64 h-42 relative">
                     {paymentProof || withdrawal.proof_payment_withdrawal ? (
-                      <img
-                        src={
-                          paymentProof ||
-                          getImageSrc(
-                            withdrawal.proof_payment_withdrawal || undefined,
-                            "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=256&fit=crop"
-                          )
-                        }
-                        alt="Payment Proof"
-                        className="w-64 h-42 object-cover rounded-[16px] cursor-pointer"
+                      <button
+                        type="button"
                         onClick={() => setShowPreviewModal(true)}
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src =
-                            "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=256&fit=crop";
-                        }}
-                      />
+                        className="w-64 h-42 p-0 border-0 focus:outline-none focus:ring-2 focus:ring-[#0C51D9] focus:ring-offset-2 overflow-hidden rounded-[16px]"
+                        aria-label="Preview payment proof"
+                      >
+                        <img
+                          src={
+                            paymentProof ||
+                            getImageSrc(
+                              withdrawal.proof_payment_withdrawal || undefined,
+                              "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=256&fit=crop"
+                            )
+                          }
+                          alt="Payment Proof"
+                          className="w-full h-full object-cover cursor-pointer"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src =
+                              "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=256&fit=crop";
+                          }}
+                        />
+                      </button>
                     ) : (
                       <div className="w-64 h-42 bg-gray-50 rounded-[16px] border-2 border-dashed border-[#DCDEDD] flex flex-col items-center justify-center text-gray-400">
                         <Image className="w-10 h-10 mb-2" />

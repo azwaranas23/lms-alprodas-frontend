@@ -15,11 +15,8 @@ import {
 } from "lucide-react";
 import {
 	subjectsService,
-	type Subject as APISubject,
 } from "~/services/subjects.service";
-import { env } from "~/config/env";
 import { courseInfoSchema, type CourseInfoData } from "~/schemas/courses";
-import { z } from "zod";
 import { Image } from "~/components/atoms/Image";
 
 interface CourseData {
@@ -48,7 +45,7 @@ export function CourseInfoStep({
 	onUpdate,
 	onNext,
 	onCancel,
-}: CourseInfoStepProps) {
+}: Readonly<CourseInfoStepProps>) {
 	const [showSubjectModal, setShowSubjectModal] = useState(false);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -82,10 +79,9 @@ export function CourseInfoStep({
 	const filteredSubjects = subjects.filter(
 		(subject) =>
 			subject.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			(subject.description &&
-				subject.description
-					.toLowerCase()
-					.includes(searchTerm.toLowerCase()))
+			subject.description
+				?.toLowerCase()
+				.includes(searchTerm.toLowerCase())
 	);
 
 	const handleSubjectSelect = (subject: Subject) => {
@@ -129,7 +125,7 @@ export function CourseInfoStep({
 				Array.isArray(validationResult.error.issues)
 			) {
 				validationResult.error.issues.forEach((err) => {
-					if (err.path && err.path[0]) {
+					if (err.path?.[0]) {
 						newErrors[err.path[0] as string] = err.message;
 					}
 				});
@@ -164,10 +160,11 @@ export function CourseInfoStep({
 							<div className="space-y-5">
 								{/* Course Name */}
 								<div className="mb-4">
-									<label className="block text-brand-dark text-base font-semibold mb-1">
+									<label htmlFor="course-name-input" className="block text-brand-dark text-base font-semibold mb-1">
 										Course Name *
 									</label>
 									<Input
+										id="course-name-input"
 										type="text"
 										required
 										value={data.name}
@@ -189,7 +186,7 @@ export function CourseInfoStep({
 
 								{/* Course Description */}
 								<div className="mb-4">
-									<label className="block text-brand-dark text-base font-semibold mb-1">
+									<label htmlFor="course-description-textarea" className="block text-brand-dark text-base font-semibold mb-1">
 										Course Description *
 									</label>
 									<div className="relative">
@@ -197,6 +194,7 @@ export function CourseInfoStep({
 											<FileText className="h-5 w-5 text-gray-400" />
 										</div>
 										<textarea
+											id="course-description-textarea"
 											rows={6}
 											required
 											value={data.description}
@@ -228,10 +226,11 @@ export function CourseInfoStep({
 
 								{/* Subject Selection */}
 								<div className="mb-4">
-									<label className="block text-brand-dark text-base font-semibold mb-1">
+									<label htmlFor="subject-select-btn" className="block text-brand-dark text-base font-semibold mb-1">
 										Subject *
 									</label>
 									<button
+										id="subject-select-btn"
 										type="button"
 										onClick={() =>
 											setShowSubjectModal(true)
@@ -492,12 +491,19 @@ export function CourseInfoStep({
 								<>
 									<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 										{filteredSubjects.map((subject) => (
-											<div
+											<button
 												key={subject.id}
+												type="button"
 												onClick={() =>
 													handleSubjectSelect(subject)
 												}
-												className="border border-[#DCDEDD] rounded-[16px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4 cursor-pointer"
+												onKeyDown={(e) => {
+													if (e.key === "Enter" || e.key === " ") {
+														e.preventDefault();
+														handleSubjectSelect(subject);
+													}
+												}}
+												className="w-full text-left border border-[#DCDEDD] rounded-[16px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#0C51D9] focus:ring-offset-2 bg-transparent"
 											>
 												<div className="flex items-center gap-4">
 													<div className="w-28 h-20 relative overflow-hidden rounded-[12px]">
@@ -526,7 +532,7 @@ export function CourseInfoStep({
 														</div>
 													</div>
 												</div>
-											</div>
+											</button>
 										))}
 									</div>
 

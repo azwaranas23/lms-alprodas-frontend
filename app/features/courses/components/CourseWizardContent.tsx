@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Check, DollarSign, Image, Key, Lightbulb } from "lucide-react";
+import { Check, Image, Key, Lightbulb } from "lucide-react";
 import { CourseInfoStep } from "./wizard-steps/steps/CourseInfoStep";
 import { CoursePhotosStep } from "./wizard-steps/steps/CoursePhotosStep";
 import { CourseDetailsStep } from "./wizard-steps/steps/CourseDetailsStep";
@@ -7,12 +7,12 @@ import { CourseTokenStep } from "./wizard-steps/steps/CourseTokenStep";
 import { ReviewSummaryStep } from "./wizard-steps/steps/ReviewSummaryStep";
 
 interface CourseWizardContentProps {
-  onComplete: (courseData: CourseData) => void;
-  onCancel: () => void;
-  onStepChange?: (step: number) => void;
-  isLoading?: boolean;
-  mode?: "add" | "edit";
-  initialData?: Partial<CourseData>;
+  readonly onComplete: (courseData: CourseData) => void;
+  readonly onCancel: () => void;
+  readonly onStepChange?: (step: number) => void;
+  readonly isLoading?: boolean;
+  readonly mode?: "add" | "edit";
+  readonly initialData?: Partial<CourseData>;
 }
 
 interface CourseData {
@@ -57,7 +57,7 @@ export function CourseWizardContent({
   isLoading,
   mode = "add",
   initialData = {},
-}: CourseWizardContentProps) {
+}: Readonly<CourseWizardContentProps>) {
   const [currentStep, setCurrentStep] = useState(1);
   const [courseData, setCourseData] = useState<CourseData>({
     name: initialData.name || "",

@@ -8,7 +8,7 @@ interface CourseHeroSectionProps {
   courseId: number;
 }
 
-export function CourseHeroSection({ courseId }: CourseHeroSectionProps) {
+export function CourseHeroSection({ courseId }: Readonly<CourseHeroSectionProps>) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [course, setCourse] = useState<Course | null>(null);
@@ -61,12 +61,12 @@ export function CourseHeroSection({ courseId }: CourseHeroSectionProps) {
 
   const openVideoModal = () => {
     setShowVideoModal(true);
-    document.body.style.overflow = 'hidden';
+    globalThis.document.body.style.overflow = 'hidden';
   };
 
   const closeVideoModal = () => {
     setShowVideoModal(false);
-    document.body.style.overflow = 'auto';
+    globalThis.document.body.style.overflow = 'auto';
   };
 
   return (
@@ -89,11 +89,11 @@ export function CourseHeroSection({ courseId }: CourseHeroSectionProps) {
                 className="flex gap-4 transition-transform duration-500 ease-in-out"
                 style={{ transform: `translateX(-${currentSlide * (768 + 16)}px)` }}
               >
-                {courseImages.map((image, index) => (
-                  <div key={index} className="flex-shrink-0 w-[768px] h-[512px] relative">
+                {courseImages.map((image) => (
+                  <div key={image} className="flex-shrink-0 w-[768px] h-[512px] relative">
                     <Image
                       src={image}
-                      alt={`Course Screenshot ${index + 1}`}
+                      alt="Course Screenshot"
                       className="w-full h-full object-cover rounded-[20px]"
                       imageType="course"
                       identifier={courseId.toString()}
@@ -113,9 +113,9 @@ export function CourseHeroSection({ courseId }: CourseHeroSectionProps) {
 
             {/* Carousel Indicators */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-              {courseImages.map((_, index) => (
+              {courseImages.map((image, index) => (
                 <button
-                  key={index}
+                  key={image}
                   onClick={() => goToSlide(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentSlide
@@ -131,14 +131,23 @@ export function CourseHeroSection({ courseId }: CourseHeroSectionProps) {
 
       {/* Video Modal */}
       {showVideoModal && (
-        <div
-          className="fixed inset-0 backdrop-blur-sm z-50 flex items-center justify-center"
-          onClick={closeVideoModal}
-        >
-          <div
-            className="bg-white rounded-[20px] border border-[#DCDEDD] w-full max-w-4xl mx-4 max-h-[90vh] overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <button
+            type="button"
+            aria-label="Close video modal"
+            className="absolute inset-0 backdrop-blur-sm bg-black/30 focus:outline-none w-full h-full border-none cursor-pointer p-0"
+            onClick={closeVideoModal}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                closeVideoModal();
+              }
+            }}
+          />
+
+          {/* Modal Content */}
+          <div className="bg-white rounded-[20px] border border-[#DCDEDD] w-full max-w-4xl mx-4 max-h-[90vh] overflow-hidden relative z-10">
             {/* Modal Header */}
             <div className="p-6 border-b border-[#DCDEDD]">
               <div className="flex items-center justify-between">
@@ -164,8 +173,9 @@ export function CourseHeroSection({ courseId }: CourseHeroSectionProps) {
               <div className="aspect-video w-full">
                 <iframe
                   src="https://www.youtube.com/embed/OArJje5zmOw?autoplay=1"
+                  title="Course Preview Video"
                   className="w-full h-full rounded-[12px]"
-                  frameBorder="0"
+                  style={{ border: "none" }}
                   allowFullScreen
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 />

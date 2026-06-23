@@ -448,27 +448,35 @@ export default function WithdrawalDetailPage() {
 
             {/* Payment Proof Display */}
             <div className="mb-4">
-              <label className="block text-brand-dark text-base font-semibold mb-1">
+              <h4 className="block text-brand-dark text-base font-semibold mb-1">
                 Payment Screenshot
-              </label>
+              </h4>
               {/* Payment Proof Image */}
               <div className="w-full h-64 rounded-[16px] overflow-hidden border border-[#DCDEDD] mb-4">
                 {withdrawal.proof_payment_withdrawal ? (
-                  <img
-                    src={`${import.meta.env.VITE_BASE_URL}${withdrawal.proof_payment_withdrawal}`}
-                    alt="Payment Proof"
-                    className="w-full h-full object-cover cursor-pointer"
+                  <button
+                    type="button"
                     onClick={() => setIsPreviewModalOpen(true)}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = "none";
-                      if (target.nextElementSibling) {
-                        (
-                          target.nextElementSibling as HTMLElement
-                        ).style.display = "flex";
-                      }
-                    }}
-                  />
+                    className="w-full h-full p-0 border-0 focus:outline-none focus:ring-2 focus:ring-[#0C51D9] focus:ring-offset-2 overflow-hidden rounded-[16px]"
+                    aria-label="Preview payment proof"
+                  >
+                    <img
+                      src={`${import.meta.env.VITE_BASE_URL}${withdrawal.proof_payment_withdrawal}`}
+                      alt="Payment Proof"
+                      className="w-full h-full object-cover cursor-pointer"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        const parentButton = target.closest('button');
+                        if (parentButton) {
+                          parentButton.style.display = "none";
+                          const fallback = parentButton.nextElementSibling as HTMLElement;
+                          if (fallback) {
+                            fallback.style.display = "flex";
+                          }
+                        }
+                      }}
+                    />
+                  </button>
                 ) : null}
                 <div
                   className="w-full h-full bg-gray-50 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-500"
@@ -551,14 +559,16 @@ export default function WithdrawalDetailPage() {
 
       {/* Payment Proof Preview Modal */}
       {isPreviewModalOpen && (
-        <div
-          className="fixed inset-0 backdrop-blur-sm z-50 flex items-center justify-center"
-          onClick={closeProofPreview}
-        >
-          <div
-            className="bg-white rounded-[20px] border border-[#DCDEDD] w-full max-w-4xl mx-4 max-h-[90vh] overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop overlay */}
+          <button
+            type="button"
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm border-0 p-0 cursor-default"
+            onClick={closeProofPreview}
+            aria-label="Close preview"
+          />
+          {/* Dialog card */}
+          <div className="bg-white rounded-[20px] border border-[#DCDEDD] w-full max-w-4xl mx-4 max-h-[90vh] overflow-hidden relative z-10">
             {/* Modal Header */}
             <div className="p-6 border-b border-[#DCDEDD]">
               <div className="flex items-center justify-between">
@@ -576,6 +586,7 @@ export default function WithdrawalDetailPage() {
                   </div>
                 </div>
                 <button
+                  type="button"
                   onClick={closeProofPreview}
                   className="w-10 h-10 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200"
                 >

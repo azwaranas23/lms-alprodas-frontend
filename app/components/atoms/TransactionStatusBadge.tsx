@@ -1,7 +1,7 @@
 export type TransactionStatus = 'paid' | 'pending' | 'failed';
 
 interface TransactionStatusBadgeProps {
-  status: TransactionStatus;
+  readonly status: TransactionStatus;
 }
 
 const statusConfig = {
@@ -19,7 +19,7 @@ const statusConfig = {
   }
 };
 
-export function TransactionStatusBadge({ status }: TransactionStatusBadgeProps) {
+export function TransactionStatusBadge({ status }: Readonly<TransactionStatusBadgeProps>) {
   const config = statusConfig[status] || statusConfig.pending;
 
   return (

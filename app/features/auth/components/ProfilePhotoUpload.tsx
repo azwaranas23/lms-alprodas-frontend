@@ -5,7 +5,7 @@ interface ProfilePhotoUploadProps {
   onPhotoChange?: (file: File | null) => void;
 }
 
-export function ProfilePhotoUpload({ onPhotoChange }: ProfilePhotoUploadProps) {
+export function ProfilePhotoUpload({ onPhotoChange }: Readonly<ProfilePhotoUploadProps>) {
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -51,14 +51,10 @@ export function ProfilePhotoUpload({ onPhotoChange }: ProfilePhotoUploadProps) {
 
   return (
     <div>
-      <label className="block text-brand-dark text-sm font-semibold mb-2">Profile Photo</label>
+      <label htmlFor="profile-photo-input" className="block text-brand-dark text-sm font-semibold mb-2">Profile Photo</label>
       <div className="flex items-center gap-4">
         <div className="w-32 h-32">
-          {!selectedPhoto ? (
-            <div className="w-32 h-32 bg-gray-100 border-2 border-dashed border-[#DCDEDD] rounded-full flex items-center justify-center">
-              <Camera className="w-12 h-12 text-gray-400" />
-            </div>
-          ) : (
+          {selectedPhoto ? (
             <div className="relative w-32 h-32">
               <img
                 src={selectedPhoto}
@@ -73,10 +69,15 @@ export function ProfilePhotoUpload({ onPhotoChange }: ProfilePhotoUploadProps) {
                 <X className="w-4 h-4" />
               </button>
             </div>
+          ) : (
+            <div className="w-32 h-32 bg-gray-100 border-2 border-dashed border-[#DCDEDD] rounded-full flex items-center justify-center">
+              <Camera className="w-12 h-12 text-gray-400" />
+            </div>
           )}
         </div>
         <div className="flex flex-col gap-2">
           <input
+            id="profile-photo-input"
             type="file"
             ref={fileInputRef}
             accept="image/*"

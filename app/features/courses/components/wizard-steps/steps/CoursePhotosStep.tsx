@@ -37,7 +37,7 @@ function PhotoUpload({
 	placeholderText,
 	initialImageUrl,
 	error,
-}: PhotoUploadProps) {
+}: Readonly<PhotoUploadProps>) {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [previewUrl, setPreviewUrl] = useState<string>(initialImageUrl || "");
 
@@ -105,7 +105,7 @@ function PhotoUpload({
 						{previewUrl ? (
 							<img
 								src={previewUrl}
-								alt={`Course Photo ${id}`}
+								alt={`Course preview ${id}`}
 								className="w-full h-42 object-cover rounded-[16px]"
 							/>
 						) : (
@@ -119,12 +119,20 @@ function PhotoUpload({
 					</div>
 
 					{!previewUrl && (
-						<div
-							className="absolute inset-0 rounded-[16px] flex items-center justify-center transition-all duration-300 cursor-pointer z-20 group hover:bg-black hover:bg-opacity-30"
+						<button
+							type="button"
+							aria-label="Upload photo"
+							className="absolute inset-0 rounded-[16px] flex items-center justify-center transition-all duration-300 cursor-pointer z-20 group hover:bg-black hover:bg-opacity-30 focus:outline-none focus:ring-2 focus:ring-[#0C51D9] focus:ring-offset-2 bg-transparent border-none w-full h-full"
 							onClick={handleClick}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" || e.key === " ") {
+									e.preventDefault();
+									handleClick();
+								}
+							}}
 						>
 							<Upload className="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 relative z-10" />
-						</div>
+						</button>
 					)}
 				</div>
 			</div>
@@ -174,7 +182,7 @@ export function CoursePhotosStep({
 	onUpdate,
 	onNext,
 	onPrevious,
-}: CoursePhotosStepProps) {
+}: Readonly<CoursePhotosStepProps>) {
 	const [errors, setErrors] = useState<{ mainPhoto?: string }>({});
 
 	console.log('CoursePhotosStep - data:', data);

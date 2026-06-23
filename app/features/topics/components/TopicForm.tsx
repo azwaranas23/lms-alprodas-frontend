@@ -13,12 +13,12 @@ import { z } from 'zod';
 
 
 interface TopicFormProps {
-  mode: 'add' | 'edit';
-  initialData?: Topic;
-  onSubmit?: (data: FormData) => Promise<void>;
+  readonly mode: 'add' | 'edit';
+  readonly initialData?: Topic;
+  readonly onSubmit?: (data: FormData) => Promise<void>;
 }
 
-export function TopicForm({ mode, initialData, onSubmit }: TopicFormProps) {
+export function TopicForm({ mode, initialData, onSubmit }: Readonly<TopicFormProps>) {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const createTopicMutation = useCreateTopic();
@@ -160,7 +160,7 @@ export function TopicForm({ mode, initialData, onSubmit }: TopicFormProps) {
 
           <div className="grid grid-cols-1 gap-5">
             <div className="mb-4">
-              <label className="block text-brand-dark text-base font-semibold mb-1">Topic Photo</label>
+              <label htmlFor="topic-photo-input" className="block text-brand-dark text-base font-semibold mb-1">Topic Photo</label>
               <div className="flex items-start gap-4">
                 <div className="w-64 h-42">
                   <div className="relative w-64 h-42">
@@ -168,7 +168,7 @@ export function TopicForm({ mode, initialData, onSubmit }: TopicFormProps) {
                     
                     <div className="w-64 h-42 relative z-10 flex items-center justify-center rounded-[16px] overflow-hidden">
                       {imagePreview ? (
-                        <img src={imagePreview} alt="Topic Photo" className="w-64 h-42 object-cover rounded-[16px]" />
+                        <img src={imagePreview} alt="Topic preview" className="w-64 h-42 object-cover rounded-[16px]" />
                       ) : (
                         <div className="flex flex-col items-center justify-center text-gray-400 h-full">
                           <Image className="w-10 h-10 mb-2" />
@@ -178,19 +178,22 @@ export function TopicForm({ mode, initialData, onSubmit }: TopicFormProps) {
                     </div>
                     
                     {!imagePreview && (
-                      <div 
-                        className="absolute inset-0 rounded-[16px] flex items-center justify-center transition-all duration-300 cursor-pointer z-20 group" 
+                      <button
+                        type="button" 
+                        className="absolute inset-0 rounded-[16px] flex items-center justify-center transition-all duration-300 cursor-pointer z-20 group bg-transparent border-0 p-0 focus:outline-none focus:ring-2 focus:ring-[#0C51D9] focus:ring-offset-2" 
                         onClick={() => fileInputRef.current?.click()}
+                        aria-label="Upload topic photo"
                       >
                         <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 rounded-[16px] transition-opacity duration-300"></div>
                         <Upload className="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 relative z-10" />
-                      </div>
+                      </button>
                     )}
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
                   <input 
                     type="file" 
+                    id="topic-photo-input"
                     ref={fileInputRef}
                     accept="image/*" 
                     className="hidden" 
@@ -231,13 +234,14 @@ export function TopicForm({ mode, initialData, onSubmit }: TopicFormProps) {
             </div>
 
             <div className="mb-4">
-              <label className="block text-brand-dark text-base font-semibold mb-1">Topic Name *</label>
+              <label htmlFor="topic-name-input" className="block text-brand-dark text-base font-semibold mb-1">Topic Name *</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <Tag className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
                   type="text"
+                  id="topic-name-input"
                   required
                   value={formData.name}
                   onChange={(e) => {
@@ -260,12 +264,13 @@ export function TopicForm({ mode, initialData, onSubmit }: TopicFormProps) {
             </div>
 
             <div className="mb-6">
-              <label className="block text-brand-dark text-base font-semibold mb-1">Topic Description</label>
+              <label htmlFor="topic-description-input" className="block text-brand-dark text-base font-semibold mb-1">Topic Description</label>
               <div className="relative">
                 <div className="absolute top-3 left-4 pointer-events-none">
                   <FileText className="h-5 w-5 text-gray-400" />
                 </div>
                 <textarea
+                  id="topic-description-input"
                   rows={4}
                   value={formData.description || ''}
                   onChange={(e) => {

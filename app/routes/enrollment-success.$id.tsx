@@ -75,7 +75,7 @@ export default function EnrollmentSuccessPage() {
           <p className="text-brand-light text-base font-normal max-w-xl mx-auto">
             You have successfully enrolled in{" "}
             <span className="font-semibold text-brand-dark">{courseTitle}</span>
-            . You can now start your learning journey or go back to browse more
+            .{" "}You can now start your learning journey or go back to browse more{" "}
             courses.
           </p>
         </div>

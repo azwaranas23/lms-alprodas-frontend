@@ -12,8 +12,8 @@ interface Bank {
 }
 
 interface BankInformationStepProps {
-  onNext: () => void;
-  onBack: () => void;
+  readonly onNext: () => void;
+  readonly onBack: () => void;
 }
 
 const banks: Bank[] = [
@@ -55,7 +55,7 @@ const banks: Bank[] = [
   }
 ];
 
-export default function BankInformationStep({ onNext, onBack }: BankInformationStepProps) {
+export default function BankInformationStep({ onNext, onBack }: Readonly<BankInformationStepProps>) {
   const { formData, updateFormData } = useWithdrawal();
   const [selectedBank, setSelectedBank] = useState<Bank | null>(
     formData.bankName ? banks.find(bank => bank.name === formData.bankName) || null : null
@@ -151,8 +151,8 @@ export default function BankInformationStep({ onNext, onBack }: BankInformationS
               <div className="space-y-5">
                 {/* Select Bank */}
                 <div className="mb-6">
-                  <label className="block text-brand-dark text-base font-semibold mb-1">Select Bank *</label>
-                  <button type="button" onClick={() => setIsBankModalOpen(true)}
+                  <label htmlFor="bank-select-button" className="block text-brand-dark text-base font-semibold mb-1">Select Bank *</label>
+                  <button type="button" id="bank-select-button" onClick={() => setIsBankModalOpen(true)}
                       className="w-full border border-[#DCDEDD] rounded-[16px] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white transition-all duration-300 font-semibold px-4 py-3 flex items-center gap-3 text-left">
                     <Building2 className="w-5 h-5 text-gray-400" />
                     <span className={`flex-1 ${selectedBank ? 'text-brand-dark font-semibold' : 'text-[#0D2929] font-normal'}`}>
@@ -328,9 +328,10 @@ export default function BankInformationStep({ onNext, onBack }: BankInformationS
             <div className="p-6 overflow-y-auto max-h-96">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredBanks.map((bank) => (
-                  <div key={bank.code}
+                  <button key={bank.code}
+                      type="button"
                       onClick={() => selectBank(bank)}
-                      className="border border-[#DCDEDD] rounded-[16px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4 cursor-pointer">
+                      className="w-full text-left bg-white border border-[#DCDEDD] rounded-[16px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <div className="flex items-center gap-4">
                       <div className="w-28 h-16 relative overflow-hidden rounded-[12px] bg-white flex items-center justify-center p-2">
                         <img src={bank.logo} alt={bank.name} className="max-w-24 max-h-12 object-contain" />
@@ -340,7 +341,7 @@ export default function BankInformationStep({ onNext, onBack }: BankInformationS
                         <p className="text-brand-light text-sm font-normal">{bank.description}</p>
                       </div>
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>

@@ -128,6 +128,7 @@ export default function CoursePlayingVideo() {
         }
       }
     } catch (err) {
+      console.error("Failed to load course data:", err);
       setError("Failed to load course data");
     } finally {
       setLoading(false);
@@ -297,26 +298,30 @@ export default function CoursePlayingVideo() {
   // Initialize copy code functionality after content loads
   useEffect(() => {
     if (
-      lessonDetail?.content_type === "ARTICLE" &&
-      lessonDetail?.content_text
+      lessonDetail?.content_type !== "ARTICLE" ||
+      !lessonDetail?.content_text
     ) {
-      // Add click handlers to copy buttons
-      const copyButtons = document.querySelectorAll("[data-copy-code]");
-      copyButtons.forEach((button) => {
-        button.addEventListener("click", () =>
-          copyCode(button as HTMLButtonElement)
-        );
-      });
-
-      // Cleanup function
-      return () => {
-        copyButtons.forEach((button) => {
-          button.removeEventListener("click", () =>
-            copyCode(button as HTMLButtonElement)
-          );
-        });
-      };
+      return;
     }
+    // Add click handlers to copy buttons
+    const copyButtons = document.querySelectorAll("[data-copy-code]");
+    const handlers = new Map<Element, () => void>();
+
+    copyButtons.forEach((button) => {
+      const handler = () => copyCode(button as HTMLButtonElement);
+      handlers.set(button, handler);
+      button.addEventListener("click", handler);
+    });
+
+    // Cleanup function
+    return () => {
+      copyButtons.forEach((button) => {
+        const handler = handlers.get(button);
+        if (handler) {
+          button.removeEventListener("click", handler);
+        }
+      });
+    };
   }, [lessonDetail]);
 
   const handleLessonClick = (lesson: any) => {
@@ -412,6 +417,50 @@ export default function CoursePlayingVideo() {
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
+  const renderNavigationButton = () => {
+    if (lessonDetail?.navigation?.next_lesson) {
+      return (
+        <button
+          onClick={handleNextLesson}
+          className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-2 flex items-center gap-2"
+        >
+          <span className="text-brand-white text-sm font-semibold">
+            {lessonDetail?.progress?.is_completed
+              ? "Next Lesson"
+              : "Complete & Next"}
+          </span>
+          <ChevronRight className="w-4 h-4 text-white" />
+        </button>
+      );
+    }
+
+    if (!lessonDetail?.progress?.is_completed && courseProgress?.progress_stats?.percentage !== 100) {
+      return (
+        <button
+          onClick={handleCompleteCourse}
+          className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-2 flex items-center gap-2"
+        >
+          <Check className="w-4 h-4 text-white" />
+          <span className="text-brand-white text-sm font-semibold">
+            Complete Course
+          </span>
+        </button>
+      );
+    }
+
+    return (
+      <button
+        disabled
+        className="bg-gray-100 border border-[#DCDEDD] text-gray-400 py-2 px-4 rounded-[8px] font-medium cursor-not-allowed flex items-center gap-2"
+      >
+        <Check className="w-4 h-4 text-gray-400" />
+        <span className="text-sm font-semibold">
+          Course Completed
+        </span>
+      </button>
+    );
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F9F9F9] flex items-center justify-center">
@@ -471,7 +520,7 @@ export default function CoursePlayingVideo() {
             </Link>
 
             <button
-              onClick={() => window.location.reload()}
+              onClick={() => globalThis.location.reload()}
               className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-6 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
             >
               <svg
@@ -495,7 +544,7 @@ export default function CoursePlayingVideo() {
           <div className="mt-6 pt-4 border-t border-gray-100">
             <p className="text-xs text-gray-400">
               Need help?{" "}
-              <a href="#" className="text-blue-600 hover:text-blue-800">
+              <a href="mailto:support@alprodas.com" className="text-blue-600 hover:text-blue-800">
                 Contact Support
               </a>
             </p>
@@ -570,10 +619,18 @@ export default function CoursePlayingVideo() {
                     >
                       {section.lessons.length > 0 ? (
                         section.lessons.map((lesson: any) => (
-                          <div
+                          <button
+                            type="button"
                             key={lesson.id}
-                            className={getLessonStyle(lesson)}
+                            disabled={!isLessonClickable(lesson)}
+                            className={`w-full text-left bg-transparent ${getLessonStyle(lesson)}`}
                             onClick={() => handleLessonClick(lesson)}
+                            onKeyDown={(e) => {
+                              if (isLessonClickable(lesson) && (e.key === "Enter" || e.key === " ")) {
+                                e.preventDefault();
+                                handleLessonClick(lesson);
+                              }
+                            }}
                             style={{
                               cursor: isLessonClickable(lesson)
                                 ? "pointer"
@@ -592,7 +649,7 @@ export default function CoursePlayingVideo() {
                             <span className={getTimeStyle(lesson)}>
                               {formatDuration(lesson.duration_minutes)}
                             </span>
-                          </div>
+                          </button>
                         ))
                       ) : (
                         <div className="text-xs text-gray-500 p-2 italic">
@@ -862,42 +919,7 @@ export default function CoursePlayingVideo() {
                           </span>
                         </button>
                       )}
-
-                      {lessonDetail?.navigation?.next_lesson ? (
-                        <button
-                          onClick={handleNextLesson}
-                          className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-2 flex items-center gap-2"
-                        >
-                          <span className="text-brand-white text-sm font-semibold">
-                            {lessonDetail?.progress?.is_completed
-                              ? "Next Lesson"
-                              : "Complete & Next"}
-                          </span>
-                          <ChevronRight className="w-4 h-4 text-white" />
-                        </button>
-                      ) : // No next lesson - this is the last lesson
-                        !lessonDetail?.progress?.is_completed &&
-                          courseProgress?.progress_stats?.percentage !== 100 ? (
-                          <button
-                            onClick={handleCompleteCourse}
-                            className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-2 flex items-center gap-2"
-                          >
-                            <Check className="w-4 h-4 text-white" />
-                            <span className="text-brand-white text-sm font-semibold">
-                              Complete Course
-                            </span>
-                          </button>
-                        ) : (
-                          <button
-                            disabled
-                            className="bg-gray-100 border border-[#DCDEDD] text-gray-400 py-2 px-4 rounded-[8px] font-medium cursor-not-allowed flex items-center gap-2"
-                          >
-                            <Check className="w-4 h-4" />
-                            <span className="text-sm font-semibold">
-                              Course Completed
-                            </span>
-                          </button>
-                        )}
+                    {renderNavigationButton()}
                     </div>
                   </div>
                 </div>
@@ -909,9 +931,16 @@ export default function CoursePlayingVideo() {
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Lesson Notes */}
-                    <div
+                    <button
+                      type="button"
                       onClick={handleGoToCourseResources}
-                      className="cursor-pointer border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 hover:shadow-md transition-all duration-300"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          handleGoToCourseResources();
+                        }
+                      }}
+                      className="w-full text-left bg-transparent border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#0C51D9] focus:ring-offset-2 cursor-pointer"
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
@@ -925,23 +954,25 @@ export default function CoursePlayingVideo() {
                             Complete lesson transcript and code examples
                           </p>
                         </div>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleGoToCourseResources();
-                          }}
+                        <div
                           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                         >
                           <Download className="w-4 h-4 text-gray-600" />
-                        </button>
+                        </div>
                       </div>
-                    </div>
+                    </button>
 
                     {/* Source Code */}
-                    <div
+                    <button
+                      type="button"
                       onClick={handleGoToCourseResources}
-                      className="cursor-pointer border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 hover:shadow-md transition-all duration-300"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          handleGoToCourseResources();
+                        }
+                      }}
+                      className="w-full text-left bg-transparent border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#0C51D9] focus:ring-offset-2 cursor-pointer"
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
@@ -955,18 +986,13 @@ export default function CoursePlayingVideo() {
                             Starter and completed project files
                           </p>
                         </div>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleGoToCourseResources();
-                          }}
+                        <div
                           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                         >
                           <Download className="w-4 h-4 text-gray-600" />
-                        </button>
+                        </div>
                       </div>
-                    </div>
+                    </button>
                   </div>
                 </div>
               </>

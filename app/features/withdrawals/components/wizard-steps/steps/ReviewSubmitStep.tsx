@@ -6,11 +6,11 @@ import { Button } from '~/components/atoms/Button';
 import { Checkbox } from '~/components/atoms/Checkbox';
 
 interface ReviewSubmitStepProps {
-  onBack: () => void;
-  onSubmit: () => void;
+  readonly onBack: () => void;
+  readonly onSubmit: () => void;
 }
 
-export default function ReviewSubmitStep({ onBack, onSubmit }: ReviewSubmitStepProps) {
+export default function ReviewSubmitStep({ onBack, onSubmit }: Readonly<ReviewSubmitStepProps>) {
   const { formData } = useWithdrawal();
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [processUnderstood, setProcessUnderstood] = useState(false);
@@ -251,9 +251,10 @@ export default function ReviewSubmitStep({ onBack, onSubmit }: ReviewSubmitStepP
               onChange={(e) => setTermsAccepted(e.target.checked)}
             >
               <span className="text-brand-dark text-sm">
-                I confirm that all the information provided is accurate and I accept the
-                <a href="#" className="text-blue-600 hover:text-blue-800 font-semibold"> Terms and Conditions</a>
-                and <a href="#" className="text-blue-600 hover:text-blue-800 font-semibold">Privacy Policy</a>.
+                I confirm that all the information provided is accurate and I accept the{" "}
+                <button type="button" className="text-blue-600 hover:text-blue-800 font-semibold inline bg-transparent p-0 border-none cursor-pointer">Terms and Conditions</button>{" "}
+                and{" "}
+                <button type="button" className="text-blue-600 hover:text-blue-800 font-semibold inline bg-transparent p-0 border-none cursor-pointer">Privacy Policy</button>.
               </span>
             </Checkbox>
 

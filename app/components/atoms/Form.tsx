@@ -1,12 +1,12 @@
 import { type FormHTMLAttributes, type ReactNode } from 'react';
 
 export interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
-  children: ReactNode;
-  isLoading?: boolean;
-  error?: string | null;
+  readonly children: ReactNode;
+  readonly isLoading?: boolean;
+  readonly error?: string | null;
 }
 
-export function Form({ children, isLoading, error, className = '', ...props }: FormProps) {
+export function Form({ children, isLoading, error, className = '', ...props }: Readonly<FormProps>) {
   return (
     <form
       className={`${className} ${isLoading ? 'opacity-50 pointer-events-none' : ''}`}

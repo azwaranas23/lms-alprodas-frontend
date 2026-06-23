@@ -256,7 +256,7 @@ export default function CoursePlayingArticle() {
               <div className="flex items-center gap-4">
                 <button
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  onClick={() => window.history.back()}
+                  onClick={() => globalThis.history.back()}
                 >
                   <ArrowLeft className="w-5 h-5 text-gray-600" />
                 </button>
@@ -585,9 +585,16 @@ export default function CoursePlayingArticle() {
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Lesson Notes */}
-                <div
+                <button
+                  type="button"
                   onClick={handleGoToCourseResources}
-                  className="cursor-pointer border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 hover:shadow-md transition-all duration-300"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handleGoToCourseResources();
+                    }
+                  }}
+                  className="w-full text-left bg-transparent border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#0C51D9] focus:ring-offset-2 cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
@@ -601,23 +608,25 @@ export default function CoursePlayingArticle() {
                         Complete lesson transcript and code examples
                       </p>
                     </div>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleGoToCourseResources();
-                      }}
+                    <div
                       className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                     >
                       <Download className="w-4 h-4 text-gray-600" />
-                    </button>
+                    </div>
                   </div>
-                </div>
+                </button>
 
                 {/* Source Code */}
-                <div
+                <button
+                  type="button"
                   onClick={handleGoToCourseResources}
-                  className="cursor-pointer border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 hover:shadow-md transition-all duration-300"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handleGoToCourseResources();
+                    }
+                  }}
+                  className="w-full text-left bg-transparent border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#0C51D9] focus:ring-offset-2 cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
@@ -631,18 +640,13 @@ export default function CoursePlayingArticle() {
                         Starter and completed project files
                       </p>
                     </div>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleGoToCourseResources();
-                      }}
+                    <div
                       className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                     >
                       <Download className="w-4 h-4 text-gray-600" />
-                    </button>
+                    </div>
                   </div>
-                </div>
+                </button>
               </div>
             </div>
           </main>

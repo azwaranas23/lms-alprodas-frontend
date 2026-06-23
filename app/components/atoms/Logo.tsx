@@ -1,10 +1,10 @@
 import { GraduationCap } from "lucide-react";
 
 interface LogoProps {
-  variant?: "navbar" | "form";
+  readonly variant?: "navbar" | "form";
 }
 
-export function Logo({ variant = "navbar" }: LogoProps) {
+export function Logo({ variant = "navbar" }: Readonly<LogoProps>) {
   if (variant === "navbar") {
     return (
       <div className="flex items-center gap-4">

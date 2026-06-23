@@ -16,14 +16,14 @@ import { withdrawalAmountSchema } from "~/schemas/withdrawals";
 import { ApiErrorMessage } from "~/components/atoms/ApiErrorMessage";
 
 interface WithdrawalDetailsStepProps {
-	onNext: () => void;
-	onBack: () => void;
+	readonly onNext: () => void;
+	readonly onBack: () => void;
 }
 
 export default function WithdrawalDetailsStep({
 	onNext,
 	onBack,
-}: WithdrawalDetailsStepProps) {
+}: Readonly<WithdrawalDetailsStepProps>) {
 	const { formData, updateFormData } = useWithdrawal();
 	const [withdrawalAmount, setWithdrawalAmount] = useState(
 		formData.formattedAmount || ""
@@ -33,6 +33,21 @@ export default function WithdrawalDetailsStep({
 	const [isValidating, setIsValidating] = useState(false);
 	const [validationError, setValidationError] = useState<any>(null);
 	const [zodError, setZodError] = useState("");
+
+	const renderBalanceContent = () => {
+		if (isLoading) {
+			return (
+				<span className="flex items-center gap-2">
+					<Loader2 className="w-8 h-8 animate-spin" />
+					Loading...
+				</span>
+			);
+		}
+		if (balance) {
+			return `Rp ${balance.available_balance.toLocaleString("id-ID")}`;
+		}
+		return "Rp 0";
+	};
 
 	useEffect(() => {
 		const loadBalance = async () => {
@@ -170,16 +185,7 @@ export default function WithdrawalDetailsStep({
 									className="text-brand-white text-5xl font-extrabold leading-none my-4"
 									id="totalBalance"
 								>
-									{isLoading ? (
-										<span className="flex items-center gap-2">
-											<Loader2 className="w-8 h-8 animate-spin" />
-											Loading...
-										</span>
-									) : balance ? (
-										`Rp ${balance.available_balance.toLocaleString("id-ID")}`
-									) : (
-										"Rp 0"
-									)}
+									{renderBalanceContent()}
 								</p>
 								<p className="text-brand-white-80 text-base font-normal">
 									Available for withdrawal
@@ -228,7 +234,7 @@ export default function WithdrawalDetailsStep({
 						<div className="space-y-5">
 							{/* Withdrawal Amount Input */}
 							<div className="mb-6">
-								<label className="block text-brand-dark text-base font-semibold mb-1">
+								<label htmlFor="withdrawalAmount" className="block text-brand-dark text-base font-semibold mb-1">
 									Withdrawal Amount *
 								</label>
 								<div className="relative">

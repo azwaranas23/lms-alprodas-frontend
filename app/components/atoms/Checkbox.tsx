@@ -1,11 +1,11 @@
 import { type ChangeEvent, type ReactNode } from 'react';
 
 interface CheckboxProps {
-  checked: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  children?: ReactNode;
-  disabled?: boolean;
-  className?: string;
+  readonly checked: boolean;
+  readonly onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  readonly children?: ReactNode;
+  readonly disabled?: boolean;
+  readonly className?: string;
 }
 
 export function Checkbox({
@@ -14,7 +14,7 @@ export function Checkbox({
   children,
   disabled = false,
   className = ''
-}: CheckboxProps) {
+}: Readonly<CheckboxProps>) {
   return (
     <label className={`flex items-start gap-3 cursor-pointer ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}>
       <input

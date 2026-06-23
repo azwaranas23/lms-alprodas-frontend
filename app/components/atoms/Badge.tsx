@@ -1,9 +1,9 @@
 export type BadgeVariant = 'success' | 'pending' | 'failed' | 'expert' | 'creative' | 'high-performing';
 
 export interface BadgeProps {
-  variant: BadgeVariant;
-  children: React.ReactNode;
-  className?: string;
+  readonly variant: BadgeVariant;
+  readonly children: React.ReactNode;
+  readonly className?: string;
 }
 
 const badgeVariants = {
@@ -16,7 +16,7 @@ const badgeVariants = {
   'high-performing': 'badge-high-performing'
 };
 
-export function Badge({ variant, children, className = '' }: BadgeProps) {
+export function Badge({ variant, children, className = '' }: Readonly<BadgeProps>) {
   const variantClass = badgeVariants[variant] || badgeVariants.expert;
 
   return (

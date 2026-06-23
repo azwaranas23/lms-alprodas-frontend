@@ -29,7 +29,7 @@ export function Modal({
   children,
   size = 'lg',
   className = ''
-}: ModalProps) {
+}: Readonly<ModalProps>) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -55,18 +55,23 @@ export function Modal({
 
   if (!isOpen) return null;
 
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
   return (
-    <div
-      className="fixed inset-0 backdrop-blur-sm z-50 flex items-center justify-center"
-      onClick={handleBackdropClick}
-    >
-      <div className={`bg-white rounded-[20px] border border-[#DCDEDD] w-full ${sizeClasses[size]} mx-4 max-h-[90vh] overflow-hidden ${className}`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop */}
+      <button
+        type="button"
+        aria-label="Close modal"
+        className="absolute inset-0 backdrop-blur-sm bg-black/10 focus:outline-none w-full h-full border-none cursor-pointer p-0"
+        onClick={onClose}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onClose();
+          }
+        }}
+      />
+      {/* Modal Dialog Box */}
+      <div className={`bg-white rounded-[20px] border border-[#DCDEDD] w-full ${sizeClasses[size]} mx-4 max-h-[90vh] overflow-hidden relative z-10 ${className}`}>
         <div className="p-6 border-b border-[#DCDEDD]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">

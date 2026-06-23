@@ -5,7 +5,7 @@ import { successResponseSchema, paginatedResponseSchema } from './common';
 export const userSchema = z.object({
   id: z.number(),
   name: z.string(),
-  email: z.string().email(),
+  email: z.email(),
   role: z.enum(['manager', 'mentor', 'student']),
   avatar: z.string().nullable().optional(),
   created_at: z.string(),

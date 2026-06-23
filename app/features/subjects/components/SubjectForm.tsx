@@ -19,7 +19,7 @@ interface SubjectFormProps {
   onSubmit?: (data: FormData) => Promise<void>;
 }
 
-export function SubjectForm({ mode, initialData, onSubmit }: SubjectFormProps) {
+export function SubjectForm({ mode, initialData, onSubmit }: Readonly<SubjectFormProps>) {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const createSubjectMutation = useCreateSubject();
@@ -190,7 +190,7 @@ export function SubjectForm({ mode, initialData, onSubmit }: SubjectFormProps) {
 
           <div className="grid grid-cols-1 gap-5">
             <div className="mb-4">
-              <label className="block text-brand-dark text-base font-semibold mb-1">Subject Photo</label>
+              <label htmlFor="subject-photo-input" className="block text-brand-dark text-base font-semibold mb-1">Subject Photo</label>
               <div className="flex items-start gap-4">
                 <div className="w-64 h-42">
                   <div className="relative w-64 h-42">
@@ -198,7 +198,7 @@ export function SubjectForm({ mode, initialData, onSubmit }: SubjectFormProps) {
 
                     <div className="w-64 h-42 relative z-10 flex items-center justify-center rounded-[16px] overflow-hidden">
                       {imagePreview ? (
-                        <img src={imagePreview} alt="Subject Photo" className="w-64 h-42 object-cover rounded-[16px]" />
+                        <img src={imagePreview} alt="Subject preview" className="w-64 h-42 object-cover rounded-[16px]" />
                       ) : (
                         <div className="flex flex-col items-center justify-center text-gray-400 h-full">
                           <Image className="w-10 h-10 mb-2" />
@@ -208,18 +208,20 @@ export function SubjectForm({ mode, initialData, onSubmit }: SubjectFormProps) {
                     </div>
 
                     {!imagePreview && (
-                      <div
-                        className="absolute inset-0 rounded-[16px] flex items-center justify-center transition-all duration-300 cursor-pointer z-20 group"
+                      <button
+                        type="button"
+                        className="absolute inset-0 rounded-[16px] flex items-center justify-center transition-all duration-300 cursor-pointer z-20 group focus:outline-none focus:ring-2 focus:ring-[#0C51D9] focus:ring-offset-2 bg-transparent border-0 p-0"
                         onClick={() => fileInputRef.current?.click()}
                       >
                         <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 rounded-[16px] transition-opacity duration-300"></div>
                         <Upload className="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 relative z-10" />
-                      </div>
+                      </button>
                     )}
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
                   <input
+                    id="subject-photo-input"
                     type="file"
                     ref={fileInputRef}
                     accept="image/*"
@@ -261,12 +263,13 @@ export function SubjectForm({ mode, initialData, onSubmit }: SubjectFormProps) {
             </div>
 
             <div className="mb-4">
-              <label className="block text-brand-dark text-base font-semibold mb-1">Subject Name *</label>
+              <label htmlFor="subject-name-input" className="block text-brand-dark text-base font-semibold mb-1">Subject Name *</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <Layers className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
+                  id="subject-name-input"
                   type="text"
                   required
                   value={formData.name}
@@ -290,12 +293,13 @@ export function SubjectForm({ mode, initialData, onSubmit }: SubjectFormProps) {
             </div>
 
             <div className="mb-4">
-              <label className="block text-brand-dark text-base font-semibold mb-1">About Subject</label>
+              <label htmlFor="subject-description-textarea" className="block text-brand-dark text-base font-semibold mb-1">About Subject</label>
               <div className="relative">
                 <div className="absolute top-3 left-4 pointer-events-none">
                   <FileText className="h-5 w-5 text-gray-400" />
                 </div>
                 <textarea
+                  id="subject-description-textarea"
                   rows={4}
                   value={formData.description || ''}
                   onChange={(e) => {
@@ -318,8 +322,9 @@ export function SubjectForm({ mode, initialData, onSubmit }: SubjectFormProps) {
             </div>
 
             <div className="mb-6">
-              <label className="block text-brand-dark text-base font-semibold mb-1">Select Topic *</label>
+              <label htmlFor="select-topic-btn" className="block text-brand-dark text-base font-semibold mb-1">Select Topic *</label>
               <button
+                id="select-topic-btn"
                 type="button"
                 onClick={() => setShowTopicModal(true)}
                 className={`w-full border rounded-[16px] focus:bg-white transition-all duration-300 font-semibold px-4 py-3 flex items-center gap-3 text-left ${

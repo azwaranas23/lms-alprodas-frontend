@@ -5,7 +5,6 @@ import type { Route } from "./+types/dashboard";
 
 import { MentorLayout } from "~/components/templates/MentorLayout";
 import { MentorRoute } from "~/features/auth/components/RoleBasedRoute";
-import { SearchSection } from "~/components/molecules/SearchSection";
 import { StatsCard } from "~/components/atoms/StatsCard";
 import { MentorQuickActions } from "~/features/mentors/components/dashboard-components/dashboard/MentorQuickActions";
 import { LatestCourses } from "~/features/mentors/components/dashboard-components/dashboard/LatestCourses";

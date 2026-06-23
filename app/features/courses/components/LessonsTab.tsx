@@ -49,9 +49,17 @@ interface LessonsTabProps {
   course: Course;
 }
 
-export function LessonsTab({ }: LessonsTabProps) {
+export function LessonsTab({ course: _course }: Readonly<LessonsTabProps>) {
   const { id } = useParams();
   const courseId = Number(id);
+
+  // Helper to determine submit text
+  const getSubmitText = () => {
+    if (isEditMode) {
+      return updateSectionMutation.isPending ? 'Updating...' : 'Update Section';
+    }
+    return createSectionMutation.isPending ? 'Adding...' : 'Add Now';
+  };
 
   // Modal state management
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -77,7 +85,7 @@ export function LessonsTab({ }: LessonsTabProps) {
     setSectionName('');
     setSectionIndex('');
     setValidationErrors({});
-    document.body.style.overflow = 'auto';
+    globalThis.document.body.style.overflow = 'auto';
   };
 
   // Mutations with callbacks
@@ -127,7 +135,7 @@ export function LessonsTab({ }: LessonsTabProps) {
     setIsModalOpen(true);
     setIsEditMode(false);
     setEditingSectionId(null);
-    document.body.style.overflow = 'hidden';
+    globalThis.document.body.style.overflow = 'hidden';
   };
 
   const openEditModal = (section: Section) => {
@@ -136,7 +144,7 @@ export function LessonsTab({ }: LessonsTabProps) {
     setEditingSectionId(section.id);
     setSectionName(section.title);
     setSectionIndex(section.order_index.toString());
-    document.body.style.overflow = 'hidden';
+    globalThis.document.body.style.overflow = 'hidden';
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -184,9 +192,94 @@ export function LessonsTab({ }: LessonsTabProps) {
   };
 
   const handleDeleteSection = (sectionId: number) => {
-    if (window.confirm('Are you sure you want to delete this section? This action cannot be undone.')) {
+    if (globalThis.confirm('Are you sure you want to delete this section? This action cannot be undone.')) {
       deleteSectionMutation.mutate(sectionId);
     }
+  };
+
+  const renderSections = () => {
+    if (sectionsLoading) {
+      return (
+        <div className="bg-white border border-[#DCDEDD] rounded-[16px] p-6">
+          <div className="text-center py-12">
+            <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading sections...</p>
+          </div>
+        </div>
+      );
+    }
+
+    if (sections && sections.length > 0) {
+      return sections
+        .sort((a, b) => a.order_index - b.order_index)
+        .map((section, index) => {
+          const iconConfig = getIconConfig(index);
+          const IconComponent = iconConfig.icon;
+
+          return (
+            <div key={section.id} className="bg-white border border-[#DCDEDD] rounded-[16px] p-6 mb-4">
+              <div className="flex items-center justify-between">
+                {/* Group 1: Icon + Title Info */}
+                <div className="flex items-center gap-4">
+                  <div className={`w-12 h-12 bg-${iconConfig.color}-50 rounded-[12px] flex items-center justify-center`}>
+                    <IconComponent className={`w-6 h-6 text-${iconConfig.color}-600`} />
+                  </div>
+                  <div>
+                    <h3 className="text-brand-dark text-lg font-bold">{section.title}</h3>
+                    <p className="text-brand-light text-sm">Section No. {section.order_index}</p>
+                  </div>
+                </div>
+
+                {/* Group 2: Metadata */}
+                <div className="flex items-center gap-3">
+                  <p className="text-brand-dark text-base font-bold">{section.total_lessons || 0} lessons</p>
+                  <span className="px-3 py-1 rounded-md text-sm font-semibold bg-[#F0FDF4] text-[#166534] ml-[50px]">Active</span>
+                </div>
+
+                {/* Group 3: Action Buttons */}
+                <div className="flex items-center gap-3">
+                  <Link
+                    to={`/dashboard/mentor/courses/${id}/sections/${section.id}/lessons`}
+                    className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-6 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
+                  >
+                    <BookOpen className="w-4 h-4" />
+                    <span className="text-sm">Lessons</span>
+                  </Link>
+                  <button
+                    onClick={() => openEditModal(section)}
+                    className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-6 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
+                  >
+                    <Edit className="w-4 h-4" />
+                    <span className="text-sm">Edit</span>
+                  </button>
+                  <button
+                    onClick={() => handleDeleteSection(section.id)}
+                    disabled={deleteSectionMutation.isPending}
+                    className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-6 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    <span className="text-sm">
+                      {deleteSectionMutation.isPending ? 'Deleting...' : 'Delete'}
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        });
+    }
+
+    return (
+      <div className="bg-white border border-[#DCDEDD] rounded-[16px] p-6">
+        <div className="text-center py-12">
+          <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
+            <BookOpen className="w-8 h-8 text-blue-600" />
+          </div>
+          <h3 className="text-brand-dark text-xl font-bold mb-2">Course Sections</h3>
+          <p className="text-brand-light text-base">Organize your course content into structured sections and lessons</p>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -205,83 +298,7 @@ export function LessonsTab({ }: LessonsTabProps) {
       </div>
 
       {/* Course Sections */}
-      {sectionsLoading ? (
-        <div className="bg-white border border-[#DCDEDD] rounded-[16px] p-6">
-          <div className="text-center py-12">
-            <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading sections...</p>
-          </div>
-        </div>
-      ) : sections && sections.length > 0 ? (
-        sections
-          .sort((a, b) => a.order_index - b.order_index)
-          .map((section, index) => {
-            const iconConfig = getIconConfig(index);
-            const IconComponent = iconConfig.icon;
-
-            return (
-              <div key={section.id} className="bg-white border border-[#DCDEDD] rounded-[16px] p-6 mb-4">
-                <div className="flex items-center justify-between">
-                  {/* Group 1: Icon + Title Info */}
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 bg-${iconConfig.color}-50 rounded-[12px] flex items-center justify-center`}>
-                      <IconComponent className={`w-6 h-6 text-${iconConfig.color}-600`} />
-                    </div>
-                    <div>
-                      <h3 className="text-brand-dark text-lg font-bold">{section.title}</h3>
-                      <p className="text-brand-light text-sm">Section No. {section.order_index}</p>
-                    </div>
-                  </div>
-
-                  {/* Group 2: Metadata */}
-                  <div className="flex items-center gap-3">
-                    <p className="text-brand-dark text-base font-bold">{section.total_lessons || 0} lessons</p>
-                    <span className="px-3 py-1 rounded-md text-sm font-semibold bg-[#F0FDF4] text-[#166534] ml-[50px]">Active</span>
-                  </div>
-
-                  {/* Group 3: Action Buttons */}
-                  <div className="flex items-center gap-3">
-                    <Link
-                      to={`/dashboard/mentor/courses/${id}/sections/${section.id}/lessons`}
-                      className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-6 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
-                    >
-                      <BookOpen className="w-4 h-4" />
-                      <span className="text-sm">Lessons</span>
-                    </Link>
-                    <button
-                      onClick={() => openEditModal(section)}
-                      className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-6 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
-                    >
-                      <Edit className="w-4 h-4" />
-                      <span className="text-sm">Edit</span>
-                    </button>
-                    <button
-                      onClick={() => handleDeleteSection(section.id)}
-                      disabled={deleteSectionMutation.isPending}
-                      className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-6 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      <span className="text-sm">
-                        {deleteSectionMutation.isPending ? 'Deleting...' : 'Delete'}
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })
-      ) : (
-        // Empty state ketika belum ada sections
-        <div className="bg-white border border-[#DCDEDD] rounded-[16px] p-6">
-          <div className="text-center py-12">
-            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <BookOpen className="w-8 h-8 text-blue-600" />
-            </div>
-            <h3 className="text-brand-dark text-xl font-bold mb-2">Course Sections</h3>
-            <p className="text-brand-light text-base">Organize your course content into structured sections and lessons</p>
-          </div>
-        </div>
-      )}
+      {renderSections()}
 
       {/* Add New Section Modal */}
       {isModalOpen && (
@@ -318,12 +335,13 @@ export function LessonsTab({ }: LessonsTabProps) {
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Section Name */}
                 <div>
-                  <label className="block text-brand-dark text-base font-semibold mb-1">Section Name *</label>
+                  <label htmlFor="section-name-input" className="block text-brand-dark text-base font-semibold mb-1">Section Name *</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                       <Layers className="h-5 w-5 text-gray-400" />
                     </div>
                     <input
+                      id="section-name-input"
                       type="text"
                       required
                       value={sectionName}
@@ -336,8 +354,8 @@ export function LessonsTab({ }: LessonsTabProps) {
                       }}
                       className={`w-full pl-12 pr-4 py-3 border rounded-[16px] hover:border-2 focus:border-2 focus:bg-white transition-all duration-300 font-semibold ${
                         validationErrors.title
-                          ? 'border-red-500 hover:border-red-500 focus:border-red-500'
-                          : 'border-[#DCDEDD] hover:border-[#0C51D9] focus:border-[#0C51D9]'
+                           ? 'border-red-500 hover:border-red-500 focus:border-red-500'
+                           : 'border-[#DCDEDD] hover:border-[#0C51D9] focus:border-[#0C51D9]'
                       }`}
                       placeholder="Enter section name"
                     />
@@ -349,12 +367,13 @@ export function LessonsTab({ }: LessonsTabProps) {
 
                 {/* Section Index */}
                 <div>
-                  <label className="block text-brand-dark text-base font-semibold mb-1">Section Index *</label>
+                  <label htmlFor="section-index-input" className="block text-brand-dark text-base font-semibold mb-1">Section Index *</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                       <Hash className="h-5 w-5 text-gray-400" />
                     </div>
                     <input
+                      id="section-index-input"
                       type="number"
                       required
                       min="1"
@@ -397,10 +416,7 @@ export function LessonsTab({ }: LessonsTabProps) {
                   >
                     <Plus className="w-4 h-4 text-white" />
                     <span className="text-brand-white text-base font-semibold">
-                      {isEditMode
-                        ? (updateSectionMutation.isPending ? 'Updating...' : 'Update Section')
-                        : (createSectionMutation.isPending ? 'Adding...' : 'Add Now')
-                      }
+                      {getSubmitText()}
                     </span>
                   </Button>
                 </div>

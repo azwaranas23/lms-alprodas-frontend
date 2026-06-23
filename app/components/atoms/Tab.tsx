@@ -1,13 +1,13 @@
 import { type ReactNode } from 'react';
 
 interface TabProps {
-  children: ReactNode;
-  isActive?: boolean;
-  onClick?: () => void;
-  className?: string;
+  readonly children: ReactNode;
+  readonly isActive?: boolean;
+  readonly onClick?: () => void;
+  readonly className?: string;
 }
 
-export function Tab({ children, isActive = false, onClick, className = '' }: TabProps) {
+export function Tab({ children, isActive = false, onClick, className = '' }: Readonly<TabProps>) {
   const baseClass = "flex items-center gap-2 px-4 py-3 rounded-[12px] border-2 font-semibold transition-all duration-300 cursor-pointer";
 
   const activeClass = "border-[#0C51D9] bg-[#0C51D9] text-white hover:bg-[#1e5beb]";

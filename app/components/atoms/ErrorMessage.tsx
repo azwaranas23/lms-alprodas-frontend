@@ -1,10 +1,10 @@
 
 interface ErrorMessageProps {
-  message?: string;
-  className?: string;
+  readonly message?: string;
+  readonly className?: string;
 }
 
-export function ErrorMessage({ message, className = '' }: ErrorMessageProps) {
+export function ErrorMessage({ message, className = '' }: Readonly<ErrorMessageProps>) {
   if (!message) return null;
 
   return (

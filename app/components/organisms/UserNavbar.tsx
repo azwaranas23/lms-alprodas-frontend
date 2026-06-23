@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router";
 import { Logo } from "../atoms/Logo";
 import { authService } from "~/services/auth.service";
-import { Avatar } from "../atoms/Avatar";
 import { UserProfileDropdown } from "../molecules/UserProfileDropdown";
 import { Menu, X } from "lucide-react";
 

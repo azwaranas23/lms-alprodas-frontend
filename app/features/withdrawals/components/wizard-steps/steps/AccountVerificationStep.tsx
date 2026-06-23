@@ -16,14 +16,14 @@ import { useWithdrawal } from "~/contexts/WithdrawalContext";
 import { getAvatarSrc } from "~/utils/formatters";
 
 interface AccountVerificationStepProps {
-	onNext: () => void;
-	onBack?: () => void;
+	readonly onNext: () => void;
+	readonly onBack?: () => void;
 }
 
 export default function AccountVerificationStep({
 	onNext,
 	onBack,
-}: AccountVerificationStepProps) {
+}: Readonly<AccountVerificationStepProps>) {
 	const { formData, updateFormData } = useWithdrawal();
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -131,7 +131,7 @@ export default function AccountVerificationStep({
 											formData.userProfile.avatar,
 											formData.userProfile.name
 										)}
-										alt="Profile Photo"
+										alt="Profile preview"
 										className="w-24 h-24 rounded-full object-cover border-4 border-blue-100"
 										onError={(e) => {
 											e.currentTarget.src = getAvatarSrc(
@@ -148,7 +148,7 @@ export default function AccountVerificationStep({
 
 							{/* Full Name (Auto-filled, readonly) */}
 							<div className="mb-4">
-								<label className="block text-brand-dark text-base font-semibold mb-1">
+								<label htmlFor="full-name-input" className="block text-brand-dark text-base font-semibold mb-1">
 									Full Name
 								</label>
 								<div className="relative">
@@ -157,6 +157,7 @@ export default function AccountVerificationStep({
 									</div>
 									<input
 										type="text"
+										id="full-name-input"
 										readOnly
 										value={formData.userProfile.name}
 										className="w-full pl-12 pr-4 py-3 border border-[#DCDEDD] rounded-[16px] bg-gray-50 text-gray-700 font-semibold cursor-not-allowed"
@@ -166,7 +167,7 @@ export default function AccountVerificationStep({
 
 							{/* Email (Auto-filled, readonly) */}
 							<div className="mb-4">
-								<label className="block text-brand-dark text-base font-semibold mb-1">
+								<label htmlFor="email-input" className="block text-brand-dark text-base font-semibold mb-1">
 									Email Address
 								</label>
 								<div className="relative">
@@ -175,6 +176,7 @@ export default function AccountVerificationStep({
 									</div>
 									<input
 										type="email"
+										id="email-input"
 										readOnly
 										value={formData.userProfile.email}
 										className="w-full pl-12 pr-4 py-3 border border-[#DCDEDD] rounded-[16px] bg-gray-50 text-gray-700 font-semibold cursor-not-allowed"
@@ -184,7 +186,7 @@ export default function AccountVerificationStep({
 
 							{/* Password */}
 							<div className="mb-4">
-								<label className="block text-brand-dark text-base font-semibold mb-1">
+								<label htmlFor="password-input" className="block text-brand-dark text-base font-semibold mb-1">
 									Password *
 								</label>
 								<div className="relative">
@@ -193,6 +195,7 @@ export default function AccountVerificationStep({
 									</div>
 									<input
 										type="password"
+										id="password-input"
 										required
 										value={password}
 										onChange={(e) =>
@@ -206,7 +209,7 @@ export default function AccountVerificationStep({
 
 							{/* Confirm Password */}
 							<div className="mb-4">
-								<label className="block text-brand-dark text-base font-semibold mb-1">
+								<label htmlFor="confirm-password-input" className="block text-brand-dark text-base font-semibold mb-1">
 									Confirm Password *
 								</label>
 								<div className="relative">
@@ -215,6 +218,7 @@ export default function AccountVerificationStep({
 									</div>
 									<input
 										type="password"
+										id="confirm-password-input"
 										required
 										value={confirmPassword}
 										onChange={(e) =>
@@ -223,9 +227,9 @@ export default function AccountVerificationStep({
 											)
 										}
 										className={`w-full pl-12 pr-4 py-3 border rounded-[16px] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white transition-all duration-300 font-semibold ${
-											!passwordMatch
-												? "border-red-500"
-												: "border-[#DCDEDD]"
+											passwordMatch
+												? "border-[#DCDEDD]"
+												: "border-red-500"
 										}`}
 										placeholder="Confirm your password"
 									/>

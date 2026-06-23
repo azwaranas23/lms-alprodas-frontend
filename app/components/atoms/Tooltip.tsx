@@ -1,14 +1,14 @@
 import { type ReactNode } from 'react';
 
 interface TooltipProps {
-  content: string;
-  children: ReactNode;
-  className?: string;
-  align?: 'left' | 'center' | 'right';
-  position?: 'top' | 'bottom';
+  readonly content: string;
+  readonly children: ReactNode;
+  readonly className?: string;
+  readonly align?: 'left' | 'center' | 'right';
+  readonly position?: 'top' | 'bottom';
 }
 
-export function Tooltip({ content, children, className = '', align = 'center', position = 'top' }: TooltipProps) {
+export function Tooltip({ content, children, className = '', align = 'center', position = 'top' }: Readonly<TooltipProps>) {
   // Don't show tooltip if content is empty or too short (likely won't truncate)
   if (!content || content.length < 30) {
     return <div className={className}>{children}</div>;
