@@ -58,8 +58,8 @@ export function CourseBenefitsTab() {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {BENEFITS.map((benefit, index) => (
-          <div key={index} className="flex items-start gap-4">
+        {BENEFITS.map((benefit) => (
+          <div key={benefit.title} className="flex items-start gap-4">
             <div
               className={`w-12 h-12 bg-${benefit.color}-50 rounded-[12px] flex items-center justify-center flex-shrink-0 text-xl`}
             >

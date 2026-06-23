@@ -1,4 +1,4 @@
-import { PlusCircle, Users, User, Settings } from "lucide-react";
+import { PlusCircle, Users } from "lucide-react";
 
 interface MentorQuickActionsProps {
   onCreateCourse: () => void;
@@ -14,7 +14,7 @@ export function MentorQuickActions({
   onRequestWithdrawal,
   onViewProfile,
   onAccountSettings,
-}: MentorQuickActionsProps) {
+}: Readonly<MentorQuickActionsProps>) {
   return (
     <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6 flex flex-col justify-between h-full">
       <div className="mb-4">

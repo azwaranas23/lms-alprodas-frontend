@@ -29,3 +29,17 @@ sonarqube-*.txt
 
 # Coverage reports
 coverage/
+
+# SonarQube
+.scannerwork/
+.sonar/
+
+# SonarQube exported reports
+sonarqube-*.csv
+sonarqube-*.txt
+sonarqube-*.json
+sonarqube-*.md
+export-sonarqube-*.ps1
+
+# Coverage reports
+coverage/

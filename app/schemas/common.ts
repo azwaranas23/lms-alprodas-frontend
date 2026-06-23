@@ -33,7 +33,7 @@ export const strongPasswordSchema = passwordSchema
 
 export const phoneSchema = z.string()
   .min(1, 'Phone number is required')
-  .regex(/^[\+]?[0-9\-\(\)\s]+$/, 'Please enter a valid phone number');
+  .regex(/^\+?[\d()\s-]+$/, 'Please enter a valid phone number');
 
 export const urlSchema = z.string()
   .min(1, 'URL is required')

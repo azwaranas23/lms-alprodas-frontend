@@ -1,14 +1,12 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { MentorLayout } from "~/components/templates/MentorLayout";
 import { MentorRoute } from "~/features/auth/components/RoleBasedRoute";
 import { PermissionRoute } from "~/features/auth/components/PermissionRoute";
 import { Header } from "~/components/templates/Header";
-import { useUser } from "~/hooks/useUser";
 import {
   BookOpen,
-  Download,
   PlusCircle,
   Search,
   Tag,
@@ -19,9 +17,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { coursesService, type Course } from "~/services/courses.service";
-import { env } from "~/config/env";
 import { Image } from "~/components/atoms/Image";
-import { Avatar } from "~/components/atoms/Avatar";
 
 export function meta() {
   return [
@@ -52,7 +48,6 @@ function useDebounce<T>(value: T, delay: number): T {
 
 export default function MentorCoursesPage() {
   const navigate = useNavigate();
-  const { getFullName, getAvatar } = useUser();
   const [searchQuery, setSearchQuery] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
@@ -81,10 +76,6 @@ export default function MentorCoursesPage() {
 
   const handleCreateCourse = () => {
     navigate("/dashboard/mentor/courses/add");
-  };
-
-  const handleExportData = () => {
-    console.log("Export functionality would be implemented here");
   };
 
   const handleEditCourse = (courseId: number) => {
@@ -350,7 +341,7 @@ export default function MentorCoursesPage() {
                       <ChevronLeft className="w-4 h-4" />
                     </button>
 
-                    {[...Array(totalPages)].map((_, index) => (
+                    {Array.from({ length: totalPages }).map((_, index) => (
                       <button
                         key={index + 1}
                         onClick={() => setCurrentPage(index + 1)}

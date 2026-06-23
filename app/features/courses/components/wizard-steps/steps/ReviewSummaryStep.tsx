@@ -2,7 +2,6 @@ import {
   Eye,
   Book,
   Tag,
-  DollarSign,
   User,
   CheckCircle,
   Users,
@@ -52,7 +51,7 @@ export function ReviewSummaryStep({
   onComplete,
   onPrevious,
   isLoading,
-}: ReviewSummaryStepProps) {
+}: Readonly<ReviewSummaryStepProps>) {
   const { getFullName } = useUser();
   const [subjectName, setSubjectName] = useState<string>("Loading...");
 
@@ -225,7 +224,7 @@ export function ReviewSummaryStep({
                             data.images?.[0]?.image_path
                           )!
                         }
-                        alt="Main Course Photo"
+                        alt="Main course cover"
                         className="w-full h-30 object-cover"
                       />
                     ) : (
@@ -244,7 +243,7 @@ export function ReviewSummaryStep({
                             data.images?.[1]?.image_path
                           )!
                         }
-                        alt="Preview Photo"
+                        alt="Course preview cover"
                         className="w-full h-30 object-cover"
                       />
                     ) : (
@@ -314,8 +313,8 @@ export function ReviewSummaryStep({
 
                 <div className="space-y-3">
                   {getKeyPoints().length > 0 ? (
-                    getKeyPoints().map((point, index) => (
-                      <div key={index} className="flex items-start gap-3">
+                    getKeyPoints().map((point) => (
+                      <div key={point} className="flex items-start gap-3">
                         <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
                         <p className="text-brand-dark text-base">{point}</p>
                       </div>
@@ -339,8 +338,8 @@ export function ReviewSummaryStep({
 
                 <div className="space-y-3">
                   {getTargetAudiences().length > 0 ? (
-                    getTargetAudiences().map((audience, index) => (
-                      <div key={index} className="flex items-start gap-3">
+                    getTargetAudiences().map((audience) => (
+                      <div key={audience} className="flex items-start gap-3">
                         <div className="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
                         <p className="text-brand-dark text-base">{audience}</p>
                       </div>
@@ -366,9 +365,9 @@ export function ReviewSummaryStep({
 
             <div className="flex flex-wrap gap-2">
               {getToolsArray().length > 0 ? (
-                getToolsArray().map((tool, index) => (
+                getToolsArray().map((tool) => (
                   <span
-                    key={index}
+                    key={tool}
                     className="badge-expert px-3 py-1 rounded-md text-sm font-semibold bg-blue-100 text-blue-800"
                   >
                     {tool}

@@ -58,7 +58,7 @@ export default function MentorStudentsPage() {
     queryFn: () =>
       coursesService.getMentorStudents({
         page: currentPage,
-        limit: parseInt(itemsPerPage),
+        limit: Number.parseInt(itemsPerPage, 10),
         search: debouncedSearchTerm || undefined,
       }),
   });
@@ -183,7 +183,7 @@ export default function MentorStudentsPage() {
             <Pagination
               currentPage={currentPage}
               totalPages={meta.total_pages}
-              itemsPerPage={parseInt(itemsPerPage)}
+              itemsPerPage={Number.parseInt(itemsPerPage, 10)}
               onPageChange={handlePageChange}
               onItemsPerPageChange={(items) =>
                 handleItemsPerPageChange(items.toString())

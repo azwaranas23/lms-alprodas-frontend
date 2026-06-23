@@ -201,9 +201,9 @@ export function TestimonialsSection({ onSmoothScroll }: TestimonialsSectionProps
 
       {/* Pagination Dots */}
       <div className="flex justify-center gap-2 mt-8">
-        {testimonials.map((_, index) => (
+        {testimonials.map((t, index) => (
           <button
-            key={index}
+            key={t.id}
             onClick={() => {
               setIsTransitioning(true);
               setCurrentTestimonialIndex(index);

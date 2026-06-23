@@ -6,7 +6,7 @@ interface CourseAboutTabProps {
   course: Course;
 }
 
-export function CourseAboutTab({ course }: CourseAboutTabProps) {
+export function CourseAboutTab({ course }: Readonly<CourseAboutTabProps>) {
   return (
     <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-8">
       <h2 className="text-2xl font-bold text-brand-dark mb-6">

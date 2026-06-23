@@ -59,7 +59,7 @@ export function CourseTokenStep({
   onUpdate,
   onNext,
   onPrevious,
-}: CourseTokenStepProps) {
+}: Readonly<CourseTokenStepProps>) {
   const {
     getFullName,
     getAvatar,
@@ -171,12 +171,12 @@ export function CourseTokenStep({
 
           {/* Course Availability Radio Options */}
           <div className="mb-6">
-            <label className="block text-brand-dark text-base font-semibold mb-3">
+            <span className="block text-brand-dark text-base font-semibold mb-3">
               Course Availability *
-            </label>
+            </span>
             <div className="flex gap-4">
               {/* Published Option */}
-              <label className="group card flex items-center justify-between w-full min-h-[60px] rounded-[16px] border border-[#DCDEDD] p-4 has-[:checked]:ring-2 has-[:checked]:ring-[#0C51D9] has-[:checked]:ring-offset-2 transition-all duration-300 cursor-pointer">
+              <label htmlFor="availability-published" aria-label="Published availability" className="group card flex items-center justify-between w-full min-h-[60px] rounded-[16px] border border-[#DCDEDD] p-4 has-[:checked]:ring-2 has-[:checked]:ring-[#0C51D9] has-[:checked]:ring-offset-2 transition-all duration-300 cursor-pointer">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-green-50 rounded-[12px] flex items-center justify-center">
                     <Globe className="w-5 h-5 text-green-600" />
@@ -193,6 +193,7 @@ export function CourseTokenStep({
                 <div className="relative flex items-center justify-center w-fit h-8 shrink-0 rounded-xl border border-[#DCDEDD] py-2 px-3 gap-2">
                   <input
                     type="radio"
+                    id="availability-published"
                     name="availability"
                     value="published"
                     checked={data.availability === "published"}
@@ -205,7 +206,7 @@ export function CourseTokenStep({
               </label>
 
               {/* Draft Option */}
-              <label className="group card flex items-center justify-between w-full min-h-[60px] rounded-[16px] border border-[#DCDEDD] p-4 has-[:checked]:ring-2 has-[:checked]:ring-[#0C51D9] has-[:checked]:ring-offset-2 transition-all duration-300 cursor-pointer">
+              <label htmlFor="availability-draft" aria-label="Draft availability" className="group card flex items-center justify-between w-full min-h-[60px] rounded-[16px] border border-[#DCDEDD] p-4 has-[:checked]:ring-2 has-[:checked]:ring-[#0C51D9] has-[:checked]:ring-offset-2 transition-all duration-300 cursor-pointer">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-orange-50 rounded-[12px] flex items-center justify-center">
                     <FileText className="w-5 h-5 text-orange-600" />
@@ -222,6 +223,7 @@ export function CourseTokenStep({
                 <div className="relative flex items-center justify-center w-fit h-8 shrink-0 rounded-xl border border-[#DCDEDD] py-2 px-3 gap-2">
                   <input
                     type="radio"
+                    id="availability-draft"
                     name="availability"
                     value="draft"
                     checked={data.availability === "draft"}

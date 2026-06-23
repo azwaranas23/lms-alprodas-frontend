@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { ChevronDown, LogOut, Home, BookOpen, LayoutDashboard } from "lucide-react";
 import { Link } from "react-router";
-import { useUser } from "~/hooks/useUser";
 import { authService } from "~/services/auth.service";
 import { Avatar } from "~/components/atoms/Avatar";
 
 export function UserProfileDropdown() {
     // Try to get user immediately if available (safe for client-side navigation)
     const [user, setUser] = useState<any>(() => authService.getUser());
-    const { getRoleName, getAvatar } = useUser();
     const [showDropdown, setShowDropdown] = useState(false);
 
     useEffect(() => {
@@ -22,7 +20,7 @@ export function UserProfileDropdown() {
 
     const handleLogout = () => {
         authService.logout();
-        window.location.href = "/login";
+        globalThis.location.href = "/login";
     };
 
     const getDashboardUrl = () => {

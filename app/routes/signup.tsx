@@ -45,6 +45,27 @@ interface FormErrors {
   [key: string]: string;
 }
 
+type InputValue = string | File | null | boolean;
+
+const validators: Record<string, (val: any, data: FormData) => string> = {
+  role: (val) => (val ? "" : "Please select your role."),
+  fullName: (val) => (val?.trim() ? "" : "Please enter your full name."),
+  gender: (val) => (val ? "" : "Please select your gender."),
+  email: (val) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(val || "") ? "" : "Please enter a valid email address.";
+  },
+  password: (val) => {
+    if (!val) return "Password is required.";
+    if (val.length < 8) return "Password must be at least 8 characters.";
+    if (!/[A-Z]/.test(val)) return "Password must contain at least one uppercase letter.";
+    if (!/\d/.test(val)) return "Password must contain at least one number.";
+    return "";
+  },
+  confirmPassword: (val, data) => (val === data.password ? "" : "Passwords do not match."),
+  terms: (val) => (val ? "" : "Please accept the terms and conditions."),
+};
+
 export default function SignupPage() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
@@ -59,7 +80,6 @@ export default function SignupPage() {
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
-  const [hasSubmitted, setHasSubmitted] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
   // UI States
@@ -69,51 +89,15 @@ export default function SignupPage() {
 
   const validateField = (
     name: string,
-    value: string | File | null | boolean,
+    value: InputValue,
     data?: FormData
   ): string => {
     const currentData = data || formData;
-
-    // Handle File type for profilePhoto
     if (name === "profilePhoto") {
-      return ""; // File validation can be done separately if needed
+      return "";
     }
-
-    // Handle boolean type for terms
-    if (name === "terms") {
-      return !value ? "You must accept the terms and conditions." : "";
-    }
-
-    // Cast to string for validation (all form fields except file are strings)
-    const stringValue = value as string;
-
-    switch (name) {
-      case "role":
-        return !stringValue ? "Please select your role." : "";
-      case "fullName":
-        return !stringValue?.trim() ? "Please enter your full name." : "";
-      case "gender":
-        return !stringValue ? "Please select your gender." : "";
-      case "email":
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return !emailRegex.test(stringValue || "")
-          ? "Please enter a valid email address."
-          : "";
-      case "password":
-        if (!stringValue) return "Password is required.";
-        if (stringValue.length < 8) return "Password must be at least 8 characters.";
-        if (!/[A-Z]/.test(stringValue)) return "Password must contain at least one uppercase letter.";
-        if (!/[0-9]/.test(stringValue)) return "Password must contain at least one number.";
-        return "";
-      case "confirmPassword":
-        return stringValue !== currentData.password
-          ? "Passwords do not match."
-          : "";
-      case "terms":
-        return !value ? "Please accept the terms and conditions." : "";
-      default:
-        return "";
-    }
+    const validator = validators[name];
+    return validator ? validator(value, currentData) : "";
   };
 
   const handleInputChange = (name: string, value: string | File | null) => {
@@ -138,9 +122,6 @@ export default function SignupPage() {
       );
       setErrors((prev) => ({ ...prev, confirmPassword: confirmError }));
     }
-
-    // Also validate the current field if you want immediate feedback (optional, usually onBlur is better for general fields)
-    // allowing onBlur to handle standard validation to avoid annoyance.
   };
 
   const handleBlur = (name: string, value: string | File | null) => {
@@ -150,7 +131,6 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setHasSubmitted(true);
     setApiError(null);
 
     // Validate all fields
@@ -255,9 +235,9 @@ export default function SignupPage() {
 
               {/* Role Selection */}
               <div>
-                <label className="block text-brand-dark text-sm font-semibold mb-3">
+                <span className="block text-brand-dark text-sm font-semibold mb-3">
                   Choose Your Role *
-                </label>
+                </span>
                 <div className="flex gap-3">
                   <RadioOption
                     name="role"
@@ -329,9 +309,9 @@ export default function SignupPage() {
 
               {/* Gender Selection */}
               <div>
-                <label className="block text-brand-dark text-sm font-semibold mb-3">
+                <span className="block text-brand-dark text-sm font-semibold mb-3">
                   Gender *
-                </label>
+                </span>
                 <div className="flex gap-3">
                   <RadioOption
                     name="gender"

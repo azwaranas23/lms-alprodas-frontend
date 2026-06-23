@@ -9,7 +9,7 @@ interface CourseResourcesStudentTabProps {
 
 export function CourseResourcesStudentTab({
   courseId,
-}: CourseResourcesStudentTabProps) {
+}: Readonly<CourseResourcesStudentTabProps>) {
   const { data, isLoading, error } = useStudentCourseResources(courseId);
 
   const resources: CourseResourceResponse[] = data?.data ?? [];
@@ -43,12 +43,12 @@ export function CourseResourcesStudentTab({
   };
 
   const handleDownload = (resource: CourseResourceResponse) => {
-    const normalizedPath = resource.resourcePath.replace(/\\/g, "/");
+    const normalizedPath = resource.resourcePath.replaceAll("\\", "/");
     const baseUrl = (
       import.meta.env.VITE_API_URL ?? "http://localhost:3005/api"
     ).replace(/\/api\/?$/, "");
     const url = `${baseUrl}/${normalizedPath}`;
-    window.open(url, "_blank");
+    globalThis.open(url, "_blank");
   };
 
   return (
@@ -64,7 +64,9 @@ export function CourseResourcesStudentTab({
       )}
 
       {!isLoading && error && (
-        !authService.isAuthenticated() ? (
+        authService.isAuthenticated() ? (
+          <p className="text-sm text-red-600">Failed to load course resources.</p>
+        ) : (
           <div className="text-center py-12 border border-dashed border-[#DCDEDD] rounded-[16px] p-8 bg-gray-50/50">
             <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
               <Lock className="w-8 h-8 text-[#0C51D9]" />
@@ -77,14 +79,12 @@ export function CourseResourcesStudentTab({
             </p>
             <button
               type="button"
-              onClick={() => window.location.href = "/login"}
+              onClick={() => globalThis.location.href = "/login"}
               className="inline-flex items-center justify-center px-6 py-3 bg-[#0C51D9] hover:bg-[#093EB3] text-white text-sm md:text-base font-semibold rounded-[12px] transition-colors shadow-sm cursor-pointer"
             >
               Login to Account
             </button>
           </div>
-        ) : (
-          <p className="text-sm text-red-600">Failed to load course resources.</p>
         )
       )}
 

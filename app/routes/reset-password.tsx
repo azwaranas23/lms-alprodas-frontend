@@ -66,6 +66,132 @@ export default function ResetPasswordPage() {
     }
   };
 
+  const renderFormContent = () => {
+    if (successMsg) {
+      return (
+        <div className="space-y-6 text-center py-4">
+          <div className="flex justify-center">
+            <CheckCircle2 className="w-16 h-16 text-emerald-500 animate-bounce" />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold text-gray-900">Success!</h2>
+            <p className="text-sm text-gray-500">{successMsg}</p>
+            <p className="text-xs text-gray-400">Redirecting to login in 3 seconds...</p>
+          </div>
+          <Link
+            to="/login"
+            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors font-semibold text-sm"
+          >
+            Go to Login Page
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      );
+    }
+
+    if (token) {
+      return (
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {errorMsg && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-[12px]">
+              <p className="text-sm text-red-600 font-medium">{errorMsg}</p>
+            </div>
+          )}
+
+          {/* Password Field */}
+          <div>
+            <label htmlFor="password" className="block mb-2 text-gray-600 text-sm font-semibold">
+              New Password
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+                <Lock className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={isPending}
+                className="w-full pl-10 pr-10 py-3 bg-white border border-[#DCDEDD] rounded-[16px] transition-all duration-300 hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white outline-none"
+                placeholder="Min. 8 characters"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none"
+              >
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
+          </div>
+
+          {/* Confirm Password Field */}
+          <div>
+            <label htmlFor="confirmPassword" className="block mb-2 text-gray-600 text-sm font-semibold">
+              Confirm New Password
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+                <Lock className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                id="confirmPassword"
+                name="confirmPassword"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                disabled={isPending}
+                className="w-full pl-10 pr-10 py-3 bg-white border border-[#DCDEDD] rounded-[16px] transition-all duration-300 hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white outline-none"
+                placeholder="Re-enter password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none"
+              >
+                {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={isPending || !password || !confirmPassword}
+            className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-3 flex items-center gap-2 w-full justify-center text-brand-white text-sm font-semibold"
+          >
+            {isPending ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Resetting password...
+              </>
+            ) : (
+              "Reset Password"
+            )}
+          </button>
+        </form>
+      );
+    }
+
+    return (
+      <div className="p-4 bg-red-50 border border-red-200 rounded-[12px] text-center">
+        <p className="text-sm text-red-600 font-medium mb-4">
+          Tautan reset password tidak valid atau tidak lengkap.
+        </p>
+        <Link
+          to="/forgot-password"
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors font-semibold text-sm"
+        >
+          Request New Link
+          <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-[#F9F9F9]">
       <Navbar />
@@ -92,121 +218,7 @@ export default function ResetPasswordPage() {
                 Please enter your new password below.
               </p>
 
-              {!token ? (
-                <div className="p-4 bg-red-50 border border-red-200 rounded-[12px] text-center">
-                  <p className="text-sm text-red-600 font-medium mb-4">
-                    Tautan reset password tidak valid atau tidak lengkap.
-                  </p>
-                  <Link
-                    to="/forgot-password"
-                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors font-semibold text-sm"
-                  >
-                    Request New Link
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              ) : successMsg ? (
-                <div className="space-y-6 text-center py-4">
-                  <div className="flex justify-center">
-                    <CheckCircle2 className="w-16 h-16 text-emerald-500 animate-bounce" />
-                  </div>
-                  <div className="space-y-2">
-                    <h2 className="text-lg font-semibold text-gray-900">Success!</h2>
-                    <p className="text-sm text-gray-500">{successMsg}</p>
-                    <p className="text-xs text-gray-400">Redirecting to login in 3 seconds...</p>
-                  </div>
-                  <Link
-                    to="/login"
-                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors font-semibold text-sm"
-                  >
-                    Go to Login Page
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {errorMsg && (
-                    <div className="p-4 bg-red-50 border border-red-200 rounded-[12px]">
-                      <p className="text-sm text-red-600 font-medium">{errorMsg}</p>
-                    </div>
-                  )}
-
-                  {/* Password Field */}
-                  <div>
-                    <label htmlFor="password" className="block mb-2 text-gray-600 text-sm font-semibold">
-                      New Password
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                        <Lock className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        id="password"
-                        name="password"
-                        required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        disabled={isPending}
-                        className="w-full pl-10 pr-10 py-3 bg-white border border-[#DCDEDD] rounded-[16px] transition-all duration-300 hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white outline-none"
-                        placeholder="Min. 8 characters"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none"
-                      >
-                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Confirm Password Field */}
-                  <div>
-                    <label htmlFor="confirmPassword" className="block mb-2 text-gray-600 text-sm font-semibold">
-                      Confirm New Password
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                        <Lock className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <input
-                        type={showConfirmPassword ? "text" : "password"}
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        required
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        disabled={isPending}
-                        className="w-full pl-10 pr-10 py-3 bg-white border border-[#DCDEDD] rounded-[16px] transition-all duration-300 hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white outline-none"
-                        placeholder="Re-enter password"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none"
-                      >
-                        {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                      </button>
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isPending || !password || !confirmPassword}
-                    className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-3 flex items-center gap-2 w-full justify-center text-brand-white text-sm font-semibold"
-                  >
-                    {isPending ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        Resetting password...
-                      </>
-                    ) : (
-                      "Reset Password"
-                    )}
-                  </button>
-                </form>
-              )}
+              {renderFormContent()}
             </div>
           </div>
         </div>

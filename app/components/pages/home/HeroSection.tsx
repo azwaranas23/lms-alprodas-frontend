@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, Star, TrendingUp, Users } from "lucide-react";
+import { BookOpen, TrendingUp } from "lucide-react";
 import { Link } from "react-router";
 import { Button } from "~/components/atoms/Button";
 import { motion } from "framer-motion";
@@ -106,11 +106,11 @@ export function HeroSection({ onSmoothScroll }: HeroSectionProps) {
             className="hidden md:block absolute bottom-12 -left-8 lg:-left-20 z-20 bg-white p-5 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
           >
             <div className="flex items-end gap-2 h-16 w-32">
-              {[40, 70, 45, 90, 65, 85].map((h, i) => (
-                <div key={i} className="flex-1 bg-blue-100 rounded-t-sm relative group">
+              {[{ h: 40, id: "c1" }, { h: 70, id: "c2" }, { h: 45, id: "c3" }, { h: 90, id: "c4" }, { h: 65, id: "c5" }, { h: 85, id: "c6" }].map((item) => (
+                <div key={item.id} className="flex-1 bg-blue-100 rounded-t-sm relative group">
                   <div
                     className="absolute bottom-0 w-full bg-blue-500 rounded-t-sm transition-all duration-1000"
-                    style={{ height: `${h}%` }}
+                    style={{ height: `${item.h}%` }}
                   />
                 </div>
               ))}

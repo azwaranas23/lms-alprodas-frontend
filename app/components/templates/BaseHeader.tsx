@@ -1,8 +1,5 @@
-import { useState } from 'react';
-import { Bell, MessageCircle, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router';
-import { useUser } from '~/hooks/useUser';
-import { authService } from '~/services/auth.service';
 import { UserProfileDropdown } from '~/components/molecules/UserProfileDropdown';
 
 interface BackButton {
@@ -26,12 +23,9 @@ export function BaseHeader({
   subtitle,
   backButton,
   variant = 'normal',
-  showActions = true,
   showUserProfile = true,
   className = ''
-}: BaseHeaderProps) {
-  const { getFullName } = useUser();
-
+}: Readonly<BaseHeaderProps>) {
 
   // Variant-specific styling
   const getHeaderClasses = () => {
@@ -66,9 +60,9 @@ export function BaseHeader({
     }
 
     return (
-      <div onClick={backButton.onClick}>
+      <button type="button" onClick={backButton.onClick} className="focus:outline-none bg-transparent p-0 border-0 cursor-pointer">
         {buttonContent}
-      </div>
+      </button>
     );
   };
 
