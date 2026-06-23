@@ -79,7 +79,7 @@ interface OverviewTabProps {
 }
 
 function formatCurrency(amount: number | undefined | null): string {
-	if (amount === undefined || amount === null || isNaN(amount)) {
+	if (amount === undefined || amount === null || Number.isNaN(amount)) {
 		return "Rp 0";
 	}
 	if (amount >= 1000000000) {

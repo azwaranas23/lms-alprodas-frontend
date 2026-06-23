@@ -37,7 +37,7 @@ export default function EditTopic() {
 
       try {
         setLoading(true);
-        const topicData = await topicsService.getTopicById(parseInt(id));
+        const topicData = await topicsService.getTopicById(Number.parseInt(id, 10));
         setTopic(topicData);
         setError(null);
       } catch (err: any) {

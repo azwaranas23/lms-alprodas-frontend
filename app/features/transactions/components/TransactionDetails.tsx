@@ -171,7 +171,7 @@ export function TransactionDetails({ transactionId }: TransactionDetailsProps) {
                 </div>
                 <div className="flex items-center gap-2">
                   <CreditCard className="w-4 h-4" />
-                  <span>{transaction.payment_method ? transaction.payment_method.replace(/_/g, ' ').toUpperCase() : 'Pending Payment'}</span>
+                  <span>{transaction.payment_method ? transaction.payment_method.replaceAll('_', ' ').toUpperCase() : 'Pending Payment'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Receipt className="w-4 h-4" />
@@ -356,7 +356,7 @@ export function TransactionDetails({ transactionId }: TransactionDetailsProps) {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-brand-light text-base">Payment Method</span>
-                <span className="text-brand-dark text-base font-medium">{transaction.payment_method ? transaction.payment_method.replace(/_/g, ' ').toUpperCase() : 'Pending'}</span>
+                <span className="text-brand-dark text-base font-medium">{transaction.payment_method ? transaction.payment_method.replaceAll('_', ' ').toUpperCase() : 'Pending'}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-brand-light text-base">Transaction Fee</span>

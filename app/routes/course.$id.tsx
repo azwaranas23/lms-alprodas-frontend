@@ -5,7 +5,7 @@ import { CourseContentSection } from "~/features/courses/components/CourseConten
 import { Footer } from "~/components/pages/home/Footer";
 
 export default function CourseDetail({ params }: Route.ComponentProps) {
-  const courseId = parseInt(params.id);
+  const courseId = Number.parseInt(params.id, 10);
 
   return (
     <div className="min-h-screen bg-[#F9F9F9]">

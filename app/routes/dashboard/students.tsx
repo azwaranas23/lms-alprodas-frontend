@@ -25,7 +25,7 @@ export default function StudentsPage() {
   // Fetch students data from API with server-side pagination
   const { data: studentsData, isLoading } = useStudents({
     page: currentPage,
-    limit: parseInt(itemsPerPage),
+    limit: Number.parseInt(itemsPerPage, 10),
     search: searchTerm,
   });
 
@@ -162,7 +162,7 @@ export default function StudentsPage() {
           <Pagination
             currentPage={currentPage}
             totalPages={meta.total_pages}
-            itemsPerPage={parseInt(itemsPerPage)}
+            itemsPerPage={Number.parseInt(itemsPerPage, 10)}
             onPageChange={handlePageChange}
             onItemsPerPageChange={(items) =>
               handleItemsPerPageChange(items.toString())

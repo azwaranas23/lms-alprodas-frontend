@@ -437,7 +437,7 @@ export default function AddLesson() {
                         const value = e.target.value;
                         console.log("Duration input value:", value);
                         const numValue =
-                          value === "" ? 0 : parseInt(value, 10) || 0;
+                          value === "" ? 0 : Number.parseInt(value, 10) || 0;
                         console.log("Parsed duration value:", numValue);
                         handleInputChange("duration_minutes", numValue);
                       }}

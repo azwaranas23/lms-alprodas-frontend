@@ -16,7 +16,7 @@ export function meta({ }: Route.MetaArgs) {
 }
 
 export default function Topic({ params }: Route.ComponentProps) {
-  const topicId = parseInt(params.id);
+  const topicId = Number.parseInt(params.id, 10);
 
   return (
     <div className="min-h-screen bg-[#F9F9F9]">

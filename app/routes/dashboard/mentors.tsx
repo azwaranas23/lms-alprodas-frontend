@@ -26,7 +26,7 @@ export default function Mentors() {
   const { data: mentorsData, isLoading } = useMentors({
     page,
     search,
-    limit: parseInt(itemsPerPage),
+    limit: Number.parseInt(itemsPerPage, 10),
   });
 
   const mentors = mentorsData?.data?.items || [];
@@ -91,7 +91,7 @@ export default function Mentors() {
             <Pagination
               currentPage={page}
               totalPages={meta.total_pages}
-              itemsPerPage={parseInt(itemsPerPage)}
+              itemsPerPage={Number.parseInt(itemsPerPage, 10)}
               onPageChange={handlePageChange}
               onItemsPerPageChange={(items) =>
                 handleItemsPerPageChange(items.toString())

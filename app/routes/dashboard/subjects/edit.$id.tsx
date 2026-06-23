@@ -36,7 +36,7 @@ export default function EditSubject() {
 
       try {
         setLoading(true);
-        const subjectData = await subjectsService.getSubjectById(parseInt(id));
+        const subjectData = await subjectsService.getSubjectById(Number.parseInt(id, 10));
         setSubject(subjectData);
         setError(null);
       } catch (err: any) {

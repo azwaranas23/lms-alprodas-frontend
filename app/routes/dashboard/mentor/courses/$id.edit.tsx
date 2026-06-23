@@ -52,7 +52,7 @@ export default function EditMentorCourse() {
         courseData.targetAudience3,
         courseData.targetAudience4,
       ].filter((audience): audience is string => Boolean(audience)),
-      subject_id: parseInt(courseData.subject) || course?.subject?.id || 1,
+      subject_id: Number.parseInt(courseData.subject, 10) || course?.subject?.id || 1,
       status: courseData.availability === "published" ? "PUBLISHED" : "DRAFT",
       course_token: courseData.courseToken,
     };

@@ -110,7 +110,7 @@ export default function Topics() {
     error,
   } = useTopics({
     page: currentPage,
-    limit: parseInt(itemsPerPage),
+    limit: Number.parseInt(itemsPerPage, 10),
     search: debouncedSearchQuery || undefined,
   });
 
@@ -280,7 +280,7 @@ export default function Topics() {
                 <Pagination
                   currentPage={currentPage}
                   totalPages={meta.total_pages}
-                  itemsPerPage={parseInt(itemsPerPage)}
+                  itemsPerPage={Number.parseInt(itemsPerPage, 10)}
                   onPageChange={handlePageChange}
                   onItemsPerPageChange={(items) =>
                     handleItemsPerPageChange(items.toString())

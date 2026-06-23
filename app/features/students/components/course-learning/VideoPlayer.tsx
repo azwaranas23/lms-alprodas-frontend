@@ -49,6 +49,7 @@ export function VideoPlayer({ lesson, onComplete }: VideoPlayerProps) {
 				controlsList="nodownload"
 				onEnded={onComplete}
 			>
+				<track kind="captions" />
 				Your browser does not support the video tag.
 			</video>
 		</div>

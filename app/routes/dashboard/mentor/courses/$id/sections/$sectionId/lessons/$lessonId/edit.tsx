@@ -455,7 +455,7 @@ export default function EditLesson() {
                       onChange={(e) => {
                         const value = e.target.value;
                         const numValue =
-                          value === "" ? 0 : parseInt(value, 10) || 0;
+                          value === "" ? 0 : Number.parseInt(value, 10) || 0;
                         handleInputChange("duration_minutes", numValue);
                       }}
                       className="w-full pl-12 pr-4 py-3 border border-[#DCDEDD] rounded-[16px] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2 focus:bg-white transition-all duration-300 font-semibold"

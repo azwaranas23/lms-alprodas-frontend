@@ -56,7 +56,7 @@ export default function WithdrawalDetailsStep({
 	const formatCurrency = (value: string) => {
 		let cleanValue = value.replace(/[^\d]/g, "");
 		if (cleanValue) {
-			return parseInt(cleanValue).toLocaleString("id-ID");
+			return Number.parseInt(cleanValue, 10).toLocaleString("id-ID");
 		}
 		return "";
 	};
@@ -69,7 +69,7 @@ export default function WithdrawalDetailsStep({
 
 	const handleAmountChange = (value: string) => {
 		const cleanValue = value.replace(/[^\d]/g, "");
-		const numericAmount = parseInt(cleanValue) || 0;
+		const numericAmount = Number.parseInt(cleanValue, 10) || 0;
 
 		setWithdrawalAmount(formatCurrency(value));
 
@@ -102,7 +102,7 @@ export default function WithdrawalDetailsStep({
 			return;
 		}
 
-		const amount = parseInt(withdrawalAmount.replace(/[^\d]/g, ""));
+		const amount = Number.parseInt(withdrawalAmount.replace(/[^\d]/g, ""), 10);
 
 		// Validate with Zod first
 		const validation = withdrawalAmountSchema.safeParse({ amount });
