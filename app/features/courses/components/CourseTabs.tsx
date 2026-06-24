@@ -18,7 +18,7 @@ interface CourseTabsProps {
   courseId: number;
 }
 
-export function CourseTabs({ course, courseId }: CourseTabsProps) {
+export function CourseTabs({ course, courseId }: Readonly<CourseTabsProps>) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Baca tab dari query ?tab=...

@@ -55,7 +55,8 @@ export const subjectsService = {
 		if (params.sort) searchParams.append("sort", params.sort);
 		if (params.order) searchParams.append("order", params.order);
 
-		const url = `${API_ENDPOINTS.subjects}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
+		const queryString = searchParams.toString();
+		const url = queryString ? `${API_ENDPOINTS.subjects}?${queryString}` : API_ENDPOINTS.subjects;
 		const response = await apiClient.get(url);
 		return response.data.data;
 	},

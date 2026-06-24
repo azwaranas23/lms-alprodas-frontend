@@ -67,6 +67,46 @@ export function MentorTransactionsList() {
 		console.log("Filtering transactions...");
 	};
 
+	const renderContent = () => {
+		if (isLoading) {
+			return (
+				<div className="text-center py-10">
+					<div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+					<p className="mt-2 text-gray-500">
+						Loading transactions...
+					</p>
+				</div>
+			);
+		}
+		if (error) {
+			return (
+				<div className="text-center py-10">
+					<p className="text-red-500">
+						Error loading transactions. Please try again later.
+					</p>
+				</div>
+			);
+		}
+		if (currentTransactions.length === 0) {
+			return (
+				<div className="text-center py-10">
+					<p className="text-gray-500">No transactions found</p>
+				</div>
+			);
+		}
+		return (
+			<div className="grid grid-cols-1 gap-4">
+				{currentTransactions.map((transaction) => (
+					<TransactionCard
+						key={transaction.id}
+						transaction={transaction}
+						onViewDetails={handleViewDetails}
+					/>
+				))}
+			</div>
+		);
+	};
+
 	return (
 		<main className="main-content flex-1 overflow-auto p-5">
 			<Card className="p-6">
@@ -127,34 +167,7 @@ export function MentorTransactionsList() {
 				</div>
 
 				{/* Transactions Grid */}
-				{isLoading ? (
-					<div className="text-center py-10">
-						<div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-						<p className="mt-2 text-gray-500">
-							Loading transactions...
-						</p>
-					</div>
-				) : error ? (
-					<div className="text-center py-10">
-						<p className="text-red-500">
-							Error loading transactions. Please try again later.
-						</p>
-					</div>
-				) : currentTransactions.length === 0 ? (
-					<div className="text-center py-10">
-						<p className="text-gray-500">No transactions found</p>
-					</div>
-				) : (
-					<div className="grid grid-cols-1 gap-4">
-						{currentTransactions.map((transaction) => (
-							<TransactionCard
-								key={transaction.id}
-								transaction={transaction}
-								onViewDetails={handleViewDetails}
-							/>
-						))}
-					</div>
-				)}
+				{renderContent()}
 
 				{/* Pagination */}
 				<Pagination

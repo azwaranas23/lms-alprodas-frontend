@@ -31,7 +31,7 @@ export function AddCourseLayout({
   stepTitle,
   mode = "add",
   backTo,
-}: AddCourseLayoutProps) {
+}: Readonly<AddCourseLayoutProps>) {
   const backButton = {
     to: backTo || "/dashboard/courses",
     label: "Back",
@@ -69,16 +69,32 @@ export function AddCourseLayout({
               const isCompleted = step.id < currentStep;
               const isLast = index === steps.length - 1;
 
+              let circleColorClass = "bg-gray-200 text-gray-500";
+              if (isActive) {
+                circleColorClass = "bg-blue-600 text-white";
+              } else if (isCompleted) {
+                circleColorClass = "bg-green-600 text-white";
+              }
+
+              let textColorClass = "text-gray-500";
+              if (isActive) {
+                textColorClass = "text-blue-600";
+              } else if (isCompleted) {
+                textColorClass = "text-green-600";
+              }
+
+              let connectorColorClass = "bg-gray-200";
+              if (isCompleted) {
+                connectorColorClass = "bg-green-600";
+              } else if (isActive) {
+                connectorColorClass = "bg-blue-600";
+              }
+
               return (
                 <div key={step.id}>
                   <div className="flex items-center gap-4">
                     <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${isActive
-                        ? "bg-blue-600 text-white"
-                        : isCompleted
-                          ? "bg-green-600 text-white"
-                          : "bg-gray-200 text-gray-500"
-                        }`}
+                      className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${circleColorClass}`}
                     >
                       {isCompleted ? (
                         <Check className="w-6 h-6" />
@@ -88,12 +104,7 @@ export function AddCourseLayout({
                     </div>
                     <div className="flex-1">
                       <h3
-                        className={`text-lg font-bold ${isActive
-                          ? "text-blue-600"
-                          : isCompleted
-                            ? "text-green-600"
-                            : "text-gray-500"
-                          }`}
+                        className={`text-lg font-bold ${textColorClass}`}
                       >
                         {step.title}
                       </h3>
@@ -103,12 +114,7 @@ export function AddCourseLayout({
                   {/* Connector Line */}
                   {!isLast && (
                     <div
-                      className={`ml-6 w-0.5 h-8 ${isCompleted
-                        ? "bg-green-600"
-                        : isActive
-                          ? "bg-blue-600"
-                          : "bg-gray-200"
-                        }`}
+                      className={`ml-6 w-0.5 h-8 ${connectorColorClass}`}
                     ></div>
                   )}
                 </div>

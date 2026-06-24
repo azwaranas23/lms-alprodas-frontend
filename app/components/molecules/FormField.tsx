@@ -9,7 +9,7 @@ interface FormFieldProps {
   className?: string;
 }
 
-export function FormField({ label, required = false, error, children, className = '' }: FormFieldProps) {
+export function FormField({ label, required = false, error, children, className = '' }: Readonly<FormFieldProps>) {
   return (
     <div className={`mb-4 ${className}`}>
       <label className="block text-brand-dark text-base font-semibold mb-1">
@@ -26,7 +26,7 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: ReactNode;
 }
 
-export function FormInput({ error, icon, className = '', ...props }: FormInputProps) {
+export function FormInput({ error, icon, className = '', ...props }: Readonly<FormInputProps>) {
   const baseClasses = 'w-full pr-4 py-3 bg-white border rounded-[16px] focus:bg-white transition-all duration-300 font-semibold';
   const errorClasses = error
     ? 'border-[#DC2626] border-2'

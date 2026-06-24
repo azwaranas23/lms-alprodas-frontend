@@ -36,7 +36,7 @@ export default function MentorCourseSuccess() {
 
   if (!course) return null;
 
-  const categoryLabel = course.category || "General";
+
 
   const thumbnailSrc =
     course.thumbnailUrl ||

@@ -15,7 +15,7 @@ interface NavbarProps {
   mode?: "home" | "standard";
 }
 
-export function Navbar({ onSmoothScroll, mode = "home" }: NavbarProps) {
+export function Navbar({ onSmoothScroll, mode = "home" }: Readonly<NavbarProps>) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);

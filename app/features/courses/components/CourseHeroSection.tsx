@@ -12,19 +12,15 @@ export function CourseHeroSection({ courseId }: Readonly<CourseHeroSectionProps>
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [course, setCourse] = useState<Course | null>(null);
-  const [loading, setLoading] = useState(true);
 
   // Fetch course detail for breadcrumb and images
   useEffect(() => {
     const fetchCourseDetail = async () => {
       try {
-        setLoading(true);
         const response = await coursesService.getCourseDetail(courseId);
         setCourse(response.data);
       } catch (error) {
         console.error("Failed to fetch course detail:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -57,11 +53,6 @@ export function CourseHeroSection({ courseId }: Readonly<CourseHeroSectionProps>
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
-  };
-
-  const openVideoModal = () => {
-    setShowVideoModal(true);
-    globalThis.document.body.style.overflow = 'hidden';
   };
 
   const closeVideoModal = () => {

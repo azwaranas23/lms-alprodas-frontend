@@ -50,7 +50,7 @@ const mockTimeline: TimelineItem[] = [
   }
 ];
 
-export function TransactionDetails({ transactionId }: TransactionDetailsProps) {
+export function TransactionDetails({ transactionId }: Readonly<TransactionDetailsProps>) {
   const navigate = useNavigate();
   const location = useLocation();
 

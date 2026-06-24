@@ -14,7 +14,7 @@ export function useCourse(id: number | undefined) {
 
 export function useCourses(filters?: CourseFilters) {
   return useQuery({
-    queryKey: courseKeys.list(filters || {}),
+    queryKey: courseKeys.list(filters ?? {}),
     queryFn: () => coursesService.getCourses(filters),
   });
 }

@@ -24,7 +24,7 @@ interface TransactionCardProps {
   context?: 'mentor' | 'student';
 }
 
-export function TransactionCard({ transaction, onViewDetails, context = 'mentor' }: TransactionCardProps) {
+export function TransactionCard({ transaction, onViewDetails, context = 'mentor' }: Readonly<TransactionCardProps>) {
   const handleDetailsClick = () => {
     onViewDetails?.(transaction.id);
   };

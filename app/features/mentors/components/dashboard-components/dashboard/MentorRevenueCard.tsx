@@ -10,7 +10,7 @@ export function MentorRevenueCard({
   totalRevenue, 
   monthlyGrowth, 
   isGrowing = true 
-}: MentorRevenueCardProps) {
+}: Readonly<MentorRevenueCardProps>) {
   return (
     <div className="main-card lg:row-span-2 rounded-[20px] border border-[#0B1042] relative overflow-hidden p-5">
       <div className="flex flex-col justify-center h-full relative z-10">

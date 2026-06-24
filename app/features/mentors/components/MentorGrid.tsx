@@ -1,4 +1,4 @@
-import { Search, Upload, Plus } from 'lucide-react';
+import { Upload, Plus } from 'lucide-react';
 import { MentorCard } from './MentorCard';
 
 interface Mentor {
@@ -20,7 +20,7 @@ interface MentorGridProps {
   onImportCSV?: () => void;
 }
 
-export function MentorGrid({ mentors, onMentorClick, onAddMentor, onImportCSV }: MentorGridProps) {
+export function MentorGrid({ mentors, onMentorClick, onAddMentor, onImportCSV }: Readonly<MentorGridProps>) {
 
   return (
     <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6">

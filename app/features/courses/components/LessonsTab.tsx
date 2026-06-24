@@ -92,29 +92,29 @@ export function LessonsTab({ course: _course }: Readonly<LessonsTabProps>) {
   const createSectionMutation = useCreateSection({
     onSuccess: () => {
       closeModal();
-      // TODO: Show success notification
+      // Placeholder: Show success notification
     },
     onError: () => {
-      // TODO: Show error notification
+      // Placeholder: Show error notification
     },
   });
 
   const updateSectionMutation = useUpdateSection({
     onSuccess: () => {
       closeModal();
-      // TODO: Show success notification
+      // Placeholder: Show success notification
     },
     onError: () => {
-      // TODO: Show error notification
+      // Placeholder: Show error notification
     },
   });
 
   const deleteSectionMutation = useDeleteSection(courseId, {
     onSuccess: () => {
-      // TODO: Show success notification
+      // Placeholder: Show success notification
     },
     onError: () => {
-      // TODO: Show error notification
+      // Placeholder: Show error notification
     },
   });
 

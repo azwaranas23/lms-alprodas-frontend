@@ -30,7 +30,7 @@ export function AddWithdrawalLayout({
   stepTitle,
   onBack,
   onCancel,
-}: AddWithdrawalLayoutProps) {
+}: Readonly<AddWithdrawalLayoutProps>) {
   const getStepStatus = (stepId: number) => {
     if (stepId < currentStep) return "completed";
     if (stepId === currentStep) return "active";
@@ -73,16 +73,32 @@ export function AddWithdrawalLayout({
               const isLast = index === steps.length - 1;
               const IconComponent = step.icon;
 
+              let circleColorClass = "bg-gray-200 text-gray-500";
+              if (status === "completed") {
+                circleColorClass = "bg-green-600";
+              } else if (status === "active") {
+                circleColorClass = "bg-blue-600";
+              }
+
+              let textColorClass = "text-gray-500";
+              if (status === "completed") {
+                textColorClass = "text-green-600";
+              } else if (status === "active") {
+                textColorClass = "text-blue-600";
+              }
+
+              let connectorColorClass = "bg-gray-200";
+              if (status === "completed") {
+                connectorColorClass = "bg-green-600";
+              } else if (status === "active") {
+                connectorColorClass = "bg-blue-600";
+              }
+
               return (
                 <div key={step.id}>
                   <div className="flex items-center gap-4">
                     <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center text-white flex-shrink-0 ${status === "completed"
-                          ? "bg-green-600"
-                          : status === "active"
-                            ? "bg-blue-600"
-                            : "bg-gray-200 text-gray-500"
-                        }`}
+                      className={`w-12 h-12 rounded-full flex items-center justify-center text-white flex-shrink-0 ${circleColorClass}`}
                     >
                       {status === "completed" ? (
                         <Check className="w-6 h-6" />
@@ -92,12 +108,7 @@ export function AddWithdrawalLayout({
                     </div>
                     <div className="flex-1">
                       <h3
-                        className={`text-lg font-bold ${status === "completed"
-                            ? "text-green-600"
-                            : status === "active"
-                              ? "text-blue-600"
-                              : "text-gray-500"
-                          }`}
+                        className={`text-lg font-bold ${textColorClass}`}
                       >
                         {step.title}
                       </h3>
@@ -107,12 +118,7 @@ export function AddWithdrawalLayout({
                   {/* Connector Line */}
                   {!isLast && (
                     <div
-                      className={`ml-6 w-0.5 h-8 ${status === "completed"
-                          ? "bg-green-600"
-                          : status === "active"
-                            ? "bg-blue-600"
-                            : "bg-gray-200"
-                        }`}
+                      className={`ml-6 w-0.5 h-8 ${connectorColorClass}`}
                     ></div>
                   )}
                 </div>

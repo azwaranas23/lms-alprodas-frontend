@@ -22,7 +22,7 @@ interface LatestCoursesProps {
 export function LatestCourses({
   courses,
   onCourseDetails,
-}: LatestCoursesProps) {
+}: Readonly<LatestCoursesProps>) {
   const handleDetailsClick = (id: number) => {
     onCourseDetails?.(id.toString());
   };

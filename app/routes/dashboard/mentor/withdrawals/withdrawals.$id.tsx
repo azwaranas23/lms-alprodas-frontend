@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router";
+import { useParams, Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import type { Route } from "./+types/withdrawals.$id";
 
@@ -30,20 +30,17 @@ import { MentorLayout } from "~/components/templates/MentorLayout";
 import { Header } from "~/components/templates/Header";
 import {
   withdrawalsService,
-  type WithdrawalDetail,
 } from "~/services/withdrawals.service";
 import { Button } from "~/components/atoms/Button";
 import {
   getAvatarSrc,
   formatCurrency,
   formatDate,
-  maskAccountNumber,
 } from "~/utils/formatters";
 import { getWithdrawalStatusBadgeClasses } from "~/utils/status";
 
 export default function WithdrawalDetailPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
 
   // Fetch withdrawal detail data

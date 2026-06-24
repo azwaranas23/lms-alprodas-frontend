@@ -29,6 +29,39 @@ import { authService } from "~/services/auth.service";
 import { getAvatarSrc } from "~/utils/formatters";
 import { useUser } from "~/hooks/useUser";
 
+interface LessonFindResult {
+  firstIncompleteLesson: any;
+  sectionToExpand: any;
+}
+
+function findFirstLessonToPlay(sections: any[]): LessonFindResult {
+  for (const section of sections) {
+    if (!section.lessons || section.lessons.length === 0) continue;
+
+    const incompleteLesson = section.lessons.find(
+      (lesson: any) => !lesson.progress?.is_completed
+    );
+    if (incompleteLesson) {
+      return {
+        firstIncompleteLesson: incompleteLesson,
+        sectionToExpand: section,
+      };
+    }
+  }
+
+  const firstSection = sections.find(
+    (s: any) => s.lessons && s.lessons.length > 0
+  );
+  if (firstSection && firstSection.lessons.length > 0) {
+    return {
+      firstIncompleteLesson: firstSection.lessons[0],
+      sectionToExpand: firstSection,
+    };
+  }
+
+  return { firstIncompleteLesson: null, sectionToExpand: null };
+}
+
 export default function CoursePlayingVideo() {
   const { courseId } = useParams();
   const navigate = useNavigate();
@@ -90,36 +123,9 @@ export default function CoursePlayingVideo() {
       const response = await coursesService.getCourseLearning(Number(courseId));
       setCourseData(response.data);
 
-      // Find first incomplete lesson and auto-expand its section
       const sections = response.data.sections || [];
       if (sections.length > 0) {
-        let firstIncompleteLesson = null;
-        let sectionToExpand = null;
-
-        // Look for first incomplete lesson across all sections
-        for (const section of sections) {
-          if (section.lessons && section.lessons.length > 0) {
-            const incompleteLesson = section.lessons.find(
-              (lesson: any) => !lesson.progress?.is_completed
-            );
-            if (incompleteLesson) {
-              firstIncompleteLesson = incompleteLesson;
-              sectionToExpand = section;
-              break;
-            }
-          }
-        }
-
-        // If no incomplete lesson found, use first lesson of first section
-        if (!firstIncompleteLesson) {
-          const firstSection = sections.find(
-            (s: any) => s.lessons && s.lessons.length > 0
-          );
-          if (firstSection && firstSection.lessons.length > 0) {
-            firstIncompleteLesson = firstSection.lessons[0];
-            sectionToExpand = firstSection;
-          }
-        }
+        const { firstIncompleteLesson, sectionToExpand } = findFirstLessonToPlay(sections);
 
         if (sectionToExpand && firstIncompleteLesson) {
           setOpenSections([sectionToExpand.id]);

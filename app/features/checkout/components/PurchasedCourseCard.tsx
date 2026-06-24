@@ -12,7 +12,7 @@ interface PurchasedCourseCardProps {
 	courseData: PurchasedCourseData;
 }
 
-export function PurchasedCourseCard({ courseData }: PurchasedCourseCardProps) {
+export function PurchasedCourseCard({ courseData }: Readonly<PurchasedCourseCardProps>) {
 	return (
 		<div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6 mb-12">
 			<div className="mb-6">

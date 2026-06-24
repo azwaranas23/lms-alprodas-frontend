@@ -7,7 +7,7 @@ interface TopicCardProps {
 	topic: Topic;
 }
 
-export function TopicCard({ topic }: TopicCardProps) {
+export function TopicCard({ topic }: Readonly<TopicCardProps>) {
 	return (
 		<Link to={`/topic/${topic.id}`} className="block">
 			<Card hover padding="none" className="overflow-hidden">

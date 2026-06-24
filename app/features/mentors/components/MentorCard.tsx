@@ -37,7 +37,7 @@ export function MentorCard({
   courseCount,
   email,
   onClick
-}: MentorCardProps) {
+}: Readonly<MentorCardProps>) {
   const handleClick = () => {
     if (onClick) {
       onClick(id);

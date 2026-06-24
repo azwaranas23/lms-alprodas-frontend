@@ -12,7 +12,6 @@ import type {
 import {
   courseResponseSchema,
   coursesResponseSchema,
-  genericSuccessResponseSchema,
 } from "~/schemas/api-responses";
 import { logger } from "~/utils/logger";
 

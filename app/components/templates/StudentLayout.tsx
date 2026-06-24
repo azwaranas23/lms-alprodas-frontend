@@ -8,7 +8,7 @@ interface StudentLayoutProps {
   subtitle?: string;
 }
 
-export function StudentLayout({ children, title, subtitle }: StudentLayoutProps) {
+export function StudentLayout({ children, title, subtitle }: Readonly<StudentLayoutProps>) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   return (

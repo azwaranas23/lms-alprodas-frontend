@@ -15,7 +15,7 @@ export function PhotoPreviewModal({
   onClose,
   title = "Photo Preview",
   subtitle = "Preview of your selected image"
-}: PhotoPreviewModalProps) {
+}: Readonly<PhotoPreviewModalProps>) {
   return (
     <Modal
       isOpen={isOpen}

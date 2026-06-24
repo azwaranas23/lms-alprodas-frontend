@@ -18,7 +18,7 @@ export function LessonSidebar({
 	openSections,
 	onToggleSection,
 	onSelectLesson,
-}: LessonSidebarProps) {
+}: Readonly<LessonSidebarProps>) {
 	const isLessonAccessible = (lesson: CourseLesson, sectionIndex: number, lessonIndex: number) => {
 		// First lesson is always accessible
 		if (sectionIndex === 0 && lessonIndex === 0) return true;
@@ -32,8 +32,8 @@ export function LessonSidebar({
 		// Check if last lesson of previous section is completed
 		if (sectionIndex > 0) {
 			const prevSection = sections[sectionIndex - 1];
-			const lastLesson = prevSection.lessons[prevSection.lessons.length - 1];
-			return lastLesson.is_completed || false;
+			const lastLesson = prevSection.lessons.at(-1);
+			return lastLesson?.is_completed || false;
 		}
 
 		return false;
@@ -98,6 +98,15 @@ export function LessonSidebar({
 									const isAccessible = isLessonAccessible(lesson, sectionIndex, lessonIndex);
 									const isCurrent = lesson.id === currentLessonId;
 
+									const accessibilityClass = isAccessible ? "cursor-pointer" : "opacity-50 cursor-not-allowed";
+
+									let statusIcon = <Lock className="w-5 h-5 text-gray-400" />;
+									if (lesson.is_completed) {
+										statusIcon = <Check className="w-5 h-5 text-green-600" />;
+									} else if (isAccessible) {
+										statusIcon = <Play className="w-5 h-5 text-gray-400" />;
+									}
+
 									return (
 										<button
 											key={lesson.id}
@@ -105,16 +114,10 @@ export function LessonSidebar({
 											disabled={!isAccessible}
 											className={`w-full p-4 text-left flex items-start gap-3 hover:bg-gray-100 transition-colors ${
 												isCurrent ? "bg-blue-50 border-l-4 border-blue-600" : ""
-											} ${!isAccessible ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+											} ${accessibilityClass}`}
 										>
 											<div className="mt-1">
-												{lesson.is_completed ? (
-													<Check className="w-5 h-5 text-green-600" />
-												) : isAccessible ? (
-													<Play className="w-5 h-5 text-gray-400" />
-												) : (
-													<Lock className="w-5 h-5 text-gray-400" />
-												)}
+												{statusIcon}
 											</div>
 											<div className="flex-1">
 												<h5 className={`font-medium ${

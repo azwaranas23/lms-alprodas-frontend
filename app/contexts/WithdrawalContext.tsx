@@ -2,6 +2,7 @@ import {
 	createContext,
 	useContext,
 	useState,
+	useMemo,
 	type ReactNode,
 } from "react";
 import { authService } from "~/services/auth.service";
@@ -61,7 +62,7 @@ interface WithdrawalProviderProps {
 	children: ReactNode;
 }
 
-export function WithdrawalProvider({ children }: WithdrawalProviderProps) {
+export function WithdrawalProvider({ children }: Readonly<WithdrawalProviderProps>) {
 	const [formData, setFormData] =
 		useState<WithdrawalFormData>(getDefaultFormData());
 
@@ -73,11 +74,14 @@ export function WithdrawalProvider({ children }: WithdrawalProviderProps) {
 		setFormData(getDefaultFormData());
 	};
 
-	const value: WithdrawalContextType = {
-		formData,
-		updateFormData,
-		resetFormData,
-	};
+	const value: WithdrawalContextType = useMemo(
+		() => ({
+			formData,
+			updateFormData,
+			resetFormData,
+		}),
+		[formData]
+	);
 
 	return (
 		<WithdrawalContext.Provider value={value}>

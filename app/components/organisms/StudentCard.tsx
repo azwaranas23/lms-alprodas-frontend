@@ -32,7 +32,7 @@ const getStatusStyle = (status: StudentStatus) => {
   }
 };
 
-export function StudentCard({ student, onViewDetails }: StudentCardProps) {
+export function StudentCard({ student, onViewDetails }: Readonly<StudentCardProps>) {
   return (
     <div className="border border-[#DCDEDD] rounded-[16px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4">
       <div className="flex flex-col items-center mb-3">

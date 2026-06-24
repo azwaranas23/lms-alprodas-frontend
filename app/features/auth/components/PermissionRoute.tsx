@@ -14,7 +14,7 @@ export function PermissionRoute({
   requiredPermission,
   requiredPermissions,
   requireAll = false
-}: PermissionRouteProps) {
+}: Readonly<PermissionRouteProps>) {
   const navigate = useNavigate();
 
   // Memoize permissions to prevent infinite loops
@@ -43,7 +43,7 @@ export function PermissionRoute({
       const redirectPath = authService.getRedirectPathByRole(user);
 
       // Only navigate if we're not already on the redirect path to avoid infinite loop
-      if (window.location.pathname !== redirectPath) {
+      if (globalThis.window.location.pathname !== redirectPath) {
         navigate(redirectPath);
       }
       return;
@@ -60,7 +60,7 @@ export function PermissionRoute({
         const redirectPath = authService.getRedirectPathByRole(user);
 
         // Only navigate if we're not already on the redirect path to avoid infinite loop
-        if (window.location.pathname !== redirectPath) {
+        if (globalThis.window.location.pathname !== redirectPath) {
           navigate(redirectPath);
         }
         return;

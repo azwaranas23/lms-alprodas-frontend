@@ -48,7 +48,7 @@ export function TransactionItem({
   onDetailsClick,
   showDetailsButton = true,
   useCompactCurrency = false
-}: TransactionItemProps) {
+}: Readonly<TransactionItemProps>) {
   const handleDetailsClick = () => {
     onDetailsClick?.(transaction.id);
   };

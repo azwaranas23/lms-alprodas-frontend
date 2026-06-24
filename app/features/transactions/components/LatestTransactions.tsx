@@ -23,7 +23,7 @@ interface LatestTransactionsProps {
 	transactions: Transaction[];
 }
 
-export function LatestTransactions({ transactions }: LatestTransactionsProps) {
+export function LatestTransactions({ transactions }: Readonly<LatestTransactionsProps>) {
 	return (
 		<BaseLatestTransactions
 			transactions={transactions}

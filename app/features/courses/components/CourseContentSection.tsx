@@ -11,7 +11,7 @@ interface CourseContentSectionProps {
   courseId: number;
 }
 
-export function CourseContentSection({ courseId }: CourseContentSectionProps) {
+export function CourseContentSection({ courseId }: Readonly<CourseContentSectionProps>) {
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
 

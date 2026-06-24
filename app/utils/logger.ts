@@ -11,13 +11,13 @@ interface LogContext {
 }
 
 class Logger {
-  private isDevelopment = import.meta.env.DEV;
-  private isProduction = import.meta.env.PROD;
+  private readonly isDevelopment = import.meta.env.DEV;
+  private readonly isProduction = import.meta.env.PROD;
 
   private log(level: LogLevel, message: string, context?: LogContext | Error) {
     // In production, send to monitoring service
     if (this.isProduction) {
-      // TODO: Integrate with monitoring service like Sentry, LogRocket, etc.
+      // Future integration with monitoring service like Sentry, LogRocket, etc.
       // this.sendToMonitoringService(level, message, context);
       return;
     }

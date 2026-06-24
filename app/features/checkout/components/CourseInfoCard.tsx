@@ -13,7 +13,7 @@ interface CourseInfoCardProps {
 	};
 }
 
-export function CourseInfoCard({ courseData }: CourseInfoCardProps) {
+export function CourseInfoCard({ courseData }: Readonly<CourseInfoCardProps>) {
 	return (
 		<div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6">
 			<div className="flex items-center gap-3 mb-6">

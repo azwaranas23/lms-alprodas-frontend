@@ -44,7 +44,7 @@ export default function WithdrawalSuccessPage() {
 
   useEffect(() => {
     // Get withdrawal data from sessionStorage
-    if (typeof window !== "undefined") {
+    if (globalThis.window !== undefined) {
       const storedData = sessionStorage.getItem("withdrawalSuccessData");
       if (storedData) {
         const parsedData = JSON.parse(storedData);

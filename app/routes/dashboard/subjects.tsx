@@ -6,9 +6,7 @@ import { Layers, Search, Upload, Plus } from "lucide-react";
 import { SubjectCard } from "~/features/subjects/components/SubjectCard";
 import { useSubjects } from "~/hooks/api/useSubjects";
 import { Button } from "~/components/atoms/Button";
-import { Input } from "~/components/atoms/Input";
 import { Pagination } from "~/components/molecules/Pagination";
-import type { Subject } from "~/services/subjects.service";
 
 export function meta() {
   return [

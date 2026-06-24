@@ -5,7 +5,6 @@ import { ManagerRoute } from "~/features/auth/components/RoleBasedRoute";
 import { PermissionRoute } from "~/features/auth/components/PermissionRoute";
 import { Tag, Search, Upload, Plus, Eye, Edit, Users } from "lucide-react";
 import { useTopics } from "~/hooks/api/useTopics";
-import { BASE_URL } from "~/constants/api";
 import { Button } from "~/components/atoms/Button";
 import { Pagination } from "~/components/molecules/Pagination";
 import { Tooltip } from "~/components/atoms/Tooltip";
@@ -28,7 +27,7 @@ interface TopicCardProps {
   onView: () => void;
 }
 
-function TopicCard({ topic, onEdit, onView }: TopicCardProps) {
+function TopicCard({ topic, onEdit, onView }: Readonly<TopicCardProps>) {
   const getBadgeClass = (count: number) => {
     const baseClass = "px-2 py-1 rounded-md text-xs font-semibold";
     if (count >= 100) return `${baseClass} badge-expert`;

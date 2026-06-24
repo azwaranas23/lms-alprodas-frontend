@@ -1,10 +1,9 @@
-import { useLocation, Link, useSearchParams, useNavigate } from "react-router";
+import { Link, useSearchParams, useNavigate } from "react-router";
 import { useEffect, useState, useRef } from "react";
 import type { Route } from "./+types/verify-email";
 import { Mail, ArrowLeft } from "lucide-react";
 import { Navbar } from "~/components/organisms/Navbar";
 import { StatusIcon } from "~/components/atoms/StatusIcon";
-import { Button } from "~/components/atoms/Button";
 import { authService } from "~/services/auth.service";
 import { getTempNavData, clearTempNavData } from "~/utils/secureNavigation";
 
@@ -207,15 +206,7 @@ export default function VerifyEmailPage() {
         <div className="w-full lg:w-1/2 flex items-center justify-center p-6">
           <div className="w-full max-w-md">
             <div className="bg-white rounded-[20px] border border-[#DCDEDD] p-8 text-center">
-              {!userData ? (
-                // Loading state
-                <>
-                  <StatusIcon status="loading" />
-                  <h1 className="text-2xl font-bold text-brand-dark mb-4">
-                    Loading...
-                  </h1>
-                </>
-              ) : (
+              {userData ? (
                 <>
                   {/* Success Icon */}
                   <StatusIcon status="success" />
@@ -296,6 +287,14 @@ export default function VerifyEmailPage() {
                       Back to Login
                     </Link>
                   </div>
+                </>
+              ) : (
+                // Loading state
+                <>
+                  <StatusIcon status="loading" />
+                  <h1 className="text-2xl font-bold text-brand-dark mb-4">
+                    Loading...
+                  </h1>
                 </>
               )}
             </div>

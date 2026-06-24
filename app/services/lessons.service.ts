@@ -1,10 +1,12 @@
 import { apiClient } from '~/lib/axios';
 
+export type ContentType = 'VIDEO' | 'ARTICLE' | 'QUIZ';
+
 export interface Lesson {
   id: number;
   section_id: number;
   title: string;
-  content_type: 'VIDEO' | 'ARTICLE' | 'QUIZ';
+  content_type: ContentType;
   content_url?: string;
   content_text?: string;
   duration_minutes: number;
@@ -18,7 +20,7 @@ export interface CreateLessonRequest {
   title: string;
   description?: string;
   section_id: number;
-  content_type: 'VIDEO' | 'ARTICLE' | 'QUIZ';
+  content_type: ContentType;
   content_url?: string;
   content_text?: string;
   duration_minutes?: number;

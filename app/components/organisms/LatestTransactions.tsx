@@ -34,7 +34,7 @@ export function LatestTransactions({
   title = "Latest Transactions",
   showDetailsButton = true,
   useCompactCurrency = false
-}: LatestTransactionsProps) {
+}: Readonly<LatestTransactionsProps>) {
   const handleDetailsClick = (id: number) => {
     onTransactionDetails?.(id);
   };

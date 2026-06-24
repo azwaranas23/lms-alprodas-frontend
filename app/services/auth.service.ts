@@ -87,7 +87,7 @@ export const authService = {
   hasPermission(permission: string): boolean {
     if (globalThis.window === undefined) return false;
     const user = this.getUser();
-    if (!user || !user.role?.permissions) return false;
+    if (!user?.role?.permissions) return false;
 
     return user.role.permissions.some((p) => p.key === permission);
   },
@@ -100,7 +100,7 @@ export const authService = {
   getUserPermissions(): string[] {
     if (globalThis.window === undefined) return [];
     const user = this.getUser();
-    if (!user || !user.role?.permissions) return [];
+    if (!user?.role?.permissions) return [];
 
     return user.role.permissions.map((p) => p.key);
   },

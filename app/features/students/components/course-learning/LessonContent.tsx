@@ -16,7 +16,7 @@ export function LessonContent({
 	onNext,
 	onComplete,
 	isCompleting,
-}: LessonContentProps) {
+}: Readonly<LessonContentProps>) {
 	if (!lesson) {
 		return (
 			<div className="bg-white rounded-[20px] border border-[#DCDEDD] p-8">

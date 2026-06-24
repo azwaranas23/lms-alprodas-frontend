@@ -7,7 +7,7 @@ interface RoleBasedRouteProps {
 }
 
 // Wrapper components for each role
-export function ManagerRoute({ children }: { children: ReactNode }) {
+export function ManagerRoute({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <ProtectedRoute allowedRoles={['manager']}>
       {children}
@@ -15,7 +15,7 @@ export function ManagerRoute({ children }: { children: ReactNode }) {
   );
 }
 
-export function MentorRoute({ children }: { children: ReactNode }) {
+export function MentorRoute({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <ProtectedRoute allowedRoles={['mentor']}>
       {children}
@@ -23,7 +23,7 @@ export function MentorRoute({ children }: { children: ReactNode }) {
   );
 }
 
-export function StudentRoute({ children }: { children: ReactNode }) {
+export function StudentRoute({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <ProtectedRoute allowedRoles={['student']}>
       {children}
@@ -32,7 +32,7 @@ export function StudentRoute({ children }: { children: ReactNode }) {
 }
 
 // General protected route for any authenticated user
-export function AuthenticatedRoute({ children }: { children: ReactNode }) {
+export function AuthenticatedRoute({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <ProtectedRoute>
       {children}

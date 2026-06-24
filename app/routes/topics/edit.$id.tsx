@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { Layout } from "~/components/templates/Layout";
 import { TopicForm } from "~/features/topics/components/TopicForm";
 
@@ -11,7 +11,6 @@ export function meta() {
 
 export default function EditTopic() {
   const navigate = useNavigate();
-  const { id } = useParams();
 
   const handleBackClick = () => {
     navigate("/topics");

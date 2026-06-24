@@ -2,9 +2,7 @@ import { apiClient } from "../lib/axios";
 import { API_ENDPOINTS } from "../constants/api";
 import type { TopicsResponse, Topic } from "../types/topics";
 import {
-	topicResponseSchema,
-	topicsResponseSchema,
-	genericSuccessResponseSchema
+	topicsResponseSchema
 } from "~/schemas/api-responses";
 import { logger } from "~/utils/logger";
 
@@ -44,7 +42,8 @@ export const topicsService = {
 		if (params.sort) searchParams.append("sort", params.sort);
 		if (params.order) searchParams.append("order", params.order);
 
-		const url = `${API_ENDPOINTS.topics}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
+		const queryString = searchParams.toString();
+		const url = queryString ? `${API_ENDPOINTS.topics}?${queryString}` : API_ENDPOINTS.topics;
 		const response = await apiClient.get(url);
 		const validatedResponse = topicsResponseSchema.safeParse(response.data);
 		if (!validatedResponse.success) {

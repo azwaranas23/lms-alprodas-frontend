@@ -17,7 +17,7 @@ interface MentorNavLinkProps {
   readonly isCollapsed?: boolean;
 }
 
-function LogoutButton({ isCollapsed }: { isCollapsed: boolean }) {
+function LogoutButton({ isCollapsed }: Readonly<{ isCollapsed: boolean }>) {
   const navigate = useNavigate();
   const baseClasses =
     "nav-link border rounded-[20px] transition-all duration-300 flex items-center";

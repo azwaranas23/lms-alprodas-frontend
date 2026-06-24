@@ -8,7 +8,7 @@ interface MentorLayoutProps {
   subtitle?: string;
 }
 
-export function MentorLayout({ children, title, subtitle }: MentorLayoutProps) {
+export function MentorLayout({ children, title, subtitle }: Readonly<MentorLayoutProps>) {
   return (
     <div className="min-h-screen bg-[#F9F9F9]">
       <div className="flex h-screen">

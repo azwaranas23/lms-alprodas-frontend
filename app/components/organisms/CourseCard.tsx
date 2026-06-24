@@ -11,7 +11,7 @@ interface CourseCardProps {
   course: Course;
 }
 
-export function CourseCard({ course }: CourseCardProps): JSX.Element {
+export function CourseCard({ course }: Readonly<CourseCardProps>): JSX.Element {
   const getTotalDuration = (sections: typeof course.sections) => {
     if (!sections || sections.length === 0) return "0 hours";
     let totalMinutes = 0;

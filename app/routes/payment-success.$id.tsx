@@ -9,8 +9,7 @@ import { LoadingSpinner } from "~/components/atoms/LoadingSpinner";
 import { Button } from "~/components/atoms/Button";
 import { authService } from "~/services/auth.service";
 import { coursesService } from "~/services/courses.service";
-import { formatCurrency, getAvatarSrc } from "~/utils/formatters";
-import { Image } from "~/components/atoms/Image";
+import { getAvatarSrc } from "~/utils/formatters";
 
 export function meta({ }: Route.MetaArgs) {
   return [

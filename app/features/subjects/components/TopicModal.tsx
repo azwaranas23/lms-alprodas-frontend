@@ -46,7 +46,7 @@ export function TopicModal({ isOpen, onClose, onSelectTopic }: TopicModalProps) 
     } else {
       const filtered = topics.filter(topic =>
         topic.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (topic.description && topic.description.toLowerCase().includes(searchTerm.toLowerCase()))
+        topic.description?.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredTopics(filtered);
     }

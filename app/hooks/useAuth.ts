@@ -27,12 +27,11 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: async () => {
       authService.logout();
-      return Promise.resolve();
     },
     onSuccess: () => {
       navigate('/login');
       // Force page refresh to clear any cached state
-      window.location.href = '/login';
+      globalThis.window.location.href = '/login';
     },
   });
 };

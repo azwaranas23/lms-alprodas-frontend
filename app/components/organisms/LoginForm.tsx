@@ -13,8 +13,6 @@ export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [rememberMe, setRememberMe] = useState(false);
-  const [hasSubmitted, setHasSubmitted] = useState(false);
-
   const loginMutation = useLogin();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,7 +20,6 @@ export function LoginForm() {
     e.stopPropagation();
     console.log('Form submitted, preventing default');
     setValidationErrors({});
-    setHasSubmitted(true);
 
     // Validate form data with Zod
     const validation = loginSchema.safeParse(formData);

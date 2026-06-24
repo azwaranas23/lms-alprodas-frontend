@@ -28,7 +28,7 @@ interface NavLinkProps {
   isActive?: boolean;
 }
 
-function NavLink({ href, icon: Icon, label, isActive = false }: NavLinkProps) {
+function NavLink({ href, icon: Icon, label, isActive = false }: Readonly<NavLinkProps>) {
   const baseClasses =
     "nav-link border rounded-[20px] transition-all duration-300 flex items-center gap-3 px-4 py-3";
   const activeClasses =
@@ -56,7 +56,7 @@ function NavLink({ href, icon: Icon, label, isActive = false }: NavLinkProps) {
 export function DynamicSidebar() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const { user, getRole, getRoleName, hasPermission } = useUser();
+  const { getRole, hasPermission } = useUser();
   const userRole = getRole();
 
   const getLogoSubtitle = () => {
@@ -67,10 +67,6 @@ export function DynamicSidebar() {
     };
 
     return roleSubtitles[userRole as keyof typeof roleSubtitles] || "Dashboard";
-  };
-
-  const getUserRoleDisplay = () => {
-    return user?.role?.name || userRole || "User";
   };
 
   const renderManagerSidebar = () => (

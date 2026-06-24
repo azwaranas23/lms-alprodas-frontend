@@ -11,7 +11,7 @@ interface DynamicHeaderProps {
   backButton?: BackButton;
 }
 
-export function DynamicHeader({ title, subtitle, backButton }: DynamicHeaderProps) {
+export function DynamicHeader({ title, subtitle, backButton }: Readonly<DynamicHeaderProps>) {
   return (
     <BaseHeader
       title={title}

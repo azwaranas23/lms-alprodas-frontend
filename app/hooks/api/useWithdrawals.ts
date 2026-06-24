@@ -15,7 +15,7 @@ export function useWithdrawal(id: number | undefined) {
 
 export function useWithdrawals(params?: WithdrawalFilters) {
   return useQuery({
-    queryKey: withdrawalKeys.list(params || {}),
+    queryKey: withdrawalKeys.list(params ?? {}),
     queryFn: () => withdrawalsService.getWithdrawals(params),
   });
 }

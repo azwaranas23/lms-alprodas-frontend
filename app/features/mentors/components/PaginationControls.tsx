@@ -18,7 +18,7 @@ export function PaginationControls({
   onPageChange,
   onItemsPerPageChange,
   itemType = 'items'
-}: PaginationControlsProps) {
+}: Readonly<PaginationControlsProps>) {
   return (
     <Pagination
       currentPage={currentPage}

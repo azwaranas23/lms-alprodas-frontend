@@ -16,7 +16,7 @@ export function WithdrawalWizardContent({
   onStepChange,
   onComplete,
   onCancel
-}: WithdrawalWizardContentProps) {
+}: Readonly<WithdrawalWizardContentProps>) {
   const handleNext = () => {
     if (currentStep < 4) {
       onStepChange(currentStep + 1);

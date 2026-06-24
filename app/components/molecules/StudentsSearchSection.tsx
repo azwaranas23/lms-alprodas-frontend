@@ -5,7 +5,7 @@ interface StudentsSearchSectionProps {
   onSearchChange: (value: string) => void;
 }
 
-export function StudentsSearchSection({ searchTerm, onSearchChange }: StudentsSearchSectionProps) {
+export function StudentsSearchSection({ searchTerm, onSearchChange }: Readonly<StudentsSearchSectionProps>) {
   return (
     <div className="mb-6">
       <div className="flex items-center gap-4">

@@ -98,7 +98,7 @@ export default function LessonDetail() {
           title="Lesson Details"
           subtitle="View lesson content and information"
           backButton={{
-            onClick: () => window.history.back(),
+            onClick: () => globalThis.window.history.back(),
             label: "Back to Lessons",
           }}
         />

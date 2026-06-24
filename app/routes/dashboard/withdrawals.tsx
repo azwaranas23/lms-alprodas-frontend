@@ -106,7 +106,7 @@ export default function WithdrawalsPage() {
   } = useWithdrawals({
     page: currentPage,
     limit: itemsPerPage,
-    status: statusFilter !== "All Status" ? (statusFilter as any) : undefined,
+    status: statusFilter === "All Status" ? undefined : (statusFilter as any),
   });
 
   // Fetch withdrawal balance

@@ -7,7 +7,7 @@ interface HeroSectionProps {
   onSmoothScroll: (e: React.MouseEvent<HTMLElement>, href: string) => void;
 }
 
-export function HeroSection({ onSmoothScroll }: HeroSectionProps) {
+export function HeroSection({ onSmoothScroll }: Readonly<HeroSectionProps>) {
   return (
     <section id="home" className="relative overflow-hidden bg-white pb-16 lg:pt-48 lg:pb-24">
       {/* Background Gradients */}

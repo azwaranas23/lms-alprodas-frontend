@@ -123,7 +123,7 @@ function calculateTotalDuration(course: Course): number {
 	}, 0);
 }
 
-export function OverviewTab({ course }: OverviewTabProps) {
+export function OverviewTab({ course }: Readonly<OverviewTabProps>) {
 	const enrollmentChartRef = useRef<HTMLCanvasElement>(null);
 	const progressChartRef = useRef<HTMLCanvasElement>(null);
 	const enrollmentChartInstance = useRef<any>(null);
@@ -138,7 +138,7 @@ export function OverviewTab({ course }: OverviewTabProps) {
 
 	// Initialize charts when component mounts
 	useEffect(() => {
-		if (typeof window === "undefined") return;
+		if (globalThis.window === undefined) return;
 
 		// Dynamically import Chart.js to avoid SSR issues
 		import("chart.js/auto")

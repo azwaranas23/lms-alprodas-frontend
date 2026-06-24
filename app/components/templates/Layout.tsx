@@ -22,7 +22,7 @@ export function Layout({
   subtitle,
   backButton,
   variant = "normal",
-}: LayoutProps) {
+}: Readonly<LayoutProps>) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   return (

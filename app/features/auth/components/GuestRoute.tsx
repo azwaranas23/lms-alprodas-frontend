@@ -10,7 +10,7 @@ interface GuestRouteProps {
  * GuestRoute component that only allows unauthenticated users
  * Redirects to appropriate dashboard if user is already logged in
  */
-export function GuestRoute({ children }: GuestRouteProps) {
+export function GuestRoute({ children }: Readonly<GuestRouteProps>) {
   const navigate = useNavigate();
 
   useEffect(() => {

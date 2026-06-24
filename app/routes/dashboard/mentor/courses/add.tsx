@@ -3,7 +3,6 @@ import { useMutation } from "@tanstack/react-query";
 import { CourseWizard } from "~/features/courses/components/CourseWizard";
 import { coursesService } from "~/services/courses.service";
 import type { CreateCourseData } from "~/services/courses.service";
-import { useUser } from "~/hooks/useUser";
 import { authService } from "~/services/auth.service";
 
 // Data yang dikirim CourseWizard ke onComplete
@@ -31,7 +30,6 @@ export interface WizardCourseData {
 
 export default function AddMentorCourse() {
   const navigate = useNavigate();
-  const { getUser } = useUser() as { getUser?: () => { id: number } | null };
 
   const { mutate, isPending } = useMutation({
     mutationFn: (payload: CreateCourseData) =>

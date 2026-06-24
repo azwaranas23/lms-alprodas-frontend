@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router";
 import type { Route } from "./+types/withdrawals";
-import { type Withdrawal } from "~/services/withdrawals.service";
 import {
   useMyWithdrawals,
   useWithdrawalBalance,
@@ -111,6 +110,135 @@ export default function MentorWithdrawalsPage() {
 
   const totalPages = withdrawalsData?.meta?.total_pages || 1;
 
+  const renderWithdrawalList = () => {
+    if (isLoadingWithdrawals) {
+      return (
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-brand-light">
+              Loading withdrawal requests...
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    if (withdrawalsError) {
+      return (
+        <div className="text-center py-12">
+          <div className="text-red-600 mb-4">
+            <AlertCircle className="w-12 h-12 mx-auto mb-2" />
+            <p className="text-lg font-semibold">
+              Error loading withdrawals
+            </p>
+            <p className="text-sm">Please try again later</p>
+          </div>
+        </div>
+      );
+    }
+
+    if (filteredRequests.length === 0) {
+      return (
+        <div className="text-center py-12">
+          <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-600 mb-2">
+            No withdrawal requests found
+          </h3>
+          <p className="text-gray-500">
+            {searchQuery
+              ? "No results match your search criteria."
+              : "You haven't made any withdrawal requests yet."}
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="grid grid-cols-1 gap-4">
+        {filteredRequests.map((withdrawal) => (
+          <div
+            key={withdrawal.id}
+            className="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4"
+          >
+            <div className="flex items-center gap-3">
+              {/* Icon and Withdrawal Info */}
+              <div className="flex items-center gap-3 min-w-0 flex-1">
+                <div className="w-10 h-10 bg-blue-50 rounded-[12px] flex items-center justify-center flex-shrink-0">
+                  <Banknote className="w-5 h-5 text-blue-600" />
+                </div>
+                <div className="min-w-0">
+                  <h4 className="text-brand-dark text-base font-bold">
+                    {withdrawal.withdrawal_code}
+                  </h4>
+                  <p className="text-brand-light text-sm">
+                    Requested at {formatDate(withdrawal.requested_at)}
+                  </p>
+                  <p className="text-brand-light text-xs">
+                    Bank: {withdrawal.bank_name}
+                  </p>
+                </div>
+              </div>
+
+              {/* Amount */}
+              <div className="text-right min-w-0 flex-shrink-0 mr-8">
+                <p className="text-lg font-bold text-brand-dark">
+                  {formatCurrency(withdrawal.amount)}
+                </p>
+              </div>
+
+              {/* Status Badge */}
+              <div className="flex-shrink-0 mr-8">
+                <span
+                  className={getStatusBadgeClasses(withdrawal.status)}
+                >
+                  {withdrawal.status}
+                </span>
+              </div>
+
+              {/* Details Button */}
+              <div className="flex-shrink-0 ml-[40px]">
+                <Link
+                  to={`/dashboard/mentor/withdrawals/${withdrawal.id}`}
+                  className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-2 flex items-center gap-2"
+                >
+                  <Eye className="w-4 h-4 text-white" />
+                  <span className="text-brand-white text-sm font-semibold">
+                    Details
+                  </span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const availableBalanceValue = isLoadingBalance
+    ? "Loading..."
+    : formatCurrencyCompact(balanceData?.available_balance || 0);
+
+  const totalEarningsValue = isLoadingBalance
+    ? "Loading..."
+    : formatCurrencyCompact(balanceData?.total_earnings || 0);
+
+  const totalWithdrawnValue = isLoadingBalance
+    ? "Loading..."
+    : formatCurrencyCompact(balanceData?.total_withdrawn || 0);
+
+  const pendingWithdrawalsValue = isLoadingBalance
+    ? "Loading..."
+    : formatCurrencyCompact(balanceData?.pending_withdrawals || 0);
+
+  const successRecordsValue = isLoadingBalance
+    ? "Loading..."
+    : (balanceData?.total_success_count?.toString() ?? "0");
+
+  const pendingRecordsValue = isLoadingBalance
+    ? "Loading..."
+    : (balanceData?.total_pending_count?.toString() ?? "0");
+
   return (
     <MentorRoute>
       <PermissionRoute requiredPermission="withdrawals.read">
@@ -125,11 +253,7 @@ export default function MentorWithdrawalsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
               <StatsCard
                 title="Available Balance"
-                value={
-                  isLoadingBalance
-                    ? "Loading..."
-                    : formatCurrencyCompact(balanceData?.available_balance || 0)
-                }
+                value={availableBalanceValue}
                 subtitle="Ready for withdrawals"
                 icon={Wallet}
                 iconBgColor="bg-green-50"
@@ -137,11 +261,7 @@ export default function MentorWithdrawalsPage() {
               />
               <StatsCard
                 title="Total Earnings"
-                value={
-                  isLoadingBalance
-                    ? "Loading..."
-                    : formatCurrencyCompact(balanceData?.total_earnings || 0)
-                }
+                value={totalEarningsValue}
                 subtitle="All time earnings"
                 icon={CheckCircle}
                 iconBgColor="bg-blue-50"
@@ -149,11 +269,7 @@ export default function MentorWithdrawalsPage() {
               />
               <StatsCard
                 title="Total Withdrawn"
-                value={
-                  isLoadingBalance
-                    ? "Loading..."
-                    : formatCurrencyCompact(balanceData?.total_withdrawn || 0)
-                }
+                value={totalWithdrawnValue}
                 subtitle="Successfully withdrawn"
                 icon={TrendingUp}
                 iconBgColor="bg-teal-50"
@@ -161,13 +277,7 @@ export default function MentorWithdrawalsPage() {
               />
               <StatsCard
                 title="Pending Amount"
-                value={
-                  isLoadingBalance
-                    ? "Loading..."
-                    : formatCurrencyCompact(
-                      balanceData?.pending_withdrawals || 0
-                    )
-                }
+                value={pendingWithdrawalsValue}
                 subtitle="Awaiting approval"
                 icon={Clock}
                 iconBgColor="bg-yellow-50"
@@ -175,11 +285,7 @@ export default function MentorWithdrawalsPage() {
               />
               <StatsCard
                 title="Success Records"
-                value={
-                  isLoadingBalance
-                    ? "Loading..."
-                    : balanceData?.total_success_count?.toString() || "0"
-                }
+                value={successRecordsValue}
                 subtitle="Successfully completed"
                 icon={FileText}
                 iconBgColor="bg-purple-50"
@@ -187,11 +293,7 @@ export default function MentorWithdrawalsPage() {
               />
               <StatsCard
                 title="Pending Records"
-                value={
-                  isLoadingBalance
-                    ? "Loading..."
-                    : balanceData?.total_pending_count?.toString() || "0"
-                }
+                value={pendingRecordsValue}
                 subtitle="Need approval"
                 icon={AlertCircle}
                 iconBgColor="bg-orange-50"
@@ -279,98 +381,8 @@ export default function MentorWithdrawalsPage() {
                 </div>
               </div>
 
-              {/* Loading State */}
-              {isLoadingWithdrawals ? (
-                <div className="flex items-center justify-center py-12">
-                  <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                    <p className="text-brand-light">
-                      Loading withdrawal requests...
-                    </p>
-                  </div>
-                </div>
-              ) : withdrawalsError ? (
-                <div className="text-center py-12">
-                  <div className="text-red-600 mb-4">
-                    <AlertCircle className="w-12 h-12 mx-auto mb-2" />
-                    <p className="text-lg font-semibold">
-                      Error loading withdrawals
-                    </p>
-                    <p className="text-sm">Please try again later</p>
-                  </div>
-                </div>
-              ) : filteredRequests.length === 0 ? (
-                <div className="text-center py-12">
-                  <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-600 mb-2">
-                    No withdrawal requests found
-                  </h3>
-                  <p className="text-gray-500">
-                    {searchQuery
-                      ? "No results match your search criteria."
-                      : "You haven't made any withdrawal requests yet."}
-                  </p>
-                </div>
-              ) : (
-                /* Withdrawal Cards Grid */
-                <div className="grid grid-cols-1 gap-4">
-                  {filteredRequests.map((withdrawal) => (
-                    <div
-                      key={withdrawal.id}
-                      className="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4"
-                    >
-                      <div className="flex items-center gap-3">
-                        {/* Icon and Withdrawal Info */}
-                        <div className="flex items-center gap-3 min-w-0 flex-1">
-                          <div className="w-10 h-10 bg-blue-50 rounded-[12px] flex items-center justify-center flex-shrink-0">
-                            <Banknote className="w-5 h-5 text-blue-600" />
-                          </div>
-                          <div className="min-w-0">
-                            <h4 className="text-brand-dark text-base font-bold">
-                              {withdrawal.withdrawal_code}
-                            </h4>
-                            <p className="text-brand-light text-sm">
-                              Requested at {formatDate(withdrawal.requested_at)}
-                            </p>
-                            <p className="text-brand-light text-xs">
-                              Bank: {withdrawal.bank_name}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Amount */}
-                        <div className="text-right min-w-0 flex-shrink-0 mr-8">
-                          <p className="text-lg font-bold text-brand-dark">
-                            {formatCurrency(withdrawal.amount)}
-                          </p>
-                        </div>
-
-                        {/* Status Badge */}
-                        <div className="flex-shrink-0 mr-8">
-                          <span
-                            className={getStatusBadgeClasses(withdrawal.status)}
-                          >
-                            {withdrawal.status}
-                          </span>
-                        </div>
-
-                        {/* Details Button */}
-                        <div className="flex-shrink-0 ml-[40px]">
-                          <Link
-                            to={`/dashboard/mentor/withdrawals/${withdrawal.id}`}
-                            className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-2 flex items-center gap-2"
-                          >
-                            <Eye className="w-4 h-4 text-white" />
-                            <span className="text-brand-white text-sm font-semibold">
-                              Details
-                            </span>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+              {/* Render requests */}
+              {renderWithdrawalList()}
 
               {/* Pagination */}
               <Pagination

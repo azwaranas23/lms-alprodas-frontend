@@ -12,7 +12,7 @@ interface HeaderProps {
   backButton?: BackButton;
 }
 
-export function Header({ title, subtitle, backButton }: HeaderProps) {
+export function Header({ title, subtitle, backButton }: Readonly<HeaderProps>) {
   return (
     <BaseHeader
       title={title}

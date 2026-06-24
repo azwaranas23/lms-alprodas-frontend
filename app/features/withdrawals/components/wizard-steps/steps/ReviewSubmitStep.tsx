@@ -38,7 +38,7 @@ export default function ReviewSubmitStep({ onBack, onSubmit }: Readonly<ReviewSu
     createWithdrawalMutation.mutate(withdrawalRequest, {
       onSuccess: (response) => {
         // Store withdrawal data for success page
-        if (typeof window !== 'undefined') {
+        if (globalThis.window !== undefined) {
           sessionStorage.setItem('withdrawalSuccessData', JSON.stringify(response.data));
         }
         onSubmit();

@@ -34,6 +34,19 @@ interface CourseCompletionData {
   achievement: string;
 }
 
+function calculateTotalDuration(sections: any[] | undefined): number {
+  return sections?.reduce(
+    (total: number, section) =>
+      total +
+      (section.lessons?.reduce(
+        (sectionTotal: number, lesson: any) =>
+          sectionTotal + (lesson.duration_minutes || 0),
+        0
+      ) || 0),
+    0
+  ) || 0;
+}
+
 export default function CourseCompletedPage() {
   const [searchParams] = useSearchParams();
   const [courseData, setCourseData] = useState<CourseCompletionData | null>(
@@ -54,16 +67,7 @@ export default function CourseCompletedPage() {
           );
           const enrollmentData = response.data;
 
-          const totalDurationMinutes = enrollmentData.course.sections?.reduce(
-            (total: number, section) =>
-              total +
-              (section.lessons?.reduce(
-                (sectionTotal: number, lesson: any) =>
-                  sectionTotal + (lesson.duration_minutes || 0),
-                0
-              ) || 0),
-            0
-          ) || 0;
+          const totalDurationMinutes = calculateTotalDuration(enrollmentData.course.sections);
 
           const courseCompletionData: CourseCompletionData = {
             title: enrollmentData.course.title,
@@ -167,7 +171,7 @@ export default function CourseCompletedPage() {
         .share({
           title: "Course Completed!",
           text: shareText,
-          url: window.location.href,
+          url: globalThis.window.location.href,
         })
         .catch((error) => {
           console.log("Error sharing:", error);

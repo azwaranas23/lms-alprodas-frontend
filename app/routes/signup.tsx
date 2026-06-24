@@ -100,7 +100,7 @@ export default function SignupPage() {
     return validator ? validator(value, currentData) : "";
   };
 
-  const handleInputChange = (name: string, value: string | File | null) => {
+  const handleInputChange = (name: string, value: InputValue) => {
     const nextFormData = { ...formData, [name]: value };
     setFormData(nextFormData);
 
@@ -489,7 +489,7 @@ export default function SignupPage() {
                   onChange={(e) =>
                     handleInputChange(
                       "terms",
-                      e.target.checked as unknown as string | File | null
+                      e.target.checked
                     )
                   }
                   className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded mt-1"

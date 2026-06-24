@@ -1,5 +1,4 @@
 import { authService } from "~/services/auth.service";
-import type { User } from "~/types/auth";
 
 export function useUser() {
 	const user = authService.getUser();

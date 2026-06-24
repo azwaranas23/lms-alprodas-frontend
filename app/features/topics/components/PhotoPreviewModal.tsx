@@ -6,7 +6,7 @@ interface PhotoPreviewModalProps {
   onClose: () => void;
 }
 
-export function PhotoPreviewModal({ isOpen, imageUrl, onClose }: PhotoPreviewModalProps) {
+export function PhotoPreviewModal({ isOpen, imageUrl, onClose }: Readonly<PhotoPreviewModalProps>) {
   return (
     <BasePhotoPreviewModal
       isOpen={isOpen}

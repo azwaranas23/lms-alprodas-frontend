@@ -1,7 +1,6 @@
 import { apiClient } from "~/lib/axios";
-import { API_ENDPOINTS } from "~/constants/api";
+import { API_ENDPOINTS, API_BASE_URL } from "~/constants/api";
 import axios from "axios";
-import { API_BASE_URL } from "~/constants/api";
 
 export interface Withdrawal {
 	id: number;
@@ -125,7 +124,7 @@ export const withdrawalsService = {
 		});
 
 		// Add auth token manually
-		if (typeof window !== "undefined") {
+		if (globalThis.window !== undefined) {
 			const token = localStorage.getItem("access_token");
 			if (token) {
 				authClient.defaults.headers.Authorization = `Bearer ${token}`;

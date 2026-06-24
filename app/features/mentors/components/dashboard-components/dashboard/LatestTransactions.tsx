@@ -24,7 +24,7 @@ interface LatestTransactionsProps {
   onTransactionDetails?: (id: string) => void;
 }
 
-export function LatestTransactions({ transactions, onTransactionDetails }: LatestTransactionsProps) {
+export function LatestTransactions({ transactions, onTransactionDetails }: Readonly<LatestTransactionsProps>) {
   const handleDetailsClick = (id: number | string) => {
     if (onTransactionDetails) {
       onTransactionDetails(id.toString());

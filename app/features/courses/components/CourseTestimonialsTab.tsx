@@ -7,7 +7,7 @@ interface CourseTestimonialsTabProps {
   course: Course;
 }
 
-export function CourseTestimonialsTab({ course }: CourseTestimonialsTabProps) {
+export function CourseTestimonialsTab({ course }: Readonly<CourseTestimonialsTabProps>) {
   const DUMMY_TESTIMONIALS = [
     {
       id: 1,
@@ -72,7 +72,7 @@ interface TestimonialCardProps {
   date?: string;
 }
 
-function TestimonialCard({ review, date }: TestimonialCardProps) {
+function TestimonialCard({ review, date }: Readonly<TestimonialCardProps>) {
   return (
     <div className="border border-[#DCDEDD] rounded-[16px] p-6">
       <div className="flex items-center gap-1 mb-4">

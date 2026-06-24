@@ -17,7 +17,7 @@ interface UserItemProps {
 	user: User;
 }
 
-function UserItem({ user }: UserItemProps) {
+function UserItem({ user }: Readonly<UserItemProps>) {
 	const getBadgeClass = (roleKey: string) => {
 		switch (roleKey) {
 			case "manager":
@@ -66,7 +66,7 @@ interface LatestUsersProps {
 	users: User[];
 }
 
-export function LatestUsers({ users }: LatestUsersProps) {
+export function LatestUsers({ users }: Readonly<LatestUsersProps>) {
 	return (
 		<div className="bg-white border border-[#DCDEDD] rounded-[20px] p-5">
 			<div className="flex items-center justify-between mb-4">

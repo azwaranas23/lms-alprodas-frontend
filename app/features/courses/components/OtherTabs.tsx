@@ -20,7 +20,7 @@ interface OtherTabsProps {
   activeTab: string;
 }
 
-export function OtherTabs({ course, activeTab }: OtherTabsProps) {
+export function OtherTabs({ course, activeTab }: Readonly<OtherTabsProps>) {
   if (activeTab === 'resources') {
     return (
       <div className="bg-white border border-[#DCDEDD] rounded-[16px] p-6">
@@ -68,8 +68,8 @@ export function OtherTabs({ course, activeTab }: OtherTabsProps) {
 
           {toolsArray.length > 0 ? (
             <div className="flex flex-wrap gap-2 justify-center mt-6">
-              {toolsArray.map((tool, index) => (
-                <span key={index} className="badge-expert px-3 py-1 rounded-md text-sm font-semibold bg-blue-100 text-blue-800">
+              {toolsArray.map((tool) => (
+                <span key={tool} className="badge-expert px-3 py-1 rounded-md text-sm font-semibold bg-blue-100 text-blue-800">
                   {tool}
                 </span>
               ))}

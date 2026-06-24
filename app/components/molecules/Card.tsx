@@ -12,7 +12,7 @@ const paddingClasses = {
   lg: 'p-5'
 };
 
-export function Card({ children, className = '', hover = false, padding = 'lg' }: CardProps) {
+export function Card({ children, className = '', hover = false, padding = 'lg' }: Readonly<CardProps>) {
   const hoverClasses = hover ? 'hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300' : '';
   const paddingClass = paddingClasses[padding];
 

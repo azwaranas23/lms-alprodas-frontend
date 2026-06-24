@@ -86,6 +86,7 @@ export function hasTempNavData(): boolean {
     const data: TempNavData = JSON.parse(stored);
     return Date.now() - data.timestamp <= EXPIRY_TIME;
   } catch (error) {
+    console.warn("Failed to check temp nav data:", error);
     return false;
   }
 }

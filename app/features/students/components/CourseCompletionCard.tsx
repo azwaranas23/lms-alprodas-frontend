@@ -24,7 +24,7 @@ interface CourseCompletionCardProps {
   courseData: CourseCompletionData;
 }
 
-export function CourseCompletionCard({ courseData }: CourseCompletionCardProps) {
+export function CourseCompletionCard({ courseData }: Readonly<CourseCompletionCardProps>) {
   return (
     <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6 mb-12">
       <div className="mb-6">

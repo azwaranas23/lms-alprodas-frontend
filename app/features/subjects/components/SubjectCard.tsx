@@ -9,7 +9,7 @@ interface SubjectCardProps {
 	onView?: () => void;
 }
 
-export function SubjectCard({ subject, onEdit, onView }: SubjectCardProps) {
+export function SubjectCard({ subject, onEdit, onView }: Readonly<SubjectCardProps>) {
 	return (
 		<div className="border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-4">
 			<div className="flex gap-4 h-full">

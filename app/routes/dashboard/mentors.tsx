@@ -5,7 +5,6 @@ import { PermissionRoute } from "~/features/auth/components/PermissionRoute";
 import { MentorGrid } from "~/features/mentors/components/MentorGrid";
 import { Pagination } from "~/components/molecules/Pagination";
 import { useMentors } from "~/hooks/api/useUsers";
-import { BASE_URL } from "~/constants/api";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -19,11 +18,11 @@ export function meta({ }: Route.MetaArgs) {
 
 export default function Mentors() {
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
+  const [search] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState("8");
 
   // Fetch mentors data from API with pagination and search
-  const { data: mentorsData, isLoading } = useMentors({
+  const { data: mentorsData } = useMentors({
     page,
     search,
     limit: Number.parseInt(itemsPerPage, 10),

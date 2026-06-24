@@ -19,22 +19,23 @@ import { Card } from "~/components/molecules/Card";
 import { getAvatarSrc } from "~/utils/formatters";
 import { Image } from "~/components/atoms/Image";
 
+function getGradient(index: number) {
+  const gradients = [
+    "from-blue-100 to-purple-100",
+    "from-yellow-100 to-orange-100",
+    "from-cyan-100 to-blue-100",
+    "from-green-100 to-emerald-100",
+    "from-green-100 to-teal-100",
+    "from-purple-100 to-pink-100",
+  ];
+  return gradients[index % gradients.length];
+}
+
 interface SubjectCardProps {
   subject: Subject;
 }
 
-function SubjectCard({ subject }: SubjectCardProps) {
-  const getGradient = (index: number) => {
-    const gradients = [
-      "from-blue-100 to-purple-100",
-      "from-yellow-100 to-orange-100",
-      "from-cyan-100 to-blue-100",
-      "from-green-100 to-emerald-100",
-      "from-green-100 to-teal-100",
-      "from-purple-100 to-pink-100",
-    ];
-    return gradients[index % gradients.length];
-  };
+function SubjectCard({ subject }: Readonly<SubjectCardProps>) {
 
   return (
     <Card hover className="h-full flex flex-col p-4">
@@ -89,18 +90,7 @@ interface CourseCardProps {
   course: Course;
 }
 
-function CourseCard({ course }: CourseCardProps) {
-  const getGradient = (index: number) => {
-    const gradients = [
-      "from-blue-100 to-purple-100",
-      "from-yellow-100 to-orange-100",
-      "from-cyan-100 to-blue-100",
-      "from-green-100 to-emerald-100",
-      "from-green-100 to-teal-100",
-      "from-purple-100 to-pink-100",
-    ];
-    return gradients[index % gradients.length];
-  };
+function CourseCard({ course }: Readonly<CourseCardProps>) {
 
   return (
     <div className="bg-white border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 hover:shadow-lg transition-all duration-300 p-6">
@@ -189,7 +179,7 @@ interface TopicContentSectionProps {
   topicId: number;
 }
 
-export function TopicContentSection({ topicId }: TopicContentSectionProps) {
+export function TopicContentSection({ topicId }: Readonly<TopicContentSectionProps>) {
   const [activeTab, setActiveTab] = useState("subjects");
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [subjectsLoading, setSubjectsLoading] = useState(true);

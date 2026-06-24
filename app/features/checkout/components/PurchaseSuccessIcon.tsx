@@ -41,7 +41,7 @@ export function PurchaseSuccessIcon() {
     return () => {
       // Cleanup style element
       if (document.head.contains(style)) {
-        document.head.removeChild(style);
+        style.remove();
       }
     };
   }, []);

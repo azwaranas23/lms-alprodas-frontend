@@ -20,7 +20,7 @@ interface NavLinkProps {
   isActive?: boolean;
 }
 
-function NavLink({ href, icon: Icon, label, isActive = false }: NavLinkProps) {
+function NavLink({ href, icon: Icon, label, isActive = false }: Readonly<NavLinkProps>) {
   const baseClasses =
     "nav-link border rounded-[20px] transition-all duration-300 flex items-center gap-3 px-4 py-3";
   const activeClasses =

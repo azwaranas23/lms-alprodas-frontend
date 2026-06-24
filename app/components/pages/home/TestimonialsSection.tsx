@@ -65,7 +65,7 @@ interface TestimonialsSectionProps {
   onSmoothScroll: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
 }
 
-export function TestimonialsSection({ onSmoothScroll }: TestimonialsSectionProps) {
+export function TestimonialsSection({ onSmoothScroll }: Readonly<TestimonialsSectionProps>) {
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
 

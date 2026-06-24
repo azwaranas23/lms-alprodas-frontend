@@ -9,7 +9,7 @@ interface CourseHeaderProps {
 	userAvatar?: string;
 }
 
-export function CourseHeader({ course, userName, userAvatar }: CourseHeaderProps) {
+export function CourseHeader({ course, userName, userAvatar }: Readonly<CourseHeaderProps>) {
 	return (
 		<header className="bg-white border-b border-[#DCDEDD] px-6 py-4">
 			<div className="flex items-center justify-between">

@@ -18,7 +18,7 @@ export function Pagination({
   itemType = 'items',
   showItemsPerPage = true,
   itemsPerPageOptions = [6, 12, 24, 50]
-}: PaginationProps) {
+}: Readonly<PaginationProps>) {
   const handlePrevious = () => {
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
@@ -96,8 +96,8 @@ export function Pagination({
         </button>
 
         {/* Page Numbers */}
-        {getPageNumbers().map((page, index) => (
-          <span key={index}>
+        {getPageNumbers().map((page) => (
+          <span key={page}>
             {page === '...' ? (
               <span className="px-2 text-gray-500">...</span>
             ) : (

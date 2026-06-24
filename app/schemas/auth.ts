@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { emailSchema, passwordSchema } from "./common";
+import { emailSchema } from "./common";
+export { passwordSchema as registerPasswordSchema } from "./common";
 
 // Simple password schema for login (only minimum length requirement)
 export const loginPasswordSchema = z.string()
@@ -11,7 +12,6 @@ export const loginSchema = z.object({
 	password: loginPasswordSchema,
 });
 
-// Registration still uses the strong password schema
-export const registerPasswordSchema = passwordSchema;
+
 
 export type LoginFormData = z.infer<typeof loginSchema>;

@@ -31,7 +31,7 @@ function getTypeStyles(type: string) {
 	}
 }
 
-export function CourseLessonsPage({ userRole }: CourseLessonsPageProps) {
+export function CourseLessonsPage({ userRole }: Readonly<CourseLessonsPageProps>) {
 	const { id, sectionId } = useParams();
 	const [selectedSectionId, setSelectedSectionId] = useState<number | null>(null);
 
@@ -74,7 +74,7 @@ export function CourseLessonsPage({ userRole }: CourseLessonsPageProps) {
 
 	const handleDeleteLesson = (lessonId: number) => {
 		console.log('Delete button clicked for lesson:', lessonId);
-		if (window.confirm('Are you sure you want to delete this lesson?')) {
+		if (globalThis.window.confirm('Are you sure you want to delete this lesson?')) {
 			console.log('User confirmed deletion, calling mutation');
 			deleteLessonMutation.mutate(lessonId);
 		} else {

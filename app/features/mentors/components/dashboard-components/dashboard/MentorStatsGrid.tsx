@@ -10,7 +10,7 @@ interface StatCardProps {
   isFirstCard?: boolean;
 }
 
-function StatCard({ title, value, subtitle, icon: Icon, iconBgColor, iconColor, isFirstCard = false }: StatCardProps) {
+function StatCard({ title, value, subtitle, icon: Icon, iconBgColor, iconColor, isFirstCard = false }: Readonly<StatCardProps>) {
   const cardClass = isFirstCard 
     ? "stats-card bg-white border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 transition-all duration-300 p-5"
     : "bg-white border border-[#DCDEDD] rounded-[20px] hover:border-[#0C51D9] hover:border-2 transition-all duration-300 p-5";
@@ -53,7 +53,7 @@ export function MentorStatsGrid({
   monthlyTransactions,
   totalWithdrawals,
   monthlyWithdrawals
-}: MentorStatsGridProps) {
+}: Readonly<MentorStatsGridProps>) {
   return (
     <>
       <StatCard

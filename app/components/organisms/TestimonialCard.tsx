@@ -16,7 +16,7 @@ interface TestimonialCardProps {
 	testimonial: Testimonial;
 }
 
-export function TestimonialCard({ testimonial }: TestimonialCardProps) {
+export function TestimonialCard({ testimonial }: Readonly<TestimonialCardProps>) {
 	return (
 		<div className="flex-shrink-0 w-80 mr-6">
 			<Card className="p-6 testimonial-card">

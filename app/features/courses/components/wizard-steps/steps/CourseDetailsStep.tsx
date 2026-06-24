@@ -36,7 +36,7 @@ export function CourseDetailsStep({
   onUpdate,
   onNext,
   onPrevious,
-}: CourseDetailsStepProps) {
+}: Readonly<CourseDetailsStepProps>) {
   const [toolsDisplay, setToolsDisplay] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -84,7 +84,7 @@ export function CourseDetailsStep({
         const newErrors: Record<string, string> = {};
         if (error.issues && Array.isArray(error.issues)) {
           error.issues.forEach((err) => {
-            if (err.path && err.path[0]) {
+            if (err.path?.[0]) {
               newErrors[err.path[0] as string] = err.message;
             }
           });
@@ -286,7 +286,7 @@ export function CourseDetailsStep({
           <div className="flex flex-wrap gap-2">
             {toolsDisplay.map((tool, index) => (
               <span
-                key={index}
+                key={`${tool}-${index}`}
                 className="badge-expert px-2 py-1 rounded-md text-xs font-semibold bg-blue-100 text-blue-800"
               >
                 {tool}

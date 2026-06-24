@@ -7,7 +7,7 @@ interface VideoPlayerProps {
 	onComplete?: () => void;
 }
 
-export function VideoPlayer({ lesson, onComplete }: VideoPlayerProps) {
+export function VideoPlayer({ lesson, onComplete }: Readonly<VideoPlayerProps>) {
 	const videoRef = useRef<HTMLVideoElement>(null);
 
 	useEffect(() => {

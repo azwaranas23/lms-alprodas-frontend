@@ -4,7 +4,7 @@ interface RevenueCardProps {
   totalRevenue?: number;
 }
 
-export function RevenueCard({ totalRevenue = 0 }: RevenueCardProps) {
+export function RevenueCard({ totalRevenue = 0 }: Readonly<RevenueCardProps>) {
   const formatCurrency = (amount: number) => {
     if (amount >= 1000000000) {
       // Milyar

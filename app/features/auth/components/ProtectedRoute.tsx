@@ -7,7 +7,7 @@ interface ProtectedRouteProps {
   allowedRoles?: string[]; // optional role-based access control
 }
 
-export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
+export function ProtectedRoute({ children, allowedRoles }: Readonly<ProtectedRouteProps>) {
   const navigate = useNavigate();
 
   // Memoize the allowedRoles to prevent infinite loops
@@ -30,7 +30,7 @@ export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) 
         const redirectPath = user ? authService.getRedirectPathByRole(user) : '/login';
 
         // Only navigate if we're not already on the redirect path
-        if (window.location.pathname !== redirectPath) {
+        if (globalThis.window.location.pathname !== redirectPath) {
           navigate(redirectPath);
         }
         return;

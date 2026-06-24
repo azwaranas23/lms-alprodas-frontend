@@ -11,7 +11,7 @@ export default function WithdrawalRequestModal({
 	isOpen,
 	onClose,
 	onComplete,
-}: WithdrawalRequestModalProps) {
+}: Readonly<WithdrawalRequestModalProps>) {
 	const [currentStep, setCurrentStep] = useState(1);
 	useEffect(() => {
 		if (isOpen) {

@@ -7,7 +7,7 @@ interface QuickActionButtonProps {
   isPrimary?: boolean;
 }
 
-function QuickActionButton({ icon: Icon, label, isPrimary = false }: QuickActionButtonProps) {
+function QuickActionButton({ icon: Icon, label, isPrimary = false }: Readonly<QuickActionButtonProps>) {
   return (
     <Button
       variant={isPrimary ? "primary" : "secondary"}

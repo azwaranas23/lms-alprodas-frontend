@@ -64,7 +64,7 @@ export function RichTextEditor({
   placeholder = "Start writing...",
   disabled = false,
   className = ""
-}: RichTextEditorProps) {
+}: Readonly<RichTextEditorProps>) {
   const [mounted, setMounted] = useState(false);
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [editor, setEditor] = useState<CKEditorInstance | null>(null);
@@ -78,7 +78,7 @@ export function RichTextEditor({
     if (!mounted) return;
 
     // Check if ClassicEditor already exists
-    if (window.ClassicEditor) {
+    if (globalThis.window?.ClassicEditor) {
       setScriptLoaded(true);
       return;
     }
@@ -98,7 +98,7 @@ export function RichTextEditor({
     return () => {
       // Cleanup on unmount
       if (document.head.contains(script)) {
-        document.head.removeChild(script);
+        script.remove();
       }
     };
   }, [mounted]);
@@ -110,7 +110,7 @@ export function RichTextEditor({
 
     const initEditor = async () => {
       try {
-        const editorInstance = await window.ClassicEditor!.create(editorRef.current!, {
+        const editorInstance = await globalThis.window?.ClassicEditor!.create(editorRef.current!, {
           toolbar: {
             items: [
               'heading', '|',
