@@ -152,14 +152,7 @@ export function CourseWizardContent({
           />
         );
       default:
-        return (
-          <CourseInfoStep
-            data={courseData}
-            onUpdate={updateCourseData}
-            onNext={handleNext}
-            onCancel={onCancel}
-          />
-        );
+        return null;
     }
   };
 

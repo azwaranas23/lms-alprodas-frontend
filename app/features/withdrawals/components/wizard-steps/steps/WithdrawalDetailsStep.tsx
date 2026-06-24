@@ -250,11 +250,10 @@ export default function WithdrawalDetailsStep({
 										onChange={(e) =>
 											handleAmountChange(e.target.value)
 										}
-										className={`w-full pl-16 pr-4 py-4 text-2xl font-bold rounded-[16px] focus:bg-white transition-all duration-300 ${
-											zodError
-												? "border-2 border-[#DC2626]"
-												: "border border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2"
-										}`}
+										className={`w-full pl-16 pr-4 py-4 text-2xl font-bold rounded-[16px] focus:bg-white transition-all duration-300 ${zodError
+											? "border-2 border-[#DC2626]"
+											: "border border-[#DCDEDD] hover:border-[#0C51D9] hover:border-2 focus:border-[#0C51D9] focus:border-2"
+											}`}
 										placeholder="0"
 									/>
 								</div>
@@ -275,9 +274,9 @@ export default function WithdrawalDetailsStep({
 
 							{/* Quick Amount Selection */}
 							<div className="mb-6">
-								<label className="block text-brand-dark text-base font-semibold mb-3">
+								<legend className="block text-brand-dark text-base font-semibold pb-3">
 									Quick Select
-								</label>
+								</legend>
 								<div className="grid grid-cols-4 gap-3">
 									<button
 										type="button"

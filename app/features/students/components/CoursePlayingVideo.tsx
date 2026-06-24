@@ -62,6 +62,66 @@ function findFirstLessonToPlay(sections: any[]): LessonFindResult {
   return { firstIncompleteLesson: null, sectionToExpand: null };
 }
 
+
+const DEFAULT_YOUTUBE_EMBED_URL = "https://www.youtube.com/embed/dQw4w9WgXcQ";
+
+const truncateText = (text: string, maxLength: number = 30) => {
+  if (!text) return "";
+  return text.length > maxLength
+    ? `${text.substring(0, maxLength)}...`
+    : text;
+};
+
+const getEmbedUrl = (url: string) => {
+  if (!url || url.length < 10) {
+    return DEFAULT_YOUTUBE_EMBED_URL;
+  }
+
+  if (url.includes("youtube.com/embed/")) {
+    const videoId = url.split("embed/")[1]?.split("?")[0];
+    return videoId && videoId.length >= 11
+      ? url
+      : DEFAULT_YOUTUBE_EMBED_URL;
+  }
+
+  const videoId = url.includes("youtube.com/watch?v=")
+    ? url.split("v=")[1]?.split("&")[0]
+    : url.includes("youtu.be/")
+      ? url.split("youtu.be/")[1]?.split("?")[0]
+      : "";
+
+  if (videoId && videoId.length >= 11) {
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  return url;
+};
+
+const isFirstIncompleteLesson = (lesson: any, sections: any[] = []) => {
+  if (lesson.progress?.is_completed) {
+    return false;
+  }
+
+  return !sections.some((section: any) =>
+    section.lessons?.some(
+      (item: any) =>
+        item.order_index < lesson.order_index &&
+        !item.progress?.is_completed
+    )
+  );
+};
+
+const canOpenLesson = (
+  lesson: any,
+  currentLesson: any,
+  sections: any[] = []
+) => {
+  const isCompleted = lesson.progress?.is_completed;
+  const isCurrent = currentLesson?.id === lesson.id;
+
+  return isCompleted || isCurrent || isFirstIncompleteLesson(lesson, sections);
+};
+
 export default function CoursePlayingVideo() {
   const { courseId } = useParams();
   const navigate = useNavigate();
@@ -92,13 +152,6 @@ export default function CoursePlayingVideo() {
         ? prev.filter((id) => id !== sectionId)
         : [...prev, sectionId]
     );
-  };
-
-  const truncateText = (text: string, maxLength: number = 30) => {
-    if (!text) return "";
-    return text.length > maxLength
-      ? text.substring(0, maxLength) + "..."
-      : text;
   };
 
   const fetchCourseProgress = async () => {
@@ -178,46 +231,6 @@ export default function CoursePlayingVideo() {
   };
 
   // Helper function to ensure proper YouTube embed URL
-  const getEmbedUrl = (url: string) => {
-    console.log("Original URL:", url);
-
-    // If URL is invalid or too short, use a default demo video
-    if (!url || url.length < 10) {
-      console.log("Invalid URL, using default demo video");
-      return "https://www.youtube.com/embed/dQw4w9WgXcQ"; // Default demo video
-    }
-
-    // If it's already an embed URL, check if it has valid video ID
-    if (url.includes("youtube.com/embed/")) {
-      const videoId = url.split("embed/")[1]?.split("?")[0];
-      if (videoId && videoId.length >= 11) {
-        return url;
-      } else {
-        console.log("Invalid video ID in embed URL, using default");
-        return "https://www.youtube.com/embed/dQw4w9WgXcQ";
-      }
-    }
-
-    // Extract video ID from various YouTube URL formats
-    let videoId = "";
-    if (url.includes("youtube.com/watch?v=")) {
-      videoId = url.split("v=")[1]?.split("&")[0];
-    } else if (url.includes("youtu.be/")) {
-      videoId = url.split("youtu.be/")[1]?.split("?")[0];
-    }
-
-    // Validate video ID (YouTube IDs are typically 11 characters)
-    if (videoId && videoId.length >= 11) {
-      const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-      console.log("Converted to embed URL:", embedUrl);
-      return embedUrl;
-    }
-
-    // If we can't parse it properly, try to use it as is but with warning
-    console.log("Could not parse URL properly, trying original:", url);
-    return url;
-  };
-
   const completeLesson = async (lessonId: number) => {
     try {
       await coursesService.completeLesson(lessonId);
@@ -331,40 +344,16 @@ export default function CoursePlayingVideo() {
   }, [lessonDetail]);
 
   const handleLessonClick = (lesson: any) => {
-    // Allow clicking:
-    // 1. Completed lessons (can replay)
-    // 2. Current lesson (already selected)
-    // 3. First incomplete lesson (can start)
-    const isCompleted = lesson.progress?.is_completed;
-    const isCurrent = currentLesson?.id === lesson.id;
-    const isFirstIncomplete =
-      !isCompleted &&
-      !courseData?.sections?.some((section: any) =>
-        section.lessons?.some(
-          (l: any) =>
-            l.order_index < lesson.order_index && !l.progress?.is_completed
-        )
-      );
-
-    if (isCompleted || isCurrent || isFirstIncomplete) {
-      setCurrentLesson(lesson);
-      fetchLessonDetail(lesson.id);
+    if (!canOpenLesson(lesson, currentLesson, courseData?.sections)) {
+      return;
     }
+
+    setCurrentLesson(lesson);
+    fetchLessonDetail(lesson.id);
   };
 
-  const isLessonClickable = (lesson: any) => {
-    const isCompleted = lesson.progress?.is_completed;
-    const isCurrent = currentLesson?.id === lesson.id;
-    const isFirstIncomplete =
-      !isCompleted &&
-      !courseData?.sections?.some((section: any) =>
-        section.lessons?.some(
-          (l: any) =>
-            l.order_index < lesson.order_index && !l.progress?.is_completed
-        )
-      );
-    return isCompleted || isCurrent || isFirstIncomplete;
-  };
+  const isLessonClickable = (lesson: any) =>
+    canOpenLesson(lesson, currentLesson, courseData?.sections);
 
   const getLessonIcon = (lesson: any) => {
     if (lesson.progress?.is_completed) {
@@ -424,23 +413,25 @@ export default function CoursePlayingVideo() {
   };
 
   const renderNavigationButton = () => {
-    if (lessonDetail?.navigation?.next_lesson) {
+    const hasNextLesson = lessonDetail?.navigation?.next_lesson;
+    const isLessonCompleted = lessonDetail?.progress?.is_completed;
+    const isCourseCompleted = courseProgress?.progress_stats?.percentage === 100;
+
+    if (hasNextLesson) {
       return (
         <button
           onClick={handleNextLesson}
           className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-4 py-2 flex items-center gap-2"
         >
           <span className="text-brand-white text-sm font-semibold">
-            {lessonDetail?.progress?.is_completed
-              ? "Next Lesson"
-              : "Complete & Next"}
+            {isLessonCompleted ? "Next Lesson" : "Complete & Next"}
           </span>
           <ChevronRight className="w-4 h-4 text-white" />
         </button>
       );
     }
 
-    if (!lessonDetail?.progress?.is_completed && courseProgress?.progress_stats?.percentage !== 100) {
+    if (!isLessonCompleted && !isCourseCompleted) {
       return (
         <button
           onClick={handleCompleteCourse}
@@ -460,9 +451,7 @@ export default function CoursePlayingVideo() {
         className="bg-gray-100 border border-[#DCDEDD] text-gray-400 py-2 px-4 rounded-[8px] font-medium cursor-not-allowed flex items-center gap-2"
       >
         <Check className="w-4 h-4 text-gray-400" />
-        <span className="text-sm font-semibold">
-          Course Completed
-        </span>
+        <span className="text-sm font-semibold">Course Completed</span>
       </button>
     );
   };
@@ -925,7 +914,7 @@ export default function CoursePlayingVideo() {
                           </span>
                         </button>
                       )}
-                    {renderNavigationButton()}
+                      {renderNavigationButton()}
                     </div>
                   </div>
                 </div>
