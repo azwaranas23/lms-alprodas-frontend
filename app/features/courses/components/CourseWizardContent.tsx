@@ -15,7 +15,7 @@ interface CourseWizardContentProps {
   readonly initialData?: Partial<CourseData>;
 }
 
-interface CourseData {
+export interface CourseData {
   name: string;
   description: string;
   subject: string;

@@ -62,7 +62,6 @@ function findFirstLessonToPlay(sections: any[]): LessonFindResult {
   return { firstIncompleteLesson: null, sectionToExpand: null };
 }
 
-
 const DEFAULT_YOUTUBE_EMBED_URL = "https://www.youtube.com/embed/dQw4w9WgXcQ";
 
 const truncateText = (text: string, maxLength: number = 30) => {
@@ -84,11 +83,13 @@ const getEmbedUrl = (url: string) => {
       : DEFAULT_YOUTUBE_EMBED_URL;
   }
 
-  const videoId = url.includes("youtube.com/watch?v=")
-    ? url.split("v=")[1]?.split("&")[0]
-    : url.includes("youtu.be/")
-      ? url.split("youtu.be/")[1]?.split("?")[0]
-      : "";
+  let videoId = "";
+
+  if (url.includes("youtube.com/watch?v=")) {
+    videoId = url.split("v=")[1]?.split("&")[0] ?? "";
+  } else if (url.includes("youtu.be/")) {
+    videoId = url.split("youtu.be/")[1]?.split("?")[0] ?? "";
+  }
 
   if (videoId && videoId.length >= 11) {
     return `https://www.youtube.com/embed/${videoId}`;
@@ -121,6 +122,515 @@ const canOpenLesson = (
 
   return isCompleted || isCurrent || isFirstIncompleteLesson(lesson, sections);
 };
+
+const getLessonIcon = (lesson: any, currentLessonId: number | undefined) => {
+  if (lesson.progress?.is_completed) {
+    return <Check className="w-3 h-3 min-w-[12px] min-h-[12px] text-white" />;
+  }
+  if (currentLessonId === lesson.id) {
+    return <Play className="w-3 h-3 min-w-[12px] min-h-[12px] text-white" />;
+  }
+  return <Lock className="w-3 h-3 min-w-[12px] min-h-[12px] text-gray-500" />;
+};
+
+const getLessonStyle = (lesson: any, currentLessonId: number | undefined) => {
+  if (lesson.progress?.is_completed) {
+    return "lesson-item completed flex items-center gap-3 p-2 rounded-md hover:bg-gray-50 cursor-pointer";
+  }
+  if (currentLessonId === lesson.id) {
+    return "lesson-item active flex items-center gap-3 p-2 rounded-md bg-blue-50 border border-blue-200";
+  }
+  return "lesson-item flex items-center gap-3 p-2 rounded-md hover:bg-gray-50 cursor-pointer";
+};
+
+const getIconBackground = (lesson: any, currentLessonId: number | undefined) => {
+  if (lesson.progress?.is_completed) {
+    return "w-5 h-5 bg-green-500 rounded-full flex items-center justify-center";
+  }
+  if (currentLessonId === lesson.id) {
+    return "w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center";
+  }
+  return "w-5 h-5 bg-gray-300 rounded-full flex items-center justify-center";
+};
+
+const getTextStyle = (lesson: any, currentLessonId: number | undefined) => {
+  if (currentLessonId === lesson.id) {
+    return "text-sm font-medium text-blue-900 truncate";
+  }
+  if (lesson.progress?.is_completed) {
+    return "text-sm text-gray-700 truncate";
+  }
+  return "text-sm text-gray-500 truncate";
+};
+
+const getTimeStyle = (lesson: any, currentLessonId: number | undefined) => {
+  if (currentLessonId === lesson.id) {
+    return "text-xs text-blue-600 ml-auto";
+  }
+  return "text-xs text-gray-400 ml-auto";
+};
+
+const formatDuration = (minutes: number) => {
+  const mins = Math.floor(minutes);
+  const secs = Math.floor((minutes % 1) * 60);
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+};
+
+/* ==========================================
+   SUB-COMPONENTS FOR REDUCING COMPLEXITY
+   ========================================== */
+
+const CourseLoadingState = () => (
+  <div className="min-h-screen bg-[#F9F9F9] flex items-center justify-center">
+    <div className="flex items-center gap-3">
+      <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+      <span className="text-gray-600">Loading course...</span>
+    </div>
+  </div>
+);
+
+interface CourseErrorStateProps {
+  error: string | null;
+}
+
+const CourseErrorState = ({ error }: CourseErrorStateProps) => (
+  <div className="min-h-screen bg-[#F9F9F9] flex items-center justify-center p-5">
+    <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-8 max-w-md w-full text-center shadow-sm">
+      <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg
+          className="w-8 h-8 text-red-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+          />
+        </svg>
+      </div>
+
+      <div className="mb-6">
+        <h3 className="text-xl font-bold text-brand-dark mb-2">
+          Oops! Something went wrong
+        </h3>
+        <p className="text-gray-600 text-sm leading-relaxed">
+          {error || "Course not found"}
+        </p>
+        <p className="text-gray-500 text-xs mt-2">
+          The course you're looking for might not exist or there was an
+          error loading the content.
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <Link
+          to="/dashboard/student/my-courses"
+          className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-6 py-3 flex items-center justify-center gap-2"
+        >
+          <ArrowLeft className="w-4 h-4 text-white" />
+          <span className="text-brand-white text-sm font-semibold">
+            Back to My Courses
+          </span>
+        </Link>
+
+        <button
+          onClick={() => globalThis.location.reload()}
+          className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-6 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+        >
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            />
+          </svg>
+          <span className="text-sm font-semibold">Try Again</span>
+        </button>
+      </div>
+
+      <div className="mt-6 pt-4 border-t border-gray-100">
+        <p className="text-xs text-gray-400">
+          Need help?{" "}
+          <a href="mailto:support@alprodas.com" className="text-blue-600 hover:text-blue-800">
+            Contact Support
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+);
+
+interface CourseSidebarProps {
+  courseData: any;
+  openSections: number[];
+  toggleAccordion: (sectionId: number) => void;
+  currentLesson: any;
+  handleLessonClick: (lesson: any) => void;
+  isLessonClickable: (lesson: any) => boolean;
+}
+
+const CourseSidebar = ({
+  courseData,
+  openSections,
+  toggleAccordion,
+  currentLesson,
+  handleLessonClick,
+  isLessonClickable,
+}: CourseSidebarProps) => {
+  return (
+    <aside className="w-80 bg-white border-r border-[#DCDEDD] flex flex-col">
+      <div className="px-6 py-4 border-b border-[#DCDEDD]">
+        <Link
+          to="/dashboard/student/my-courses"
+          className="flex items-center gap-4 hover:opacity-80 transition-opacity"
+        >
+          <div className="w-14 h-14 relative flex items-center justify-center">
+            <div className="w-14 h-14 absolute bg-gradient-to-br from-primary-100 to-primary-200 rounded-full"></div>
+            <div className="w-10 h-10 absolute bg-gradient-to-br from-primary-500 to-primary-600 rounded-full opacity-90"></div>
+            <GraduationCap className="w-5 h-5 text-white relative z-10" />
+          </div>
+          <div>
+            <h1 className="text-brand-dark text-lg font-bold">Alprodas LMS</h1>
+            <p className="text-brand-dark text-xs font-normal">Student Dashboard</p>
+          </div>
+        </Link>
+      </div>
+
+      <nav className="flex-1 overflow-y-auto px-4 py-4">
+        <div className="space-y-3">
+          {courseData.sections && courseData.sections.length > 0 ? (
+            courseData.sections.map((section: any) => (
+              <div key={section.id} className="accordion-section">
+                <button
+                  className="accordion-header w-full text-left p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                  onClick={() => toggleAccordion(section.id)}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-semibold">
+                        {section.order_index}
+                      </div>
+                      <span className="font-medium text-gray-900" title={section.title}>
+                        {truncateText(section.title, 20)}
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={`w-4 h-4 text-gray-500 accordion-chevron transition-transform ${openSections.includes(section.id) ? "rotate-180" : ""
+                        }`}
+                    />
+                  </div>
+                </button>
+                <div
+                  className={`accordion-content mt-2 ml-9 space-y-2 ${openSections.includes(section.id) ? "" : "hidden"
+                    }`}
+                >
+                  {section.lessons && section.lessons.length > 0 ? (
+                    section.lessons.map((lesson: any) => (
+                      <button
+                        type="button"
+                        key={lesson.id}
+                        disabled={!isLessonClickable(lesson)}
+                        className={`w-full text-left bg-transparent ${getLessonStyle(
+                          lesson,
+                          currentLesson?.id
+                        )}`}
+                        onClick={() => handleLessonClick(lesson)}
+                        style={{
+                          cursor: isLessonClickable(lesson) ? "pointer" : "not-allowed",
+                        }}
+                      >
+                        <div className={getIconBackground(lesson, currentLesson?.id)}>
+                          {getLessonIcon(lesson, currentLesson?.id)}
+                        </div>
+                        <span className={getTextStyle(lesson, currentLesson?.id)} title={lesson.title}>
+                          {truncateText(lesson.title, 20)}
+                        </span>
+                        <span className={getTimeStyle(lesson, currentLesson?.id)}>
+                          {formatDuration(lesson.duration_minutes)}
+                        </span>
+                      </button>
+                    ))
+                  ) : (
+                    <div className="text-xs text-gray-500 p-2 italic">No lessons available</div>
+                  )}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center py-8 px-4">
+                <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No lessons available</h3>
+                <p className="text-gray-500 text-sm">
+                  This course doesn't have any lessons yet. Please check back later.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </nav>
+    </aside>
+  );
+};
+
+interface CourseHeaderProps {
+  lessonDetail: any;
+  currentLesson: any;
+  courseData: any;
+  isProfileOpen: boolean;
+  setIsProfileOpen: (isOpen: boolean) => void;
+  profileRef: React.RefObject<HTMLDivElement | null>;
+  getFullName: () => string;
+  getRoleName: () => string;
+  getAvatar: () => string | undefined;
+  handleLogout: () => void;
+}
+
+const CourseHeader = ({
+  lessonDetail,
+  currentLesson,
+  courseData,
+  isProfileOpen,
+  setIsProfileOpen,
+  profileRef,
+  getFullName,
+  getRoleName,
+  getAvatar,
+  handleLogout,
+}: CourseHeaderProps) => {
+  return (
+    <header className="page-header bg-white border-b border-[#DCDEDD] px-5 py-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Link
+            to="/dashboard/student/my-courses"
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5 text-gray-600" />
+          </Link>
+          <div>
+            <h2 className="text-brand-dark text-2xl font-extrabold">
+              {lessonDetail?.title || currentLesson?.title || courseData.title}
+            </h2>
+            <p className="text-brand-light text-sm font-normal mt-1">
+              {lessonDetail
+                ? `Section ${lessonDetail.section?.order_index ||
+                courseData?.sections?.findIndex((s: any) => s.id === lessonDetail.section?.id) + 1 ||
+                lessonDetail.section?.id
+                }: ${lessonDetail.section?.title} • Lesson ${lessonDetail.order_index}`
+                : courseData.subject?.name}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <button className="w-10 h-10 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200">
+              <Bookmark className="w-5 h-5 text-gray-600" />
+            </button>
+            <button className="w-10 h-10 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200">
+              <Share2 className="w-5 h-5 text-gray-600" />
+            </button>
+            <button className="w-10 h-10 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200">
+              <Settings className="w-5 h-5 text-gray-600" />
+            </button>
+          </div>
+
+          <div className="w-px h-8 bg-[#DCDEDD] mx-5"></div>
+
+          <div className="relative" ref={profileRef}>
+            <button
+              onClick={() => setIsProfileOpen(!isProfileOpen)}
+              className="flex items-center gap-3 hover:bg-gray-50 rounded-lg p-2 transition-colors"
+            >
+              <img
+                src={getAvatarSrc(getAvatar(), getFullName())}
+                alt="User Avatar"
+                className="w-12 h-12 rounded-full object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = getAvatarSrc(undefined, getFullName());
+                }}
+              />
+              <div className="text-left hidden md:block">
+                <p className="text-brand-dark text-base font-semibold">{getFullName()}</p>
+                <p className="text-brand-dark text-base font-normal leading-7">{getRoleName()}</p>
+              </div>
+              <ChevronDown
+                className={`w-4 h-4 text-gray-400 transition-transform ${isProfileOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+
+            {isProfileOpen && (
+              <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-[#DCDEDD] rounded-xl shadow-lg py-2 z-50 animate-in fade-in zoom-in-95 duration-200">
+                <div className="px-4 py-2 border-b border-gray-100 md:hidden">
+                  <p className="text-sm font-semibold text-gray-900">{getFullName()}</p>
+                  <p className="text-xs text-gray-500">{getRoleName()}</p>
+                </div>
+                <div className="py-1 border-b border-gray-100">
+                  <Link
+                    to="/"
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 transition-colors"
+                  >
+                    <Home className="w-4 h-4" />
+                    Home
+                  </Link>
+                  <Link
+                    to="/courses"
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 transition-colors"
+                  >
+                    <BookOpen className="w-4 h-4" />
+                    Courses
+                  </Link>
+                  <Link
+                    to="/dashboard/student/my-courses"
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 transition-colors"
+                  >
+                    <LayoutDashboard className="w-4 h-4" />
+                    Dashboard
+                  </Link>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+/* ==========================================
+   HELPER FUNCTIONS FOR LESSON VIDEO/ARTICLE
+   ========================================== */
+
+const handleCopyCodeAction = (button: HTMLButtonElement) => {
+  const codeBlock = button.closest(".bg-gray-900")?.querySelector("code");
+  if (!codeBlock) return;
+
+  const text = codeBlock.textContent || "";
+  navigator.clipboard.writeText(text).then(() => {
+    const originalIcon = button.innerHTML;
+    button.innerHTML =
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"></polyline></svg>';
+    button.classList.add("text-green-400");
+
+    setTimeout(() => {
+      button.innerHTML = originalIcon;
+      button.classList.remove("text-green-400");
+    }, 2000);
+  });
+};
+
+const attachCopyListeners = () => {
+  const copyButtons = document.querySelectorAll("[data-copy-code]");
+  const handlers = new Map<Element, () => void>();
+
+  copyButtons.forEach((button) => {
+    const handler = () => handleCopyCodeAction(button as HTMLButtonElement);
+    handlers.set(button, handler);
+    button.addEventListener("click", handler);
+  });
+
+  return { copyButtons, handlers };
+};
+
+const cleanupCopyListeners = (copyButtons: NodeListOf<Element>, handlers: Map<Element, () => void>) => {
+  copyButtons.forEach((button) => {
+    const handler = handlers.get(button);
+    if (handler) {
+      button.removeEventListener("click", handler);
+    }
+  });
+};
+
+interface LessonVideoOrArticleProps {
+  lessonLoading: boolean;
+  lessonDetail: any;
+}
+
+const LessonVideoOrArticle = ({ lessonLoading, lessonDetail }: LessonVideoOrArticleProps) => {
+  useEffect(() => {
+    if (lessonDetail?.content_type !== "ARTICLE" || !lessonDetail?.content_text) {
+      return;
+    }
+
+    const { copyButtons, handlers } = attachCopyListeners();
+
+    return () => cleanupCopyListeners(copyButtons, handlers);
+  }, [lessonDetail]);
+
+  if (lessonLoading) {
+    return (
+      <div className="aspect-video w-full bg-gray-50 rounded-[12px] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+      </div>
+    );
+  }
+
+  if (lessonDetail?.content_type === "VIDEO") {
+    return (
+      <div className="aspect-video w-full">
+        {lessonDetail?.content_url ? (
+          <iframe
+            src={getEmbedUrl(lessonDetail.content_url)}
+            className="w-full h-full rounded-[12px] border-0"
+            allowFullScreen
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            title={lessonDetail.title}
+          ></iframe>
+        ) : (
+          <div className="w-full h-full bg-gray-50 rounded-[12px] flex items-center justify-center">
+            <div className="text-center text-gray-600">
+              <Play className="w-16 h-16 mx-auto mb-4" />
+              <p className="text-lg">Video not available</p>
+              <p className="text-sm">Video URL is missing or invalid</p>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="prose max-w-none">
+      {lessonDetail?.content_text ? (
+        <div
+          className="article-content"
+          dangerouslySetInnerHTML={{
+            __html: lessonDetail.content_text,
+          }}
+        />
+      ) : (
+        <div className="text-center py-12 text-gray-600">
+          <FileText className="w-16 h-16 mx-auto mb-4" />
+          <p className="text-lg">Article content not available</p>
+          <p className="text-sm">Content is missing or still being loaded</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+/* ==========================================
+   MAIN COMPONENT (Cognitive Complexity < 15)
+   ========================================== */
 
 export default function CoursePlayingVideo() {
   const { courseId } = useParams();
@@ -199,7 +709,6 @@ export default function CoursePlayingVideo() {
     fetchCourseProgress();
   }, [courseId]);
 
-  // Handle click outside to close profile dropdown
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
@@ -221,7 +730,6 @@ export default function CoursePlayingVideo() {
     try {
       setLessonLoading(true);
       const response = await coursesService.getLessonDetail(lessonId);
-      console.log("Lesson detail response:", response.data);
       setLessonDetail(response.data);
     } catch (err) {
       console.error("Failed to load lesson detail:", err);
@@ -230,11 +738,9 @@ export default function CoursePlayingVideo() {
     }
   };
 
-  // Helper function to ensure proper YouTube embed URL
   const completeLesson = async (lessonId: number) => {
     try {
       await coursesService.completeLesson(lessonId);
-      // Refresh course data and progress to update
       fetchCourseData();
       fetchCourseProgress();
     } catch (err) {
@@ -244,35 +750,26 @@ export default function CoursePlayingVideo() {
 
   const handleNextLesson = async () => {
     if (lessonDetail?.navigation?.next_lesson) {
-      // Mark current lesson as complete first
       if (lessonDetail?.id && !lessonDetail?.progress?.is_completed) {
         await completeLesson(lessonDetail.id);
       }
 
-      // Navigate to next lesson
       const nextLesson = lessonDetail.navigation.next_lesson;
       handleLessonClick({ id: nextLesson.id, title: nextLesson.title });
-
-      // Refresh course progress to update percentage
       fetchCourseProgress();
     }
   };
 
   const handleCompleteCourse = async () => {
     try {
-      // Mark current lesson as complete first
       if (lessonDetail?.id && !lessonDetail?.progress?.is_completed) {
         await completeLesson(lessonDetail.id);
       }
 
-      // Call API to complete course
       const response = await coursesService.completeCourse(Number(courseId));
-
-      // Refresh course progress after completion
       await fetchCourseProgress();
 
       if (response.data.success) {
-        // Navigate to course completion page with courseId and certificateId
         const params = new URLSearchParams({
           courseId: courseId || "",
           certificateId: response.data.certificate_id || "",
@@ -294,55 +791,6 @@ export default function CoursePlayingVideo() {
     }
   };
 
-  // Copy code functionality for article content
-  const copyCode = (button: HTMLButtonElement) => {
-    const codeBlock = button.closest(".bg-gray-900")?.querySelector("code");
-    if (codeBlock) {
-      const text = codeBlock.textContent || "";
-
-      navigator.clipboard.writeText(text).then(() => {
-        const originalIcon = button.innerHTML;
-        button.innerHTML =
-          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"></polyline></svg>';
-        button.classList.add("text-green-400");
-
-        setTimeout(() => {
-          button.innerHTML = originalIcon;
-          button.classList.remove("text-green-400");
-        }, 2000);
-      });
-    }
-  };
-
-  // Initialize copy code functionality after content loads
-  useEffect(() => {
-    if (
-      lessonDetail?.content_type !== "ARTICLE" ||
-      !lessonDetail?.content_text
-    ) {
-      return;
-    }
-    // Add click handlers to copy buttons
-    const copyButtons = document.querySelectorAll("[data-copy-code]");
-    const handlers = new Map<Element, () => void>();
-
-    copyButtons.forEach((button) => {
-      const handler = () => copyCode(button as HTMLButtonElement);
-      handlers.set(button, handler);
-      button.addEventListener("click", handler);
-    });
-
-    // Cleanup function
-    return () => {
-      copyButtons.forEach((button) => {
-        const handler = handlers.get(button);
-        if (handler) {
-          button.removeEventListener("click", handler);
-        }
-      });
-    };
-  }, [lessonDetail]);
-
   const handleLessonClick = (lesson: any) => {
     if (!canOpenLesson(lesson, currentLesson, courseData?.sections)) {
       return;
@@ -354,63 +802,6 @@ export default function CoursePlayingVideo() {
 
   const isLessonClickable = (lesson: any) =>
     canOpenLesson(lesson, currentLesson, courseData?.sections);
-
-  const getLessonIcon = (lesson: any) => {
-    if (lesson.progress?.is_completed) {
-      return <Check className="w-3 h-3 min-w-[12px] min-h-[12px] text-white" />;
-    }
-    if (currentLesson?.id === lesson.id) {
-      return <Play className="w-3 h-3 min-w-[12px] min-h-[12px] text-white" />;
-    }
-    // Semua lesson yang tidak completed dan tidak current = locked
-    return <Lock className="w-3 h-3 min-w-[12px] min-h-[12px] text-gray-500" />;
-  };
-
-  const getLessonStyle = (lesson: any) => {
-    if (lesson.progress?.is_completed) {
-      return "lesson-item completed flex items-center gap-3 p-2 rounded-md hover:bg-gray-50 cursor-pointer";
-    }
-    if (currentLesson?.id === lesson.id) {
-      return "lesson-item active flex items-center gap-3 p-2 rounded-md bg-blue-50 border border-blue-200";
-    }
-    // Semua lesson yang tidak completed dan tidak current = default style
-    return "lesson-item flex items-center gap-3 p-2 rounded-md hover:bg-gray-50 cursor-pointer";
-  };
-
-  const getIconBackground = (lesson: any) => {
-    if (lesson.progress?.is_completed) {
-      return "w-5 h-5 bg-green-500 rounded-full flex items-center justify-center";
-    }
-    if (currentLesson?.id === lesson.id) {
-      return "w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center";
-    }
-    // Semua lesson yang tidak completed dan tidak current = gray background
-    return "w-5 h-5 bg-gray-300 rounded-full flex items-center justify-center";
-  };
-
-  const getTextStyle = (lesson: any) => {
-    if (currentLesson?.id === lesson.id) {
-      return "text-sm font-medium text-blue-900 truncate";
-    }
-    if (lesson.progress?.is_completed) {
-      return "text-sm text-gray-700 truncate";
-    }
-    // Lesson yang belum completed dan bukan current = gray text
-    return "text-sm text-gray-500 truncate";
-  };
-
-  const getTimeStyle = (lesson: any) => {
-    if (currentLesson?.id === lesson.id) {
-      return "text-xs text-blue-600 ml-auto";
-    }
-    return "text-xs text-gray-400 ml-auto";
-  };
-
-  const formatDuration = (minutes: number) => {
-    const mins = Math.floor(minutes);
-    const secs = Math.floor((minutes % 1) * 60);
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
-  };
 
   const renderNavigationButton = () => {
     const hasNextLesson = lessonDetail?.navigation?.next_lesson;
@@ -457,402 +848,49 @@ export default function CoursePlayingVideo() {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-[#F9F9F9] flex items-center justify-center">
-        <div className="flex items-center gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-          <span className="text-gray-600">Loading course...</span>
-        </div>
-      </div>
-    );
+    return <CourseLoadingState />;
   }
 
   if (error || !courseData) {
-    return (
-      <div className="min-h-screen bg-[#F9F9F9] flex items-center justify-center p-5">
-        <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-8 max-w-md w-full text-center shadow-sm">
-          {/* Error Icon */}
-          <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg
-              className="w-8 h-8 text-red-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
-              />
-            </svg>
-          </div>
-
-          {/* Error Content */}
-          <div className="mb-6">
-            <h3 className="text-xl font-bold text-brand-dark mb-2">
-              Oops! Something went wrong
-            </h3>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              {error || "Course not found"}
-            </p>
-            <p className="text-gray-500 text-xs mt-2">
-              The course you're looking for might not exist or there was an
-              error loading the content.
-            </p>
-          </div>
-
-          {/* Actions */}
-          <div className="flex flex-col gap-3">
-            <Link
-              to="/dashboard/student/my-courses"
-              className="btn-primary rounded-[8px] border border-[#2151A0] hover:brightness-110 focus:ring-2 focus:ring-[#0C51D9] transition-all duration-300 blue-gradient blue-btn-shadow px-6 py-3 flex items-center justify-center gap-2"
-            >
-              <ArrowLeft className="w-4 h-4 text-white" />
-              <span className="text-brand-white text-sm font-semibold">
-                Back to My Courses
-              </span>
-            </Link>
-
-            <button
-              onClick={() => globalThis.location.reload()}
-              className="bg-white border border-[#DCDEDD] text-brand-dark py-3 px-6 rounded-[8px] font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                />
-              </svg>
-              <span className="text-sm font-semibold">Try Again</span>
-            </button>
-          </div>
-
-          {/* Support Link */}
-          <div className="mt-6 pt-4 border-t border-gray-100">
-            <p className="text-xs text-gray-400">
-              Need help?{" "}
-              <a href="mailto:support@alprodas.com" className="text-blue-600 hover:text-blue-800">
-                Contact Support
-              </a>
-            </p>
-          </div>
-        </div>
-      </div>
-    );
+    return <CourseErrorState error={error} />;
   }
 
   return (
     <div className="min-h-screen bg-[#F9F9F9]">
       <div className="flex h-screen">
-        {/* Course Navigation Sidebar */}
-        <aside className="w-80 bg-white border-r border-[#DCDEDD] flex flex-col">
-          {/* Logo Section */}
-          <div className="px-6 py-4 border-b border-[#DCDEDD]">
-            <Link
-              to="/dashboard/student/my-courses"
-              className="flex items-center gap-4 hover:opacity-80 transition-opacity"
-            >
-              <div className="w-14 h-14 relative flex items-center justify-center">
-                {/* Background circle */}
-                <div className="w-14 h-14 absolute bg-gradient-to-br from-primary-100 to-primary-200 rounded-full"></div>
-                {/* Overlapping smaller circle */}
-                <div className="w-10 h-10 absolute bg-gradient-to-br from-primary-500 to-primary-600 rounded-full opacity-90"></div>
-                {/* Lucide icon */}
-                <GraduationCap className="w-5 h-5 text-white relative z-10" />
-              </div>
-              <div>
-                <h1 className="text-brand-dark text-lg font-bold">
-                  Alprodas LMS
-                </h1>
-                <p className="text-brand-dark text-xs font-normal">
-                  Student Dashboard
-                </p>
-              </div>
-            </Link>
-          </div>
+        <CourseSidebar
+          courseData={courseData}
+          openSections={openSections}
+          toggleAccordion={toggleAccordion}
+          currentLesson={currentLesson}
+          handleLessonClick={handleLessonClick}
+          isLessonClickable={isLessonClickable}
+        />
 
-          {/* Course Sections Navigation */}
-          <nav className="flex-1 overflow-y-auto px-4 py-4">
-            <div className="space-y-3">
-              {courseData.sections && courseData.sections.length > 0 ? (
-                courseData.sections.map((section: any) => (
-                  <div key={section.id} className="accordion-section">
-                    <button
-                      className="accordion-header w-full text-left p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                      onClick={() => toggleAccordion(section.id)}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-semibold">
-                            {section.order_index}
-                          </div>
-                          <span
-                            className="font-medium text-gray-900"
-                            title={section.title}
-                          >
-                            {truncateText(section.title, 20)}
-                          </span>
-                        </div>
-                        <ChevronDown
-                          className={`w-4 h-4 text-gray-500 accordion-chevron transition-transform ${openSections.includes(section.id)
-                            ? "rotate-180"
-                            : ""
-                            }`}
-                        />
-                      </div>
-                    </button>
-                    <div
-                      className={`accordion-content mt-2 ml-9 space-y-2 ${openSections.includes(section.id) ? "" : "hidden"}`}
-                    >
-                      {section.lessons.length > 0 ? (
-                        section.lessons.map((lesson: any) => (
-                          <button
-                            type="button"
-                            key={lesson.id}
-                            disabled={!isLessonClickable(lesson)}
-                            className={`w-full text-left bg-transparent ${getLessonStyle(lesson)}`}
-                            onClick={() => handleLessonClick(lesson)}
-                            onKeyDown={(e) => {
-                              if (isLessonClickable(lesson) && (e.key === "Enter" || e.key === " ")) {
-                                e.preventDefault();
-                                handleLessonClick(lesson);
-                              }
-                            }}
-                            style={{
-                              cursor: isLessonClickable(lesson)
-                                ? "pointer"
-                                : "not-allowed",
-                            }}
-                          >
-                            <div className={getIconBackground(lesson)}>
-                              {getLessonIcon(lesson)}
-                            </div>
-                            <span
-                              className={getTextStyle(lesson)}
-                              title={lesson.title}
-                            >
-                              {truncateText(lesson.title, 20)}
-                            </span>
-                            <span className={getTimeStyle(lesson)}>
-                              {formatDuration(lesson.duration_minutes)}
-                            </span>
-                          </button>
-                        ))
-                      ) : (
-                        <div className="text-xs text-gray-500 p-2 italic">
-                          No lessons available
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                /* Empty State */
-                <div className="flex items-center justify-center h-full">
-                  <div className="text-center py-8 px-4">
-                    <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">
-                      No lessons available
-                    </h3>
-                    <p className="text-gray-500 text-sm">
-                      This course doesn't have any lessons yet. Please check
-                      back later.
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </nav>
-        </aside>
-
-        {/* Main Content */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Top Navbar */}
-          <header className="page-header bg-white border-b border-[#DCDEDD] px-5 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Link
-                  to="/dashboard/student/my-courses"
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  <ArrowLeft className="w-5 h-5 text-gray-600" />
-                </Link>
-                <div>
-                  <h2 className="text-brand-dark text-2xl font-extrabold">
-                    {lessonDetail?.title ||
-                      currentLesson?.title ||
-                      courseData.title}
-                  </h2>
-                  <p className="text-brand-light text-sm font-normal mt-1">
-                    {lessonDetail
-                      ? `Section ${lessonDetail.section.order_index ||
-                      courseData?.sections?.findIndex(
-                        (s: any) => s.id === lessonDetail.section.id
-                      ) + 1 ||
-                      lessonDetail.section.id
-                      }: ${lessonDetail.section.title} • Lesson ${lessonDetail.order_index}`
-                      : courseData.subject.name}
-                  </p>
-                </div>
-              </div>
+          <CourseHeader
+            lessonDetail={lessonDetail}
+            currentLesson={currentLesson}
+            courseData={courseData}
+            isProfileOpen={isProfileOpen}
+            setIsProfileOpen={setIsProfileOpen}
+            profileRef={profileRef}
+            getFullName={getFullName}
+            getRoleName={getRoleName}
+            getAvatar={getAvatar}
+            handleLogout={handleLogout}
+          />
 
-              <div className="flex items-center gap-4">
-                {/* Action Buttons */}
-                <div className="flex items-center gap-3">
-                  <button className="w-10 h-10 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200">
-                    <Bookmark className="w-5 h-5 text-gray-600" />
-                  </button>
-                  <button className="w-10 h-10 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200">
-                    <Share2 className="w-5 h-5 text-gray-600" />
-                  </button>
-                  <button className="w-10 h-10 rounded-full border border-[#DCDEDD] flex items-center justify-center hover:border-[#0C51D9] hover:border-2 transition-all duration-200">
-                    <Settings className="w-5 h-5 text-gray-600" />
-                  </button>
-                </div>
-
-                {/* Divider */}
-                <div className="w-px h-8 bg-[#DCDEDD] mx-5"></div>
-
-                {/* User Profile */}
-                <div className="relative" ref={profileRef}>
-                  <button
-                    onClick={() => setIsProfileOpen(!isProfileOpen)}
-                    className="flex items-center gap-3 hover:bg-gray-50 rounded-lg p-2 transition-colors"
-                  >
-                    <img
-                      src={getAvatarSrc(getAvatar(), getFullName())}
-                      alt="User Avatar"
-                      className="w-12 h-12 rounded-full object-cover"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = getAvatarSrc(undefined, getFullName());
-                      }}
-                    />
-                    <div className="text-left hidden md:block">
-                      <p className="text-brand-dark text-base font-semibold">
-                        {getFullName()}
-                      </p>
-                      <p className="text-brand-dark text-base font-normal leading-7">
-                        {getRoleName()}
-                      </p>
-                    </div>
-                    <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} />
-                  </button>
-
-                  {/* Dropdown Menu */}
-                  {isProfileOpen && (
-                    <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-[#DCDEDD] rounded-xl shadow-lg py-2 z-50 animate-in fade-in zoom-in-95 duration-200">
-                      <div className="px-4 py-2 border-b border-gray-100 md:hidden">
-                        <p className="text-sm font-semibold text-gray-900">{getFullName()}</p>
-                        <p className="text-xs text-gray-500">{getRoleName()}</p>
-                      </div>
-                      <div className="py-1 border-b border-gray-100">
-                        <Link
-                          to="/"
-                          className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 transition-colors"
-                        >
-                          <Home className="w-4 h-4" />
-                          Home
-                        </Link>
-                        <Link
-                          to="/courses"
-                          className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 transition-colors"
-                        >
-                          <BookOpen className="w-4 h-4" />
-                          Courses
-                        </Link>
-                        <Link
-                          to="/dashboard/student/my-courses"
-                          className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 transition-colors"
-                        >
-                          <LayoutDashboard className="w-4 h-4" />
-                          Dashboard
-                        </Link>
-                      </div>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        Logout
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </header>
-
-          {/* Main Content Area */}
           <main className="main-content flex-1 overflow-auto p-5">
             {currentLesson ? (
               <>
-                {/* Video Section */}
                 <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6 mb-6">
-                  {lessonLoading ? (
-                    <div className="aspect-video w-full bg-gray-50 rounded-[12px] flex items-center justify-center">
-                      <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-                    </div>
-                  ) : (
-                    <div className="w-full">
-                      {lessonDetail?.content_type === "VIDEO" ? (
-                        <div className="aspect-video w-full">
-                          {lessonDetail?.content_url ? (
-                            <iframe
-                              src={getEmbedUrl(lessonDetail.content_url)}
-                              className="w-full h-full rounded-[12px] border-0"
-                              allowFullScreen
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              title={lessonDetail.title}
-                            ></iframe>
-                          ) : (
-                            <div className="w-full h-full bg-gray-50 rounded-[12px] flex items-center justify-center">
-                              <div className="text-center text-gray-600">
-                                <Play className="w-16 h-16 mx-auto mb-4" />
-                                <p className="text-lg">Video not available</p>
-                                <p className="text-sm">
-                                  Video URL is missing or invalid
-                                </p>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      ) : (
-                        /* Article Content */
-                        <div className="prose max-w-none">
-                          {lessonDetail?.content_text ? (
-                            <div
-                              className="article-content"
-                              dangerouslySetInnerHTML={{
-                                __html: lessonDetail.content_text,
-                              }}
-                            />
-                          ) : (
-                            <div className="text-center py-12 text-gray-600">
-                              <FileText className="w-16 h-16 mx-auto mb-4" />
-                              <p className="text-lg">
-                                Article content not available
-                              </p>
-                              <p className="text-sm">
-                                Content is missing or still being loaded
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  )}
+                  <LessonVideoOrArticle
+                    lessonLoading={lessonLoading}
+                    lessonDetail={lessonDetail}
+                  />
                 </div>
 
-                {/* Lesson Details */}
                 <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6 mb-6">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -919,22 +957,14 @@ export default function CoursePlayingVideo() {
                   </div>
                 </div>
 
-                {/* Resources & Downloads */}
                 <div className="bg-white border border-[#DCDEDD] rounded-[20px] p-6">
                   <h4 className="text-lg font-bold text-brand-dark mb-4">
                     Resources & Downloads
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Lesson Notes */}
                     <button
                       type="button"
                       onClick={handleGoToCourseResources}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          handleGoToCourseResources();
-                        }
-                      }}
                       className="w-full text-left bg-transparent border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#0C51D9] focus:ring-offset-2 cursor-pointer"
                     >
                       <div className="flex items-center gap-3">
@@ -957,16 +987,9 @@ export default function CoursePlayingVideo() {
                       </div>
                     </button>
 
-                    {/* Source Code */}
                     <button
                       type="button"
                       onClick={handleGoToCourseResources}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          handleGoToCourseResources();
-                        }
-                      }}
                       className="w-full text-left bg-transparent border border-[#DCDEDD] rounded-lg p-4 hover:border-[#0C51D9] hover:border-2 hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#0C51D9] focus:ring-offset-2 cursor-pointer"
                     >
                       <div className="flex items-center gap-3">
@@ -992,7 +1015,6 @@ export default function CoursePlayingVideo() {
                 </div>
               </>
             ) : (
-              /* Empty State - No Lesson Selected */
               <div className="flex items-center justify-center h-full">
                 <div className="text-center py-12">
                   <Play className="w-16 h-16 text-gray-400 mx-auto mb-4" />

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { AddCourseLayout } from "~/components/templates/AddCourseLayout";
 import { PermissionRoute } from "~/features/auth/components/PermissionRoute";
 import { CourseWizardContent } from "~/features/courses/components/CourseWizardContent";
+import type { CourseData } from "~/features/courses/components/CourseWizardContent";
 import {
   useCourse,
   useUpdateCourse,
@@ -99,7 +100,7 @@ export default function EditMentorCourse() {
   };
 
   // Transform course data to CourseWizard format
-  const getInitialData = () => {
+  const getInitialData = (): Partial<CourseData> => {
     if (!course) return {};
 
     return {
@@ -108,9 +109,9 @@ export default function EditMentorCourse() {
       subject: course.subject?.id?.toString() || "",
       tools: course.tools || "",
       courseToken: course.course_token,
-      availability: (course.status?.toUpperCase() === "PUBLISHED"
+      availability: course.status?.toUpperCase() === "PUBLISHED"
         ? "published"
-        : "draft") as "published" | "draft",
+        : "draft",
       level: "Beginner", // Default or get from course data
       duration: "10 hours", // Default or get from course data
       requirements: [], // Default or get from course data

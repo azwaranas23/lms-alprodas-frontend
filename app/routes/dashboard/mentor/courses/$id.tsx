@@ -243,7 +243,7 @@ export default function MentorCourseDetail() {
                   <div className="flex items-center gap-2">
                     <BookOpen className="w-4 h-4" />
                     <span>
-                      {totalLessons} lesson{totalLessons !== 1 ? "s" : ""}
+                      {totalLessons} lesson{totalLessons === 1 ? "" : "s"}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">

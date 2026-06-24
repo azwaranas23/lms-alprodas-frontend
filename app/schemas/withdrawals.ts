@@ -79,8 +79,8 @@ export const accountVerificationSchema = z.object({
 
 // Complete Withdrawal Request Schema
 export const createWithdrawalSchema = bankInformationSchema
-  .merge(withdrawalDetailsSchema)
-  .merge(accountVerificationSchema);
+  .extend(withdrawalDetailsSchema.shape)
+  .extend(accountVerificationSchema.shape);
 
 // Update Withdrawal Schema
 export const updateWithdrawalSchema = z.object({

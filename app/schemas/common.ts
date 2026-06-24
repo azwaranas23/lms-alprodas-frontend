@@ -19,9 +19,9 @@ export const videoFileSchema = z.instanceof(File)
   .refine((file) => file.type.startsWith('video/'), 'Please select a valid video file');
 
 // Common field schemas
-export const emailSchema = z.string()
-  .min(1, 'Email is required')
-  .email('Please enter a valid email address');
+export const emailSchema = z.email({
+  error: 'Please enter a valid email address',
+});
 
 export const passwordSchema = z.string()
   .min(1, 'Password is required')
@@ -35,9 +35,9 @@ export const phoneSchema = z.string()
   .min(1, 'Phone number is required')
   .regex(/^\+?[\d()\s-]+$/, 'Please enter a valid phone number');
 
-export const urlSchema = z.string()
-  .min(1, 'URL is required')
-  .url('Please enter a valid URL');
+export const urlSchema = z.url({
+  error: 'Please enter a valid URL',
+});
 
 // Text content schemas
 export const titleSchema = z.string()
@@ -67,13 +67,9 @@ export const optionalIdSchema = z.number()
   .optional();
 
 // Date schemas
-export const dateStringSchema = z.string()
-  .min(1, 'Date is required')
-  .datetime('Please enter a valid date');
+export const dateStringSchema = z.iso.datetime({ error: 'Invalid date format' })
 
-export const futureDateSchema = z.string()
-  .min(1, 'Date is required')
-  .datetime('Please enter a valid date')
+export const futureDateSchema = z.iso.datetime({ error: 'Invalid date format' })
   .refine((date) => new Date(date) > new Date(), 'Date must be in the future');
 
 // Pagination schemas
