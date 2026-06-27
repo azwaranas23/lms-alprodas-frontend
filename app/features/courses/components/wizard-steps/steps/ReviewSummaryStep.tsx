@@ -62,7 +62,7 @@ export function ReviewSummaryStep({
         try {
           const subjects = await subjectsService.getSubjects({ limit: 100 });
           const subject = subjects.items.find(
-            (s) => s.id.toString() === data.subject
+            (s) => s.id.toString() === data.subject,
           );
           setSubjectName(subject?.name || "Not found");
         } catch (error) {
@@ -191,16 +191,6 @@ export function ReviewSummaryStep({
 
                   <div className="flex items-start gap-3">
                     <Key className="w-5 h-5 text-gray-400 mt-0.5" />
-                    <div>
-                      <p className="text-brand-light text-sm font-medium">
-                        Course Token
-                      </p>
-                      <p className="text-brand-dark text-base font-semibold font-mono">
-                        {data.courseToken && data.courseToken.trim() !== ""
-                          ? data.courseToken
-                          : "Not generated"}
-                      </p>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -215,13 +205,13 @@ export function ReviewSummaryStep({
                   <div className="w-full h-30 rounded-[8px] border border-[#DCDEDD] overflow-hidden bg-gray-100 flex items-center justify-center">
                     {getPhotoUrl(
                       data.mainPhoto,
-                      data.images?.[0]?.image_path
+                      data.images?.[0]?.image_path,
                     ) ? (
                       <img
                         src={
                           getPhotoUrl(
                             data.mainPhoto,
-                            data.images?.[0]?.image_path
+                            data.images?.[0]?.image_path,
                           )!
                         }
                         alt="Main course cover"
@@ -234,13 +224,13 @@ export function ReviewSummaryStep({
                   <div className="w-full h-30 rounded-[8px] border border-[#DCDEDD] overflow-hidden bg-gray-100 flex items-center justify-center">
                     {getPhotoUrl(
                       data.previewPhoto,
-                      data.images?.[1]?.image_path
+                      data.images?.[1]?.image_path,
                     ) ? (
                       <img
                         src={
                           getPhotoUrl(
                             data.previewPhoto,
-                            data.images?.[1]?.image_path
+                            data.images?.[1]?.image_path,
                           )!
                         }
                         alt="Course preview cover"
@@ -255,13 +245,13 @@ export function ReviewSummaryStep({
                   <div className="w-full h-30 rounded-[8px] border border-[#DCDEDD] overflow-hidden bg-gray-100 flex items-center justify-center">
                     {getPhotoUrl(
                       data.contentPhoto,
-                      data.images?.[2]?.image_path
+                      data.images?.[2]?.image_path,
                     ) ? (
                       <img
                         src={
                           getPhotoUrl(
                             data.contentPhoto,
-                            data.images?.[2]?.image_path
+                            data.images?.[2]?.image_path,
                           )!
                         }
                         alt="Content Sample"
@@ -276,13 +266,13 @@ export function ReviewSummaryStep({
                   <div className="w-full h-30 rounded-[8px] border border-[#DCDEDD] overflow-hidden bg-gray-100 flex items-center justify-center">
                     {getPhotoUrl(
                       data.certificatePhoto,
-                      data.images?.[3]?.image_path
+                      data.images?.[3]?.image_path,
                     ) ? (
                       <img
                         src={
                           getPhotoUrl(
                             data.certificatePhoto,
-                            data.images?.[3]?.image_path
+                            data.images?.[3]?.image_path,
                           )!
                         }
                         alt="Certificate Design"

@@ -39,7 +39,6 @@ export default function EditMentorCourse() {
     const updateData: UpdateCourseData = {
       title: courseData.name,
       description: courseData.description,
-      about: courseData.description,
       tools: courseData.tools,
       key_points: [
         courseData.keyPoint1,
@@ -53,7 +52,8 @@ export default function EditMentorCourse() {
         courseData.targetAudience3,
         courseData.targetAudience4,
       ].filter((audience): audience is string => Boolean(audience)),
-      subject_id: Number.parseInt(courseData.subject, 10) || course?.subject?.id || 1,
+      subject_id:
+        Number.parseInt(courseData.subject, 10) || course?.subject?.id || 1,
       status: courseData.availability === "published" ? "PUBLISHED" : "DRAFT",
       course_token: courseData.courseToken,
     };
@@ -70,9 +70,9 @@ export default function EditMentorCourse() {
               imageType: "main",
               imageFile: courseData.mainPhoto!,
             },
-            { onSuccess: () => resolve(), onError: reject }
+            { onSuccess: () => resolve(), onError: reject },
           );
-        })
+        }),
       );
     }
 
@@ -92,7 +92,7 @@ export default function EditMentorCourse() {
           onError: (error: unknown) => {
             console.error("Error updating course:", error);
           },
-        }
+        },
       );
     } catch (error: any) {
       console.error("Error uploading images:", error);
@@ -109,9 +109,8 @@ export default function EditMentorCourse() {
       subject: course.subject?.id?.toString() || "",
       tools: course.tools || "",
       courseToken: course.course_token,
-      availability: course.status?.toUpperCase() === "PUBLISHED"
-        ? "published"
-        : "draft",
+      availability:
+        course.status?.toUpperCase() === "PUBLISHED" ? "published" : "draft",
       level: "Beginner", // Default or get from course data
       duration: "10 hours", // Default or get from course data
       requirements: [], // Default or get from course data
@@ -126,15 +125,15 @@ export default function EditMentorCourse() {
       images: course.images || [],
       mentor: course.mentor
         ? {
-          id: course.mentor.id,
-          name: course.mentor.name,
-          profile: {
-            expertise: course.mentor.profile?.expertise,
-            avatar: course.mentor.profile?.avatar,
-            totalCourses: 0,
-            totalStudents: 0,
-          },
-        }
+            id: course.mentor.id,
+            name: course.mentor.name,
+            profile: {
+              expertise: course.mentor.profile?.expertise,
+              avatar: course.mentor.profile?.avatar,
+              totalCourses: 0,
+              totalStudents: 0,
+            },
+          }
         : undefined,
     };
   };

@@ -17,11 +17,6 @@ export function CourseAboutTab({ course }: Readonly<CourseAboutTabProps>) {
         <p className="text-brand-light leading-relaxed mb-4">
           {course.description}
         </p>
-        {course.about && (
-          <p className="text-brand-light leading-relaxed mb-4">
-            {course.about}
-          </p>
-        )}
       </div>
 
       <h3 className="text-xl font-bold text-brand-dark mb-4">
